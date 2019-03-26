@@ -22,9 +22,11 @@ export class ConnexionPage {
     console.log('ionViewDidLoad ConnexionPage');
   }
 
+/*
   goBack(){
     console.log(`goBack`);
     this.navCtrl.pop();
   }
+*/
 
 }
