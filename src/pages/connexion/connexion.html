@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>connexion</ion-title>
+    <ion-title>Page Connexion</ion-title>
   </ion-navbar>
 
 <!--  <button ion-item (click)="goBack()">
@@ -19,24 +19,23 @@
 
 
 <ion-content padding>
-  <h3>
-    Page connexion
-  </h3>
-  <ion-list>
+  <form #form="ngForm" (ngSubmit)="onSubmitForm(form)">
+    <ion-list>
 
-    <ion-item>
-      <ion-label floating>Pseudo</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Pseudo</ion-label>
+        <ion-input type="text" name="pseudo" ngModel ></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Mot de Passe</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Mot de Passe</ion-label>
+        <ion-input type="password" name="mdp" ngModel ></ion-input>
+      </ion-item>
 
-  </ion-list>
+    </ion-list>
 
-  <button ion-button block>Se Connecter</button>
+    <button type="submit" ion-button block >Se Connecter</button>
+  </form>
 
 
   <button ion-button outline >Créer Compte</button>

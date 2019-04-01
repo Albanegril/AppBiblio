@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {NgForm} from "@angular/forms";
 
 /**
  * Generated class for the ConnexionPage page.
@@ -29,4 +30,11 @@ export class ConnexionPage {
   }
 */
 
+  onSubmitForm(form: NgForm) {
+    console.log(form.value);
+    console.log("connexion compte");
+    //TO DO
+
+    this.navCtrl.push('ListBiblioPage');
+  }
 }

@@ -14,5 +14,23 @@
 
 
 <ion-content padding>
+  <ion-list inset *ngFor="let maison of listMaison;" >
+
+    <ion-item (click)="expandItem(maison)">
+      <ion-icon name="leaf" item-start></ion-icon>
+      {{this.maison.nom}}
+
+      <expandable [expandHeight]="maisonExpandHeight" [expanded]="this.maison.expanded">
+        <ion-list inset *ngFor="let biblio of listBiblio;">
+          <ion-item>
+            <ion-icon name="leaf" item-start></ion-icon>
+            {{this.biblio.nom}}
+
+          </ion-item>
+        </ion-list>
+      </expandable>
+
+    </ion-item>
+  </ion-list>
 
 </ion-content>
