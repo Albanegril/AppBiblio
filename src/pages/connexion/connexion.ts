@@ -33,8 +33,18 @@ export class ConnexionPage {
   onSubmitForm(form: NgForm) {
     console.log(form.value);
     console.log("connexion compte");
-    //TO DO
+    //TODO
 
-    this.navCtrl.push('ListBiblioPage');
+    this.navCtrl.push('ListBiblioPage').then(()=>{
+      this.navCtrl.setRoot('ListBiblioPage');
+    });
+  }
+
+  onClickCreationCompte() {
+    // TODO
+  }
+
+  onClickPourquoiCompte() {
+    // TODO
   }
 }

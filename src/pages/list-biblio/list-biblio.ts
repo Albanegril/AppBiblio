@@ -26,7 +26,6 @@ export class ListBiblioPage {
     this.listMaison = [
       { nom:"Bougnoux", id:1, expanded: false},
       { nom:"Gerbau", id:2, expanded: false},
-      { nom:"Gerbau", id:3, expanded: false},
       { nom:"MtpEva", id:4, expanded: false},
       { nom:"AppartClermont", id:5, expanded: false}
     ];
@@ -55,5 +54,9 @@ export class ListBiblioPage {
 
     });
 
+  }
+
+  onClickBiblio(id: any) {
+    this.navCtrl.push('ListLivrePage', {'id':id});
   }
 }

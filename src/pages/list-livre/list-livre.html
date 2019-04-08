@@ -8,20 +8,23 @@
 
   <ion-navbar>
     <ion-title>listLivre</ion-title>
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
+  <ion-list inset *ngFor="let livre of listLivre;">
+    <ion-item (click)="onClickLivre(this.livre.id)">
       <ion-thumbnail item-start>
-        <img src="img/thumbnail-totoro.png">
+        <img src="assets/imgs/logobooks.png">
       </ion-thumbnail>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <button ion-button clear item-end>View</button>
+      <h2>{{this.livre.titre}} {{this.livre.auteur}}</h2>
+      <p>{{this.livre.date}} • {{this.livre.sujets}}</p>
     </ion-item>
   </ion-list>
 

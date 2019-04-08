@@ -5,9 +5,12 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>listBiblio</ion-title>
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
@@ -17,13 +20,13 @@
   <ion-list inset *ngFor="let maison of listMaison;" >
 
     <ion-item (click)="expandItem(maison)">
-      <ion-icon name="leaf" item-start></ion-icon>
-      {{this.maison.nom}}
+      <ion-icon name="home" item-start></ion-icon>
+       {{this.maison.nom}}
 
       <expandable [expandHeight]="maisonExpandHeight" [expanded]="this.maison.expanded">
         <ion-list inset *ngFor="let biblio of listBiblio;">
-          <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
+          <ion-item (click)="onClickBiblio(this.biblio.id)">
+            <ion-icon name="albums" item-start></ion-icon>
             {{this.biblio.nom}}
 
           </ion-item>

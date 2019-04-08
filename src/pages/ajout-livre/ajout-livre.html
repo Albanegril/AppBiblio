@@ -15,4 +15,50 @@
 
 <ion-content padding>
 
+  <form #form="ngForm" (ngSubmit)="onSubmitForm(form)">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Titre</ion-label>
+        <ion-input type="text" name="titre" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Auteur</ion-label>
+        <ion-input type="text" name="auteur" ngModel></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Editeur</ion-label>
+        <ion-input type="text" name="editeur" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Date</ion-label>
+        <ion-input type="date" name="date" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Langue list</ion-label>
+        <ion-input type="text" name="langue" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Type list</ion-label>
+        <ion-input type="text" name="type" ngModel></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Biblio list</ion-label>
+        <ion-input type="text" name="biblio" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Proprio</ion-label>
+        <ion-input type="text" name="proprio" ngModel></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Résumé</ion-label>
+        <ion-input type="text" name="resume" ngModel></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <button type="submit" ion-button block >Ajouter</button>
+  </form>
+
 </ion-content>
