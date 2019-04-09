@@ -40,5 +40,12 @@ export class Livre {
     this.proprio_L = proprio_L;
   }
 
+  addLivre(title:string, language: string, date_published: Date, authors: string[], cover: string) {
+    let livre: Livre;
+    livre = new Livre(title, "", "", language, date_published, "", 0, "", authors, cover, null);
+
+  }
+
+
 
 }

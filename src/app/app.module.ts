@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { BiblioServiceProvider } from '../providers/biblio-service/biblio-service';
 import { ExpandableComponent } from "../components/expandable/expandable";
+import { GestionCompteProvider } from '../providers/gestion-compte/gestion-compte';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ExpandableComponent } from "../components/expandable/expandable";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BiblioServiceProvider
+    BiblioServiceProvider,
+    GestionCompteProvider
   ]
 })
 export class AppModule {}

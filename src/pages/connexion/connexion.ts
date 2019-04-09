@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {NgForm} from "@angular/forms";
+import { GestionCompteProvider } from '../../providers/gestion-compte/gestion-compte';
 
 /**
  * Generated class for the ConnexionPage page.
@@ -15,8 +16,8 @@ import {NgForm} from "@angular/forms";
   templateUrl: 'connexion.html',
 })
 export class ConnexionPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private errorMessage: "Echec Connexion
+  constructor(private gestionnaireCompte: GestionCompteProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -35,10 +36,22 @@ export class ConnexionPage {
     console.log("connexion compte");
     //TODO
 
-    this.navCtrl.push('ListBiblioPage').then(()=>{
-      this.navCtrl.setRoot('ListBiblioPage');
-    });
+    const pseudo = form.value[0];
+    const mdp = form.value[1];
+
+    this.gestionnaireCompte.connexionLecteur(pseudo, mdp).then(
+      () => {
+        this.navCtrl.push('ListBiblioPage').then(
+          ()=>{
+          this.navCtrl.setRoot('ListBiblioPage');
+        });
+      },
+      (error) => {
+        this.errorMessage = error;
+      }
+    );
   }
+
 
   onClickCreationCompte() {
     // TODO
