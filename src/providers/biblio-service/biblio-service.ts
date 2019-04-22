@@ -1,6 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Livre} from "../../models/Livre";
+import {Subject} from "rxjs";
 
 /*
   Generated class for the BiblioServiceProvider provider.
@@ -29,7 +30,7 @@ export class BiblioServiceProvider {
       this.http.get(url, {headers: headers}).subscribe(data => {
         let json: Livre = data as Livre;
 
-        resolve(json.data);
+        resolve(json.title);
       }, err => {
         console.log(err);
       });

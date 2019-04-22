@@ -18,6 +18,7 @@ export class GestionCompteProvider {
 
   connexionLecteur(pseudo: string, mdp: string) {
     return new Promise((resolve, reject) => {
+      console.log("gestion connexion");
       /*firebase.auth().createUserWithEmailAndPassword(email, password).then(
         (user) => {
           resolve(user);
