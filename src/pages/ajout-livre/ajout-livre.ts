@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {FormArray, FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
+import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 
 /**
  * Generated class for the AjoutLivrePage page.
@@ -16,7 +17,9 @@ import {FormArray, FormBuilder, FormGroup, NgForm, Validators} from "@angular/fo
 })
 export class AjoutLivrePage{
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private lienFirebaseService: LienFireBaseProvider,
+              public navCtrl: NavController, public navParams: NavParams,
+              private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -30,9 +33,18 @@ export class AjoutLivrePage{
     // ajout BD
     // verification des entrées min + si existant ?
     //TODO
-
-    this.navCtrl.push('FicheLivrePage');
+    this.lienFirebaseService.addLivre(form)
+      .then( res => {
+        let toast = this.toastCtrl.create({
+          message: 'Livre add successfully',
+          duration: 3000
+        });
+        toast.present();
+      //  this.resetFields();
+        this.navCtrl.push('FicheLivrePage');
+      }, err => {
+        console.log(err)
+      })
   }
-
 
 }

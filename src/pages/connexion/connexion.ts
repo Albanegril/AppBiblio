@@ -19,6 +19,7 @@ import { ConnexionCreationPage } from '../connexion-creation/connexion-creation'
   templateUrl: 'connexion.html',
 })
 export class ConnexionPage {
+
   private errorMessage: "Echec Connexion";
   constructor(private gestionnaireCompte: GestionCompteProvider,
               public modalCtrl: ModalController,
@@ -39,10 +40,10 @@ export class ConnexionPage {
     console.log("connexion compte");
     //TODO
 
-    const pseudo = form.value[0];
-    const mdp = form.value[1];
+    const email = form.value.email;
+    const mdp = form.value.mdp;
 
-    this.gestionnaireCompte.connexionLecteur(pseudo, mdp).then(
+    this.gestionnaireCompte.connexionLecteur(email, mdp).then(
       () => {
         console.log("connexion en cours");
         this.navCtrl.push('ListBiblioPage').then(

@@ -26,7 +26,7 @@ export class Livre {
 
   private _proprio_L: Lecteur;
 
-  constructor(title: string, title_long: string,
+/*  constructor(title: string, title_long: string,
               isbn: string, isbn13: string, dewey_decimal: string,
               format: string, publisher: string, language: string,
               date_published: Date, edition: string, pages: number,
@@ -52,9 +52,9 @@ export class Livre {
     this.subjects = subjects;
     this.reviews = reviews;
     this.cover = cover;
-  }
+  }*/
 
-  /*  constructor(title_long: string, isbn: string, publisher: string,
+  constructor(title_long: string, isbn: string, publisher: string,
   language: string, date_published: Date, edition: string, pages: number,
   synopsys: string, authors: string[], cover: string, proprio_L: Lecteur) {
     this.title_long = title_long;
@@ -68,8 +68,7 @@ export class Livre {
     this.authors = authors;
     this.cover = cover;
     this.proprio_L = proprio_L;
-  }*/
-
+  }
 
   get id_L(): number {
     return this._id_L;
@@ -88,10 +87,8 @@ export class Livre {
   }
 
   addLivre(title:string, language: string, date_published: Date, authors: string[], cover: string) {
-    let livre: Livre;
-    livre = new Livre(title, title,"", "", "", "",
-      "", language, date_published, "", 0, "", "",
-      "" , "", authors, null, null, cover);
+    //livre = new Livre(title, title,"", "", "", "", "", language, date_published, "", 0, "", "", "" , "", authors, null, null, cover);
+    let livre = new Livre(title, "", "", language, date_published, "" , 0, "", authors, cover, null);
   }
 
 

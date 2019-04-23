@@ -31,10 +31,10 @@ export class ConnexionCreationPage {
     console.log("connexion compte");
     //TODO
 
-    const pseudo = form.value[0];
-    const mdp = form.value[1];
+    const email = form.value.email;
+    const mdp = form.value.mdp;
 
-    this.gestionnaireCompte.connexionLecteur(pseudo, mdp).then(
+    this.gestionnaireCompte.creationLecteur(email, mdp).then(
       () => {
         this.navCtrl.push('ConnexionPage').then(
           ()=>{

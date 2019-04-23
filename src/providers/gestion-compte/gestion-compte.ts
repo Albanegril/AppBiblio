@@ -16,35 +16,31 @@ export class GestionCompteProvider {
     console.log('Hello GestionCompteProvider Provider');
   }
 
-  connexionLecteur(pseudo: string, mdp: string) {
+  connexionLecteur(email: string, mdp: string) {
     return new Promise((resolve, reject) => {
-      console.log("gestion connexion");
-      /*firebase.auth().createUserWithEmailAndPassword(email, password).then(
+      console.log(`gestion connexion email <${email}> mdp<${mdp}>`);
+      firebase.auth().signInWithEmailAndPassword(email, mdp).then(
         (user) => {
           resolve(user);
         },
         (error) => {
           reject(error);
         }
-      );*/
+      );
     });
   }
 
-  creationLecteur(pseudo: string, mdp: string) {
-    return new Promise((resolve, reject) => {
-      /*firebase.auth().signInWithEmailAndPassword(email, password).then(
-        (user) => {
-          resolve(user);
-        },
-        (error) => {
-          reject(error);
-        }
-      );*/
-    });
+  creationLecteur(email: string, mdp: string) {
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().createUserWithEmailAndPassword(email, mdp)
+        .then(
+          res => resolve(res),
+          err => reject(err))
+    })
   }
 
   deconnexion() {
-   // firebase.auth().signOut();
+    firebase.auth().signOut();
   }
 
 }
