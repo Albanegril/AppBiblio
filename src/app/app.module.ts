@@ -13,6 +13,7 @@ import { ExpandableComponent } from "../components/expandable/expandable";
 import { GestionCompteProvider } from '../providers/gestion-compte/gestion-compte';
 import { HttpClientModule } from '@angular/common/http';
 import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base';
+//import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    //AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +41,7 @@ import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BiblioServiceProvider,
     GestionCompteProvider,
-    LienFireBaseProvider
+    LienFireBaseProvider,
   ]
 })
 export class AppModule {}

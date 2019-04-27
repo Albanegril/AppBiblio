@@ -5,7 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {App} from 'ionic-angular';
 
 import { HomePage } from '../pages/home/home';
+
 import * as firebase from 'firebase';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,14 +24,16 @@ export class MyApp {
       splashScreen.hide();
 
       // Initialize Firebase
+      // in credentials + app.module
       let config = {
-        apiKey: "AIzaSyCq2RijJNcDrINB-P1RPIUrD96SpBIm8LE",
-        authDomain: "appbiblio-35f08.firebaseapp.com",
-        databaseURL: "https://appbiblio-35f08.firebaseio.com",
-        projectId: "appbiblio-35f08",
-        storageBucket: "appbiblio-35f08.appspot.com",
-        messagingSenderId: "917836731868"
-      };
+            apiKey: "AIzaSyCq2RijJNcDrINB-P1RPIUrD96SpBIm8LE",
+            authDomain: "appbiblio-35f08.firebaseapp.com",
+            databaseURL: "https://appbiblio-35f08.firebaseio.com",
+            projectId: "appbiblio-35f08",
+            storageBucket: "appbiblio-35f08.appspot.com",
+            messagingSenderId: "917836731868"
+          };
+     // AngularFireModule.initializeApp(config);
       firebase.initializeApp(config);
     });
 

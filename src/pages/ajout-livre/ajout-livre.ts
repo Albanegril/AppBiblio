@@ -33,18 +33,19 @@ export class AjoutLivrePage{
     // ajout BD
     // verification des entrées min + si existant ?
     //TODO
-    this.lienFirebaseService.addLivre(form)
+    /*this.lienFirebaseService.addLivre(form)
       .then( res => {
         let toast = this.toastCtrl.create({
           message: 'Livre add successfully',
           duration: 3000
         });
         toast.present();
-      //  this.resetFields();
+      //  this.resetFields();*/
+    console.log("ajoute du livre dans la BD...")
         this.navCtrl.push('FicheLivrePage');
-      }, err => {
+      /*}, err => {
         console.log(err)
-      })
+      })*/
   }
 
 }

@@ -20,8 +20,10 @@
   <ion-list inset *ngFor="let maison of listMaison;" >
 
     <ion-item (click)="expandItem(maison)">
-      <ion-icon name="home" item-start></ion-icon>
-       {{this.maison.nom}}
+      <h2>
+        <ion-icon name="home" item-start></ion-icon>
+        {{this.maison.nom}}
+      </h2>
 
       <expandable [expandHeight]="maisonExpandHeight" [expanded]="this.maison.expanded">
         <ion-list inset *ngFor="let biblio of listBiblio;">
