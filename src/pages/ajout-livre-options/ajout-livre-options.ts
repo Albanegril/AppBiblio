@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {ConnexionPourquoiPage} from "../connexion-pourquoi/connexion-pourquoi";
+import {AjoutLivreIsbnScannerPage} from "../ajout-livre-isbn-scanner/ajout-livre-isbn-scanner";
+import {AjoutLivreQrScannerPage} from "../ajout-livre-qr-scanner/ajout-livre-qr-scanner";
 
 /**
  * Generated class for the AjoutLivreOptionsPage page.
@@ -15,7 +18,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AjoutLivreOptionsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public modalCtrl: ModalController,) {
   }
 
   ionViewDidLoad() {
@@ -24,7 +28,8 @@ export class AjoutLivreOptionsPage {
 
   onClickISBN() {
     console.log("go Scanner !");
-    //TODO
+    const modal = this.modalCtrl.create(AjoutLivreIsbnScannerPage);
+    modal.present();
   }
 
   onClickForm() {
@@ -34,6 +39,7 @@ export class AjoutLivreOptionsPage {
 
   onClickQR() {
     console.log("go Scanner !");
-    //TODO
+    const modal = this.modalCtrl.create(AjoutLivreQrScannerPage);
+    modal.present();
   }
 }

@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Livre} from "../../models/Livre";
 import {Subject} from "rxjs";
+import {BarcodeScanResult} from "@ionic-native/barcode-scanner";
 
 /*
   Generated class for the BiblioServiceProvider provider.
@@ -16,8 +17,8 @@ export class BiblioServiceProvider {
     console.log('Hello BiblioServiceProvider Provider');
   }
 
-  getLivreISBN(isbn:string):Promise<any>{
-    isbn = "0201558025";
+  getLivreISBN(isbn: any):Promise<any>{
+   // isbn = "0201558025";
     const url:string = 'https://openlibrary.org/api/books?bibkeys=ISBN:' + encodeURI(isbn) + '&jscmd=data&format=json';
     console.log(url);
     return new Promise(resolve => {
@@ -31,6 +32,11 @@ export class BiblioServiceProvider {
         let json: Livre = data as Livre;
 
         resolve(json.title);
+
+        // dismiss modal
+        // open page formulaire ajout livre
+        // remplir les inputs avec les info récupérées
+
       }, err => {
         console.log(err);
       });

@@ -27,7 +27,6 @@ export class ConnexionPourquoiPage {
   close(){
     console.log('fermer ConnexionPourquoiPage');
     this.viewCtrl.dismiss();
-
   }
 
 }

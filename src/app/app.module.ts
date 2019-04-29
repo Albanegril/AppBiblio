@@ -15,12 +15,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base';
 //import { AngularFirestoreModule } from '@angular/fire/firestore';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import {AjoutLivreIsbnScannerPage} from "../pages/ajout-livre-isbn-scanner/ajout-livre-isbn-scanner";
+import {AjoutLivreQrScannerPage} from "../pages/ajout-livre-qr-scanner/ajout-livre-qr-scanner";
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ConnexionPourquoiPage,
-    ConnexionCreationPage
+    ConnexionCreationPage,
+    AjoutLivreQrScannerPage,
+    AjoutLivreIsbnScannerPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,9 @@ import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base
     MyApp,
     HomePage,
     ConnexionPourquoiPage,
-    ConnexionCreationPage
+    ConnexionCreationPage,
+    AjoutLivreQrScannerPage,
+    AjoutLivreIsbnScannerPage
   ],
   providers: [
     StatusBar,
@@ -42,6 +50,7 @@ import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base
     BiblioServiceProvider,
     GestionCompteProvider,
     LienFireBaseProvider,
+    BarcodeScanner
   ]
 })
 export class AppModule {}

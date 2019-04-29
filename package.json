@@ -21,6 +21,7 @@
     "@angular/http": "5.0.0",
     "@angular/platform-browser": "5.0.0",
     "@angular/platform-browser-dynamic": "5.0.0",
+    "@ionic-native/barcode-scanner": "^4.20.0",
     "@ionic-native/core": "4.3.2",
     "@ionic-native/splash-screen": "4.3.2",
     "@ionic-native/status-bar": "4.3.2",
@@ -38,7 +39,9 @@
     "rxjs": "5.5.2",
     "rxjs-compat": "^6.4.0",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "phonegap-plugin-barcodescanner": "~8.0.1",
+    "cordova-android": "~7.1.4"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.0",
@@ -51,10 +54,12 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "phonegap-plugin-barcodescanner": {}
     },
     "platforms": [
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }

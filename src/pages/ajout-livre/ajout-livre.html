@@ -16,55 +16,56 @@
 <ion-content padding>
 
   <form #form="ngForm" (ngSubmit)="onSubmitForm(form)">
-    <ion-list>
-      <ion-item>
-        <ion-label floating>Titre</ion-label>
-        <ion-input type="text" name="titre" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Auteurs</ion-label>
-        <ion-input type="text" name="auteurs" ngModel></ion-input>
-      </ion-item>
+    <ion-list col12 offset-md-3 offset-lg-3>
+      <ion-row>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Titre</ion-label>
+          <ion-input type="text" name="titre" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Auteurs</ion-label>
+          <ion-input type="text" name="auteurs" ngModel></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label floating>Editeur</ion-label>
-        <ion-input type="text" name="editeur" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label stacked>Date</ion-label>
-        <ion-input type="date" name="date" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Edition</ion-label>
-        <ion-input type="text" name="edition" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Nombre pages</ion-label>
-        <ion-input type="number" name="nbPages" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Langue list</ion-label>
-        <ion-input type="text" name="langue" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Type list</ion-label>
-        <ion-input type="text" name="type" ngModel></ion-input>
-      </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Editeur</ion-label>
+          <ion-input type="text" name="editeur" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label stacked>Date</ion-label>
+          <ion-input type="date" name="date" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Edition</ion-label>
+          <ion-input type="text" name="edition" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Nombre pages</ion-label>
+          <ion-input type="number" name="nbPages" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Langue list</ion-label>
+          <ion-input type="text" name="langue" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Type list</ion-label>
+          <ion-input type="text" name="type" ngModel></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label floating>Biblio list</ion-label>
-        <ion-input type="text" name="biblioL" ngModel></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Proprio</ion-label>
-        <ion-input type="text" name="proprioL" ngModel></ion-input>
-      </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Biblio list</ion-label>
+          <ion-input type="text" name="biblioL" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Proprio</ion-label>
+          <ion-input type="text" name="proprioL" ngModel></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label floating>Resume</ion-label>
-        <ion-input type="text" name="resume" ngModel></ion-input>
-      </ion-item>
-
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Resume</ion-label>
+          <ion-input type="text" name="resume" ngModel></ion-input>
+        </ion-item>
+      </ion-row>
     </ion-list>
     <button type="submit" ion-button block >Ajouter</button>
   </form>
