@@ -13,11 +13,15 @@ import { ExpandableComponent } from "../components/expandable/expandable";
 import { GestionCompteProvider } from '../providers/gestion-compte/gestion-compte';
 import { HttpClientModule } from '@angular/common/http';
 import { LienFireBaseProvider } from '../providers/lien-fire-base/lien-fire-base';
-//import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import {AjoutLivreIsbnScannerPage} from "../pages/ajout-livre-isbn-scanner/ajout-livre-isbn-scanner";
 import {AjoutLivreQrScannerPage} from "../pages/ajout-livre-qr-scanner/ajout-livre-qr-scanner";
+
+import { Camera } from '@ionic-native/camera';
+
+import {AngularFireModule} from "@angular/fire";
+import { firebaseConfig } from './credentials';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import {AjoutLivreQrScannerPage} from "../pages/ajout-livre-qr-scanner/ajout-liv
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    //AngularFirestoreModule
+    // AngularFireModule,
+    // AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +55,8 @@ import {AjoutLivreQrScannerPage} from "../pages/ajout-livre-qr-scanner/ajout-liv
     BiblioServiceProvider,
     GestionCompteProvider,
     LienFireBaseProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    Camera
   ]
 })
 export class AppModule {}

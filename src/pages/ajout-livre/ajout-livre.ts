@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, normalizeURL, ToastController} from 'ionic-angular';
 import {FormArray, FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
+import {Camera} from "@ionic-native/camera";
+import {Livre} from "../../models/Livre";
 
 /**
  * Generated class for the AjoutLivrePage page.
@@ -16,10 +18,12 @@ import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-bas
   templateUrl: 'ajout-livre.html',
 })
 export class AjoutLivrePage{
+  public livre:Livre = new Livre();
 
   constructor(private lienFirebaseService: LienFireBaseProvider,
               public navCtrl: NavController, public navParams: NavParams,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private camera: Camera) {
   }
 
   ionViewDidLoad() {
@@ -48,4 +52,30 @@ export class AjoutLivrePage{
       })*/
   }
 
+  onTakePhoto() {
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true
+    }).then(
+      (data) => {
+        if (data) {
+          this.livre.cover = normalizeURL(data);
+        }
+      }
+    ).catch(
+      (error) => {
+        this.toastCtrl.create({
+          message: error.message,
+          duration: 3000,
+          position: 'bottom'
+        }).present();
+      }
+    )
+  }
+
+  onGalerie() {
+
+  }
 }

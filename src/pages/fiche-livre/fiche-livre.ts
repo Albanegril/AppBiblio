@@ -15,21 +15,33 @@ import {Livre} from "../../models/Livre";
   templateUrl: 'fiche-livre.html',
 })
 export class FicheLivrePage {
-  public idL:String;
-  public livre:Livre;
+  public livre:Livre = new Livre();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.idL = this.navParams.get('id');
-    console.log(this.idL);
-    this.getLivre(this.idL);
+    console.log(this.navParams.get('id'));
+    this.getLivre(this.navParams.get('id'));
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FicheLivrePage');
   }
 
-  private getLivre(idL: String) {
+  private getLivre(idL: number) {
         // init livre + attribut ?
         // TODO
   }
+
+  lire() {
+    // créer ficher lecteur + add lecteur
+  }
+
+  deplacer() {
+    // changement emplacement
+    // modal ? ou popup ?
+  }
+
+  emprunter() {
+    // lecteur exterieur
+  }
+
 }

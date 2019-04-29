@@ -28,6 +28,20 @@
         </ion-item>
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Couverture</ion-label>
+          <ion-input type="text" name="couverture" ngModel></ion-input>
+
+          <ion-buttons end>
+            <button ion-button round large icon-only (click)="onTakePhoto()">
+              <ion-icon name="camera"></ion-icon>
+            </button>
+            <button ion-button round large icon-only (click)="onGalerie()">
+              <ion-icon name="image"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-item>
+
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Editeur</ion-label>
           <ion-input type="text" name="editeur" ngModel></ion-input>
         </ion-item>
@@ -39,6 +53,7 @@
           <ion-label floating>Edition</ion-label>
           <ion-input type="text" name="edition" ngModel></ion-input>
         </ion-item>
+
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Nombre pages</ion-label>
           <ion-input type="number" name="nbPages" ngModel></ion-input>
@@ -56,6 +71,7 @@
           <ion-label floating>Biblio list</ion-label>
           <ion-input type="text" name="biblioL" ngModel></ion-input>
         </ion-item>
+
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Proprio</ion-label>
           <ion-input type="text" name="proprioL" ngModel></ion-input>

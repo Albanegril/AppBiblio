@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import * as firebase from 'firebase';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {GestionCompteProvider} from "../providers/gestion-compte/gestion-compte";
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,9 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 export class MyApp {
   rootPage:any = HomePage;
 
-  constructor(public app: App, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(public app: App, platform: Platform,
+              statusBar: StatusBar, splashScreen: SplashScreen,
+              private gestionnaireCompte: GestionCompteProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -47,5 +50,8 @@ export class MyApp {
     //TODO
   }
 
+  deconnexion() {
+    this.gestionnaireCompte.deconnexion()
+  }
 }
 
