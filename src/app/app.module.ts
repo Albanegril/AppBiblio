@@ -22,6 +22,7 @@ import { Camera } from '@ionic-native/camera';
 
 import {AngularFireModule} from "@angular/fire";
 import { firebaseConfig } from './credentials';
+import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -36,8 +37,8 @@ import { firebaseConfig } from './credentials';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    // AngularFireModule,
-    // AngularFireModule.initializeApp(firebaseConfig)
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +57,8 @@ import { firebaseConfig } from './credentials';
     GestionCompteProvider,
     LienFireBaseProvider,
     BarcodeScanner,
-    Camera
+    Camera,
+    AngularFirestore
   ]
 })
 export class AppModule {}

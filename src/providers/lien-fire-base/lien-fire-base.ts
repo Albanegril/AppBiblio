@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
 import {Livre} from "../../models/Livre";
 
-//import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import {Lecture} from "../../models/Lecture";
 import {Lecteur} from "../../models/Lecteur";
@@ -16,11 +16,11 @@ import {Lecteur} from "../../models/Lecteur";
 */
 @Injectable()
 export class LienFireBaseProvider {
-  // livre$ = new Subject<Livre[]>();
+   livre$ = new Subject<Livre[]>();
   // livreList: Livre[];
 
   constructor(public http: HttpClient,
-             // public afs: AngularFirestore,
+             public afs: AngularFirestore
               ) {
     console.log('Hello LienFireBaseProvider Provider');
   }
@@ -30,8 +30,10 @@ export class LienFireBaseProvider {
   }*/
 
   addLivre(form){
-    /*return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/Livre').add({
+    return new Promise<any>((resolve, reject) => {
+
+      this.afs.collection('/Livre/XxUBpQXSg657pUgkWJzq/Livre').add(
+      {
         titre: form.titre,
         isbn: form.isbn,
         editeur: form.editeur,
@@ -45,14 +47,15 @@ export class LienFireBaseProvider {
         proprioL: form.proprioL,
         biblioL: form.biblioL
 
-    })
+      })
         .then(
           (res) => {
+            console.log("!!!!!! afs.collection" + res);
             resolve(res)
           },
           err => reject(err)
         )
-    })*/
+    })
   }
 
   addLecteur(form){

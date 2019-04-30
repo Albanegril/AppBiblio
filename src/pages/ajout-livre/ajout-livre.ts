@@ -37,19 +37,20 @@ export class AjoutLivrePage{
     // ajout BD
     // verification des entrées min + si existant ?
     //TODO
-    /*this.lienFirebaseService.addLivre(form)
+    this.lienFirebaseService.addLivre(form)
       .then( res => {
         let toast = this.toastCtrl.create({
           message: 'Livre add successfully',
           duration: 3000
         });
         toast.present();
-      //  this.resetFields();*/
-    console.log("ajoute du livre dans la BD...")
-        this.navCtrl.push('FicheLivrePage');
-      /*}, err => {
-        console.log(err)
-      })*/
+      //  this.resetFields();
+    console.log("ajoute du livre dans la BD OK ...")
+       // this.navCtrl.push('FicheLivrePage');
+      }, err => {
+        console.log("Err ajout du livre dans la BD" + JSON.stringify(err));
+        console.log(err);
+      })
   }
 
   onTakePhoto() {
