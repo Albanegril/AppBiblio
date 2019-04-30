@@ -6,35 +6,31 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <button ion-item (click)="openPage('RechercheLivrePage')">
+      <button ion-item menu-close (click)="openPage('RechercheLivrePage')">
         <ion-icon name="search"></ion-icon>
         RechercheLivre
       </button>
-      <button ion-item (click)="openPage('ListBiblioPage')">
+      <button ion-item menu-close (click)="openPage('ListBiblioPage')">
         <ion-icon name="home"></ion-icon>
         ListBiblio
       </button>
-      <button ion-item (click)="openPage('AjoutLivreOptionsPage')">
+      <button ion-item menu-close (click)="openPage('AjoutLivreOptionsPage')">
         <ion-icon name="book"></ion-icon>
         AjoutLivre
       </button>
-      <button ion-item (click)="openPage('AjoutBiblioPage')">
+      <button ion-item menu-close (click)="openPage('AjoutBiblioPage')">
         <ion-icon name="menu"></ion-icon>
         AjoutBiblio
       </button>
-      <button ion-item (click)="openPage('ListLecteursPage')">
+      <button ion-item menu-close (click)="openPage('ListLecteursPage')">
         <ion-icon name="people"></ion-icon>
         ListLecteurs
       </button>
-      <button ion-item (click)="openPage('MesLecturesPage')">
+      <button ion-item menu-close (click)="openPage('MesLecturesPage')">
         <ion-icon name="book"></ion-icon>
         MesLectures
       </button>
-      <button ion-item (click)="closeMenu()">
-        <ion-icon name="close"></ion-icon>
-        CloseMenu
-      </button>
-      <button ion-item (click)="deconnexion()">
+      <button ion-item menu-close (click)="deconnexion()">
         <ion-icon name="log-out"></ion-icon>
         Deconnexion
       </button>

@@ -19,7 +19,7 @@ export class BiblioServiceProvider {
 
   getLivreISBN(isbn: any):Promise<any>{
    // isbn = "0201558025";
-    const url:string = 'https://openlibrary.org/api/books?bibkeys=ISBN:' + encodeURI(isbn) + '&jscmd=data&format=json';
+    const url:string = 'https://openlibrary.org/api/books?bibkeys=ISBN:' + isbn.text + '&jscmd=data&format=json';
     console.log(url);
     return new Promise(resolve => {
       let headers: HttpHeaders = new HttpHeaders();
@@ -33,6 +33,7 @@ export class BiblioServiceProvider {
 
         resolve(json.title);
 
+        console.log(json.title);
         // dismiss modal
         // open page formulaire ajout livre
         // remplir les inputs avec les info récupérées

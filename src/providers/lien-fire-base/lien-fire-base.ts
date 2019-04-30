@@ -17,12 +17,14 @@ import {Lecteur} from "../../models/Lecteur";
 @Injectable()
 export class LienFireBaseProvider {
    livre$ = new Subject<Livre[]>();
-  // livreList: Livre[];
+   data: any;
+  livreList: Livre[];
 
   constructor(public http: HttpClient,
              public afs: AngularFirestore
               ) {
     console.log('Hello LienFireBaseProvider Provider');
+    this.retrieveLivres();
   }
 
 /*  emitLivres() {
@@ -32,7 +34,7 @@ export class LienFireBaseProvider {
   addLivre(form){
     return new Promise<any>((resolve, reject) => {
 
-      this.afs.collection('/Livre/XxUBpQXSg657pUgkWJzq/Livre').add(
+      this.afs.collection('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').add(
       {
         titre: form.titre,
         isbn: form.isbn,
@@ -59,8 +61,8 @@ export class LienFireBaseProvider {
   }
 
   addLecteur(form){
-    /*return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/Livre').add({
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection('/Lecteur/e1IWZmEdiqjLeTv4xs0F/Lecteur').add({
         nom: form.nom,
         prenom: form.prenom,
         pseudo: form.pseudo,
@@ -74,12 +76,12 @@ export class LienFireBaseProvider {
           },
           err => reject(err)
         )
-    })*/
+    })
   }
 
   addBiblio(form){
-    /*return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/Livre').add({
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection('/Biblio/VWf30cTxBYV5CidHmfKT/Biblio').add({
         nomB: form.nom,
         nbEtages: form.nbEtages,
         proprioB: form.proprioB,
@@ -91,12 +93,12 @@ export class LienFireBaseProvider {
           },
           err => reject(err)
         )
-    })*/
+    })
   }
 
   addMaison(form){
-    /*return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/Livre').add({
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection('/Maison/bv394kJ4Bv6oJ0Dv0kWI/Maison').add({
         nomM: form.nomM,
         adresse: form.adresse,
         proprioM: form.proprioM
@@ -107,22 +109,30 @@ export class LienFireBaseProvider {
           },
           err => reject(err)
         )
-    })*/
+    })
   }
 
-
-/*  retrieveDataLivres() {
-    return new Promise((resolve, reject) => {
-      firebase.database().ref('livres').once('value').then(
-        (data: DataSnapshot) => {
+  retrieveLivres() {
+    this.data = this.afs.doc<any>('/Livre/Fa1vm1fYmsuKwCUuup31');
+    console.log('Retreive data : ' + this.data);
+/*    return new Promise((resolve, reject) => {
+      this.data = this.afs.doc<any>('/Livre/Fa1vm1fYmsuKwCUuup31')
+        .then(
+        (data: any) => {
           this.livreList = data.val();
-          this.emitLivres();
+          console.log('Retreive data : ' + this.data);
+
           resolve('Données récupérées avec succès !');
         }, (error) => {
           reject(error);
         }
       );
-    });
-  }*/
+    });*/
+  }
+
+  rechercheLivre(){
+    /*this.teamAdminCollection = fireStore.collection<any>('userProfile', ref =>
+      ref.where('teamAdmin', '==', true));*/
+  }
 
 }
