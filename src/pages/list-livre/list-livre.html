@@ -25,7 +25,20 @@
       </ion-thumbnail>
       <h2>{{this.livre.titre}} {{this.livre.auteur}}</h2>
       <p>{{this.livre.date}} • {{this.livre.sujets}}</p>
+
+     <!-- utiliser un Fabs ? ou Action Sheet ?-->
+      <button ion-button outline (click)="deplacer()" >
+        <ion-icon name="move"></ion-icon>
+      </button>
+
+      <button ion-button outline (click)="lire()" >
+        <ion-icon name="book"></ion-icon>
+      </button>
     </ion-item>
   </ion-list>
+
+  <button ion-button outline (click)="ajouterLivre()" >
+    <ion-icon name="add"></ion-icon>
+  </button>
 
 </ion-content>

@@ -46,9 +46,9 @@ export class AjoutLivrePage{
         toast.present();
       //  this.resetFields();
     console.log("ajoute du livre dans la BD OK ...")
-       // this.navCtrl.push('FicheLivrePage');
+       this.navCtrl.push('FicheLivrePage');
       }, err => {
-        console.log("Err ajout du livre dans la BD" + JSON.stringify(err));
+       // console.log("Err ajout du livre dans la BD" + JSON.stringify(err));
         console.log(err);
       })
   }

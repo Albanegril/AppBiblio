@@ -40,4 +40,16 @@ export class ListLivrePage {
   onClickLivre(idL: any) {
     this.navCtrl.push('FicheLivrePage', {'id':idL});
   }
+
+  ajouterLivre() {
+    // donner possibilité de déplacer des livres rapidement, selection multiple ?
+  }
+
+  lire() {
+    // créé une lecture du livre pour le lecteur connecté
+  }
+
+  deplacer() {
+    // déplacement rapide ? alerts ou modal
+  }
 }

@@ -38,6 +38,7 @@ export class FicheLivrePage {
   deplacer() {
     // changement emplacement
     // modal ? ou popup ?
+    // /!\ afficher emplacement !
   }
 
   emprunter() {

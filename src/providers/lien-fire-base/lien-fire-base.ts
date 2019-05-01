@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {Livre} from "../../models/Livre";
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import {Lecture} from "../../models/Lecture";
 import {Lecteur} from "../../models/Lecteur";
+import {map} from "rxjs/operators";
 
 /*
   Generated class for the LienFireBaseProvider provider.
@@ -19,6 +20,9 @@ export class LienFireBaseProvider {
    livre$ = new Subject<Livre[]>();
    data: any;
   livreList: Livre[];
+
+  private livreCollection: AngularFirestoreCollection<Livre>;
+  livre: Observable<Livre[]>;
 
   constructor(public http: HttpClient,
              public afs: AngularFirestore
@@ -33,26 +37,26 @@ export class LienFireBaseProvider {
 
   addLivre(form){
     return new Promise<any>((resolve, reject) => {
-
+      console.log(form.value);
       this.afs.collection('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').add(
       {
-        titre: form.titre,
-        isbn: form.isbn,
-        editeur: form.editeur,
-        langue: form.langue,
-        date: form.date,
-        edition: form.edition,
-        nbPages: form.nbPages,
-        resume: form.resume,
-        auteurs: form.auteurs,
-        cover: form.cover,
-        proprioL: form.proprioL,
-        biblioL: form.biblioL
+        titre: form.value.titre,
+        //isbn: form.value.isbn,
+        editeur: form.value.editeur,
+        langue: form.value.langue,
+        date: form.value.date,
+        //edition: form.value.edition,
+        nbPages: form.value.nbPages,
+        resume: form.value.resume,
+        auteurs: form.value.auteurs,
+        cover: form.value.cover,
+        proprioL: form.value.proprioL,
+        biblioL: form.value.biblioL
 
       })
         .then(
           (res) => {
-            console.log("!!!!!! afs.collection" + res);
+            console.log("afs.collection : " + res.id);
             resolve(res)
           },
           err => reject(err)
@@ -112,27 +116,44 @@ export class LienFireBaseProvider {
     })
   }
 
-  retrieveLivres() {
-    this.data = this.afs.doc<any>('/Livre/Fa1vm1fYmsuKwCUuup31');
-    console.log('Retreive data : ' + this.data);
-/*    return new Promise((resolve, reject) => {
-      this.data = this.afs.doc<any>('/Livre/Fa1vm1fYmsuKwCUuup31')
+  addBiblioToMaison(id) {
+  // + id biblio ??
+    // créé maison si n'existe pas !
+    // avoir proposer création avant ?
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection('/Maison/bv394kJ4Bv6oJ0Dv0kWI/Maison').add({
+        BiblioListe: id
+      })
         .then(
-        (data: any) => {
-          this.livreList = data.val();
-          console.log('Retreive data : ' + this.data);
+          (res) => {
+            resolve(res)
+          },
+          err => reject(err)
+        )
+    });
+  }
 
-          resolve('Données récupérées avec succès !');
-        }, (error) => {
-          reject(error);
-        }
-      );
-    });*/
+  retrieveLivres(){
+    this.data = this.afs.doc<any>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
+    console.log('Retreive data : ' + this.data);
+
+    this.livreCollection = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
+    // .snapshotChanges() returns a DocumentChangeAction[], which contains
+    // a lot of information about "what happened" with each change. If you want to
+    // get the data and the id use the map operator.
+    /*this.livre = this.livreCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Livre;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );*/
   }
 
   rechercheLivre(){
     /*this.teamAdminCollection = fireStore.collection<any>('userProfile', ref =>
       ref.where('teamAdmin', '==', true));*/
   }
+
 
 }

@@ -48,7 +48,6 @@ export class MyApp {
 
   closeMenu() {
     //TODO
-
   }
 
   deconnexion() {

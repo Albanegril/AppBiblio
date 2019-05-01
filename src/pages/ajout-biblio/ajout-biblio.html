@@ -14,5 +14,30 @@
 
 
 <ion-content padding>
+  <form #form="ngForm" (ngSubmit)="onSubmitForm(form)">
+    <ion-list col12 offset-md-3 offset-lg-3>
+      <ion-row>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Nom</ion-label>
+          <ion-input type="text" name="nom" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Maison</ion-label>
+          <ion-input type="text" name="maison" ngModel></ion-input>
+        </ion-item>
+        <!--liste déroulante + création en modale possible ? -->
 
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Nombre Etages</ion-label>
+          <ion-input type="number" name="nbEtages" ngModel></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Proprio</ion-label>
+          <ion-input type="text" name="proprioB" ngModel></ion-input>
+          <!--liste déroulante + création en modale possible ? -->
+        </ion-item>
+      </ion-row>
+    </ion-list>
+    <button type="submit" ion-button block >Ajouter</button>
+  </form>
 </ion-content>
