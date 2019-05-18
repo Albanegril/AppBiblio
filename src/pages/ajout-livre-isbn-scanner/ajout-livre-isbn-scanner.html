@@ -22,11 +22,17 @@
   <ion-card>
     <ion-card-content>
       <ion-card-title>
-        Scanner l'ISBN de votre livre :
+        Si le scanner ne se déclanche pas, rentrer le numéro d'ISBN ici :
       </ion-card-title>
-      <p>
-        Scanner ICI
-      </p>
+      <form #form="ngForm" (ngSubmit)="onSubmitNumero(form)">
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Numero ISBN</ion-label>
+              <ion-input type="number" name="num" ngModel></ion-input>
+            </ion-item>
+
+        <button type="submit" ion-button block >Rechercher</button>
+      </form>
     </ion-card-content>
   </ion-card>
 

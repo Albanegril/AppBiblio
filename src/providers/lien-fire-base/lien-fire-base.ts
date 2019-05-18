@@ -133,21 +133,35 @@ export class LienFireBaseProvider {
     });
   }
 
+  getLivre(idL){
+    //return new Promise<Livre>((resolve, reject) => {
+      this.data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL)
+      /*  .then(
+          (res) => {
+            resolve(res)
+          },
+          err => reject(err)
+        )*/
+   // });
+    return this.data;
+    console.log('Retreive data : ' + this.data);
+  }
+
   retrieveLivres(){
-    this.data = this.afs.doc<any>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
+    this.data = this.afs.collection<any>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
     console.log('Retreive data : ' + this.data);
 
     this.livreCollection = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
     // .snapshotChanges() returns a DocumentChangeAction[], which contains
     // a lot of information about "what happened" with each change. If you want to
     // get the data and the id use the map operator.
-    /*this.livre = this.livreCollection.snapshotChanges().pipe(
+     this.livreCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Livre;
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
-    );*/
+    );
   }
 
   rechercheLivre(){

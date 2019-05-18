@@ -2,7 +2,7 @@ import {Lecteur} from "./Lecteur";
 
 export class Livre {
 
-  private _id_L: number;
+  private _id_L: string;
 
   private _title: string;
   private _title_long: string;
@@ -32,11 +32,11 @@ export class Livre {
   private _type: string; // Faire type enum ?
 
 
-  get id_L(): number {
+  get id_L(): string {
     return this._id_L;
   }
 
-  set id_L(value: number) {
+  set id_L(value: string) {
     this._id_L = value;
   }
 

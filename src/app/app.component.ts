@@ -51,7 +51,8 @@ export class MyApp {
   }
 
   deconnexion() {
-    this.gestionnaireCompte.deconnexion()
+    this.gestionnaireCompte.deconnexion();
+    this.app.getActiveNav().push(HomePage);
   }
 }
 

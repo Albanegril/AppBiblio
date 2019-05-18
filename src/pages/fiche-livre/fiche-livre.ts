@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Livre} from "../../models/Livre";
+import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 
 /**
  * Generated class for the FicheLivrePage page.
@@ -17,18 +18,35 @@ import {Livre} from "../../models/Livre";
 export class FicheLivrePage {
   public livre:Livre = new Livre();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private lienFirebaseService: LienFireBaseProvider,
+              private toastCtrl: ToastController) {
+
     console.log(this.navParams.get('id'));
-    this.getLivre(this.navParams.get('id'));
+    //this.livre = this.getLivre(this.navParams.get('id'));
+    console.log(this.livre);
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FicheLivrePage');
   }
 
-  private getLivre(idL: number) {
+  private getLivre(idL: string) {
         // init livre + attribut ?
         // TODO
+    this.lienFirebaseService.getLivre(idL)
+      .then( res => {
+        let toast = this.toastCtrl.create({
+          message: 'Info Livre Trouvées',
+          duration: 3000
+        });
+        toast.present();
+        this.livre = res;
+        console.log("affichage livre OK ...")
+      }, err => {
+        console.log(err);
+      })
   }
 
   lire() {

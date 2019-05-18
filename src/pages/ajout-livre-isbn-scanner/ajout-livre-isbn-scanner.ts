@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {BiblioServiceProvider} from "../../providers/biblio-service/biblio-service";
+import {NgForm} from "@angular/forms";
 
 /**
  * Generated class for the AjoutLivreIsbnScannerPage page.
@@ -22,10 +23,23 @@ export class AjoutLivreIsbnScannerPage {
               private barcodeScanner: BarcodeScanner,
               private biblioServiceprovider: BiblioServiceProvider) {
 
-    this.barcodeScanner.scan().then(barcodeData => {
+/*    this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
       // envoyer code dans service ISBN BD
       this.biblioServiceprovider.getLivreISBN(barcodeData);
+      // retourner à la page du formulaire remplie ( passer par ici ?)
+    }).catch(err => {
+      console.log('Error', err);
+    });*/
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      // envoyer code dans service ISBN BD
+      this.biblioServiceprovider.getLivreISBN(barcodeData).then( data => {
+        console.log('title', data);
+        this.navCtrl.push('FicheLivrePage', {'data':data});
+      }).catch(err => {
+        console.log('Error', err);
+      })
       // retourner à la page du formulaire remplie ( passer par ici ?)
     }).catch(err => {
       console.log('Error', err);
@@ -42,4 +56,13 @@ export class AjoutLivreIsbnScannerPage {
     this.viewCtrl.dismiss();
   }
 
+  onSubmitNumero(form: NgForm) {
+    console.log(form.value.num);
+    this.biblioServiceprovider.getLivreNumISBN(form.value.num).then( data => {
+      console.log('title', data);
+      this.navCtrl.push('FicheLivrePage', {'data':data});
+    }).catch(err => {
+      console.log('Error', err);
+    });
+  }
 }
