@@ -1,9 +1,9 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Livre} from "../../models/Livre";
+import {DataISBN} from "./dataISBN";
 import {Subject} from "rxjs";
 import {BarcodeScanResult} from "@ionic-native/barcode-scanner";
-import {NavController, NavParams} from "ionic-angular";
 
 /*
   Generated class for the BiblioServiceProvider provider.
@@ -19,7 +19,7 @@ export class BiblioServiceProvider {
 
   constructor(public http: HttpClient,
              // private storage: Storage,
-              public navCtrl: NavController, public navParams: NavParams) {
+              ) {
     console.log('Hello BiblioServiceProvider Provider');
   }
 
@@ -62,18 +62,12 @@ export class BiblioServiceProvider {
       headers.append('content-type','application/json');
 
       this.http.get(url, {headers: headers}).subscribe(data => {
-        let json: Livre = data as Livre;
-
-        console.log("data : " +  data);
-        console.log("data : " +  data.toString());
-        console.log("json : " +  json);
+        let json: DataISBN = data as DataISBN;
+        console.log('json :', json);
+        console.log('data :', data);
+        console.log('json.Isbn :', json.ISBN);
 
         resolve(json);
-       // this.navCtrl.push('FicheLivrePage', {'data':data});
-        console.log("title : " + json.title);
-        // dismiss modal
-        // open page formulaire ajout livre
-        // remplir les inputs avec les info récupérées
 
       }, err => {
         console.log(err);

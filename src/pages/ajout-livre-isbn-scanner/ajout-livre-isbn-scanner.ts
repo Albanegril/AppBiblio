@@ -22,15 +22,14 @@ export class AjoutLivreIsbnScannerPage {
               public viewCtrl: ViewController,
               private barcodeScanner: BarcodeScanner,
               private biblioServiceprovider: BiblioServiceProvider) {
-
-/*    this.barcodeScanner.scan().then(barcodeData => {
+   this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
       // envoyer code dans service ISBN BD
       this.biblioServiceprovider.getLivreISBN(barcodeData);
       // retourner à la page du formulaire remplie ( passer par ici ?)
     }).catch(err => {
       console.log('Error', err);
-    });*/
+    });
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
       // envoyer code dans service ISBN BD
@@ -59,7 +58,7 @@ export class AjoutLivreIsbnScannerPage {
   onSubmitNumero(form: NgForm) {
     console.log(form.value.num);
     this.biblioServiceprovider.getLivreNumISBN(form.value.num).then( data => {
-      console.log('title', data);
+      console.log('json data :', data);
       this.navCtrl.push('FicheLivrePage', {'data':data});
     }).catch(err => {
       console.log('Error', err);

@@ -4,6 +4,8 @@ import {FormArray, FormBuilder, FormGroup, NgForm, Validators} from "@angular/fo
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Camera} from "@ionic-native/camera";
 import {Livre} from "../../models/Livre";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 
 /**
  * Generated class for the AjoutLivrePage page.

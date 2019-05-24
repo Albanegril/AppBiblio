@@ -29,7 +29,9 @@ export class Livre {
   private _proprio_L: Lecteur;
   private _lecteurs: Lecteur[];
 
-  private _type: string; // Faire type enum ?
+  private _type: string;
+
+  // Faire type enum ?
 
 
   get id_L(): string {
