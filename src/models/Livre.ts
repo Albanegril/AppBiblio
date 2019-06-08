@@ -5,9 +5,7 @@ export class Livre {
   private _id_L: string;
 
   private _title: string;
-  private _title_long: string;
   private _isbn: string;
-  private _isbn13: string;
   private _dewey_decimal: string;
   private _format: string;
   private _publisher: string; // = editeur ?
@@ -50,28 +48,12 @@ export class Livre {
     this._title = value;
   }
 
-  get title_long(): string {
-    return this._title_long;
-  }
-
-  set title_long(value: string) {
-    this._title_long = value;
-  }
-
   get isbn(): string {
     return this._isbn;
   }
 
   set isbn(value: string) {
     this._isbn = value;
-  }
-
-  get isbn13(): string {
-    return this._isbn13;
-  }
-
-  set isbn13(value: string) {
-    this._isbn13 = value;
   }
 
   get dewey_decimal(): string {
@@ -224,5 +206,14 @@ export class Livre {
   }*/
 
 
-
+  setLivreOpenLibrary(title: string, isbn: string, publisher: string, language: string, date_published: Date, pages: number, authors: string[], subjects: string[]) {
+    this._title = title;
+    this._isbn = isbn;
+    this._publisher = publisher;
+    this._language = language;
+    this._date_published = date_published;
+    this._pages = pages;
+    this._authors = authors;
+    this._subjects = subjects;
+  }
 }

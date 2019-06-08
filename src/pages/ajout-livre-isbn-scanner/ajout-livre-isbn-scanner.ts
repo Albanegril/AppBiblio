@@ -58,7 +58,7 @@ export class AjoutLivreIsbnScannerPage {
   onSubmitNumero(form: NgForm) {
     console.log(form.value.num);
     this.biblioServiceprovider.getLivreNumISBN(form.value.num).then( data => {
-      console.log('json data :', data);
+      console.log('livre data :', data);
       this.navCtrl.push('FicheLivrePage', {'data':data});
     }).catch(err => {
       console.log('Error', err);

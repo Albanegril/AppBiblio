@@ -133,7 +133,7 @@ export class LienFireBaseProvider {
     });
   }
 
-  getLivre(idL){
+  getLivre(idL) : Livre{
     //return new Promise<Livre>((resolve, reject) => {
       this.data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL)
       /*  .then(
@@ -143,8 +143,10 @@ export class LienFireBaseProvider {
           err => reject(err)
         )*/
    // });
-    return this.data;
     console.log('Retreive data : ' + this.data);
+
+    return this.data;
+
   }
 
   retrieveLivres(){

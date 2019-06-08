@@ -24,6 +24,7 @@ export class FicheLivrePage {
 
     console.log(this.navParams.get('id'));
     //this.livre = this.getLivre(this.navParams.get('id'));
+    this.livre = lienFirebaseService.getLivre(this.navParams.get('id'));
     console.log(this.livre);
 
   }
@@ -32,7 +33,7 @@ export class FicheLivrePage {
     console.log('ionViewDidLoad FicheLivrePage');
   }
 
-  private getLivre(idL: string) {
+  /*private getLivre(idL: string) {
         // init livre + attribut ?
         // TODO
     this.lienFirebaseService.getLivre(idL)
@@ -47,7 +48,7 @@ export class FicheLivrePage {
       }, err => {
         console.log(err);
       })
-  }
+  }*/
 
   lire() {
     // créer ficher lecteur + add lecteur

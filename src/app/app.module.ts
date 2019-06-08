@@ -60,7 +60,7 @@ import {IonicStorageModule} from "@ionic/storage";
     LienFireBaseProvider,
     BarcodeScanner,
     Camera,
-    AngularFirestore
+    AngularFirestore,
   ]
 })
 export class AppModule {}
