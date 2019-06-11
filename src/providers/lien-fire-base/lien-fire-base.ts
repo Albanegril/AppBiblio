@@ -8,6 +8,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import {Lecture} from "../../models/Lecture";
 import {Lecteur} from "../../models/Lecteur";
 import {map} from "rxjs/operators";
+import {Biblio} from "../../models/Biblio";
+import {Maison} from "../../models/Maison";
 
 /*
   Generated class for the LienFireBaseProvider provider.
@@ -17,18 +19,13 @@ import {map} from "rxjs/operators";
 */
 @Injectable()
 export class LienFireBaseProvider {
-   livre$ = new Subject<Livre[]>();
-   data: any;
-  livreList: Livre[];
-
-  private livreCollection: AngularFirestoreCollection<Livre>;
-  livre: Observable<Livre[]>;
+  //data: any;
+  //livre: Observable<Livre[]>;
 
   constructor(public http: HttpClient,
              public afs: AngularFirestore
               ) {
     console.log('Hello LienFireBaseProvider Provider');
-    this.retrieveLivres();
   }
 
 /*  emitLivres() {
@@ -158,51 +155,52 @@ export class LienFireBaseProvider {
     return livre;
   }
 
-  retrieveLivres(){
-    this.data = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').ref.get().then(data => {
-      let i:number = 0;
+  retrieveLivres() : Livre[]{
+    let livres : Livre[] = new Array();
+
+    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(data => {
       for(let list of data.docs){
         let listData = list.data();
-       // console.log('Retreive data : ', list.data[i].doc.titre);
-        console.log('Retreive data bis : ', list.data[i]);
-        i++;
+        console.log('Livre data : ', list.data());
+        console.log('Livre nom : ', list.data().titre);
       }});
 
-/*    this.livreCollection = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
-    // .snapshotChanges() returns a DocumentChangeAction[], which contains
-    // a lot of information about "what happened" with each change. If you want to
-    // get the data and the id use the map operator.
-     this.livreCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Livre;
-        const id = a.payload.doc.id;
-        console.log('Retreive data : ' + data);
-        console.log('Retreive id : ' + id);
-
-        return { id, ...data };
-      }))
-    );*/
+    return livres;
   }
 
-  retrieveBiblio(){
-    /*    let user_data= [];
+  retrieveBiblio() : Biblio[]{
+    let biblios : Biblio[] = new Array();
 
-    this.afs.database().ref().on('value', (snapshot) => {
-        let result = snapshot.value();
-        for(let k in result){ //"k" provides key Id of each object
-          user_data.push({
-            id : k,
-            name : result[k].name,
-            phone : result[k].phone,
-          });
-        }
-      });*/
+    this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').ref.get().then(data => {
+      for(let list of data.docs){
+        console.log('Biblio data : ', list.data());
+        let biblio:Biblio = new Biblio();
+        biblio.setBiblio(list.id, list.data().nom, 0, null, []);
+        biblios.push(biblio);
+        console.log('Biblio data bis : ', biblio);
+      }});
+
+    return biblios;
+  }
+
+  retrieveMaison() {
+    let maisons : Maison[] = new Array();
+
+    this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').ref.get().then(data => {
+      for(let list of data.docs){
+        console.log('Maison data : ', list.data());
+        let maison:Maison = new Maison();
+        maison.setMaison(list.id, list.data().nom, "null", null, []);
+        maisons.push(maison);
+        console.log('Maison data bis : ', maison);
+      }});
+
+    return maisons;
   }
 
   rechercheLivre(){
     /*this.teamAdminCollection = fireStore.collection<any>('userProfile', ref =>
-      ref.where('teamAdmin', '==', true));*/
+      ref.where('titre', '==', true));*/
   }
-
 
 }

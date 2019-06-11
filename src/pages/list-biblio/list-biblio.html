@@ -22,14 +22,14 @@
     <ion-item (click)="expandItem(maison)">
       <h2>
         <ion-icon name="home" item-start></ion-icon>
-        {{this.maison.nom}}
+        {{this.maison.nom_M}}
       </h2>
 
       <expandable [expandHeight]="maisonExpandHeight" [expanded]="this.maison.expanded">
         <ion-list inset *ngFor="let biblio of listBiblio;">
-          <ion-item (click)="onClickBiblio(this.biblio.id)">
+          <ion-item (click)="onClickBiblio(this.biblio.id_B)">
             <ion-icon name="albums" item-start></ion-icon>
-            {{this.biblio.nom}}
+            {{this.biblio.nom_B}}
 
           </ion-item>
         </ion-list>
