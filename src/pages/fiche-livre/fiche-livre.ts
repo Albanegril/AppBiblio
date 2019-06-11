@@ -22,10 +22,9 @@ export class FicheLivrePage {
               private lienFirebaseService: LienFireBaseProvider,
               private toastCtrl: ToastController) {
 
-    console.log(this.navParams.get('id'));
-    //this.livre = this.getLivre(this.navParams.get('id'));
+    console.log('fiche livre id : '+ this.navParams.get('id'));
     this.livre = lienFirebaseService.getLivre(this.navParams.get('id'));
-    console.log(this.livre);
+    console.log('fiche livre data : '+ this.livre);
 
   }
 
@@ -33,22 +32,6 @@ export class FicheLivrePage {
     console.log('ionViewDidLoad FicheLivrePage');
   }
 
-  /*private getLivre(idL: string) {
-        // init livre + attribut ?
-        // TODO
-    this.lienFirebaseService.getLivre(idL)
-      .then( res => {
-        let toast = this.toastCtrl.create({
-          message: 'Info Livre Trouvées',
-          duration: 3000
-        });
-        toast.present();
-        this.livre = res;
-        console.log("affichage livre OK ...")
-      }, err => {
-        console.log(err);
-      })
-  }*/
 
   lire() {
     // créer ficher lecteur + add lecteur

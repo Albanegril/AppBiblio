@@ -76,9 +76,9 @@ export class BiblioServiceProvider {
       this.http.get(url, {headers: headers}).subscribe(data => {
         let json: Livre = data as Livre;
 
-        resolve(json.title);
+        resolve(json);
 
-        console.log(json.title);
+        console.log(json);
         // dismiss modal
         // open page formulaire ajout livre
         // remplir les inputs avec les info récupérées
@@ -121,7 +121,7 @@ export class BiblioServiceProvider {
         let livre: Livre = new Livre();
         livre = this.setLivre(data);
 
-        console.log('livre :', livre.title);
+       // console.log('livre :', livre.title);
 
         // console.log('livre :', json.ISBN);
 
@@ -138,14 +138,14 @@ export class BiblioServiceProvider {
     //livre.id_L();
     console.log("livre :", livre);
 
-    livre.setLivreOpenLibrary(data.ISBN.title,
+  /*  livre.setLivreOpenLibrary(data.ISBN.title,
       data.ISBN.identifiers.isbn_10,
       data.ISBN.publishers.name[0],
       "ENG",
       data.ISBN.publish_date,
-      data.ISBN.pagination, /*mettre en int*/
+      data.ISBN.pagination, /!*mettre en int*!/
       data.ISBN.authors[0].name,
-      data.ISBN.subjects[0].name);
+      data.ISBN.subjects[0].name);*/
 
     return livre;
   }

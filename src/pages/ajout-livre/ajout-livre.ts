@@ -33,8 +33,7 @@ export class AjoutLivrePage{
   }
 
   onSubmitForm(form: NgForm) {
-    console.log(form.value);
-    console.log("ajout livre");
+    console.log("ajout livre" + form.value);
 
     // ajout BD
     // verification des entrées min + si existant ?

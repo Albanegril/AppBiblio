@@ -56,7 +56,7 @@ export class LienFireBaseProvider {
       })
         .then(
           (res) => {
-            console.log("afs.collection : " + res.id);
+            console.log("afs.collection : ", res.id);
             resolve(res)
           },
           err => reject(err)
@@ -134,26 +134,41 @@ export class LienFireBaseProvider {
   }
 
   getLivre(idL) : Livre{
-    //return new Promise<Livre>((resolve, reject) => {
-      this.data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL)
-      /*  .then(
-          (res) => {
-            resolve(res)
-          },
-          err => reject(err)
-        )*/
-   // });
-    console.log('Retreive data : ' + this.data);
+    let docRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
+    let livre :Livre = new Livre();
 
-    return this.data;
+    docRef.ref.get().then(function(doc) {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+        console.log("Document titre :", doc.data().titre);
 
+        livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
+          doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+          [], "null", doc.data().cover, "null", doc.data().proprioL, []);
+          console.log("livre titre :", livre.titre);
+
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+
+    return livre;
   }
 
   retrieveLivres(){
-    this.data = this.afs.collection<any>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
-    console.log('Retreive data : ' + this.data);
+    this.data = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').ref.get().then(data => {
+      let i:number = 0;
+      for(let list of data.docs){
+        let listData = list.data();
+       // console.log('Retreive data : ', list.data[i].doc.titre);
+        console.log('Retreive data bis : ', list.data[i]);
+        i++;
+      }});
 
-    this.livreCollection = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
+/*    this.livreCollection = this.afs.collection<Livre>('/Livre/Fa1vm1fYmsuKwCUuup31/Livre');
     // .snapshotChanges() returns a DocumentChangeAction[], which contains
     // a lot of information about "what happened" with each change. If you want to
     // get the data and the id use the map operator.
@@ -161,9 +176,27 @@ export class LienFireBaseProvider {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Livre;
         const id = a.payload.doc.id;
+        console.log('Retreive data : ' + data);
+        console.log('Retreive id : ' + id);
+
         return { id, ...data };
       }))
-    );
+    );*/
+  }
+
+  retrieveBiblio(){
+    /*    let user_data= [];
+
+    this.afs.database().ref().on('value', (snapshot) => {
+        let result = snapshot.value();
+        for(let k in result){ //"k" provides key Id of each object
+          user_data.push({
+            id : k,
+            name : result[k].name,
+            phone : result[k].phone,
+          });
+        }
+      });*/
   }
 
   rechercheLivre(){

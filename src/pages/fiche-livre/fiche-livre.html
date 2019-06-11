@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>fiche {{this.livre.title}}</ion-title>
+    <ion-title>fiche {{this.livre.titre}}</ion-title>
 
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -25,20 +25,20 @@
         <img src="assets/imgs/logobooks.png">
       </ion-col>
       <ion-col col-6>
-        <h3>Titre Livre {{this.livre.title_long}}</h3>
-        <h4>Auteur {{this.livre.authors}}</h4>
+        <h3>Titre Livre {{this.livre.titre}}</h3>
+        <h4>Auteur {{this.livre.auteurs}}</h4>
 
-        <h5>Genre {{this.livre.subjects}}</h5>
+        <h5>Genre {{this.livre.genre}}</h5>
         <h5>Type {{this.livre.type}}</h5>
 
-        <h6>Editeur {{this.livre.publisher}}</h6>
-        <h6>Date {{this.livre.date_published}}</h6>
-        <h6>Langue {{this.livre.language}}</h6>
+        <h6>Editeur {{this.livre.editeur}}</h6>
+        <h6>Date {{this.livre.date}}</h6>
+        <h6>Langue {{this.livre.langue}}</h6>
       </ion-col>
     </ion-row>
     <ion-row>
         <h5>Résumé</h5>
-        <p>Blablablabla {{this.livre.synopsys}}</p>
+        <p>Blablablabla {{this.livre.resume}}</p>
     </ion-row>
     <ion-row>
         <h5>Propriétaire : {{this.livre.proprio_L}}</h5>

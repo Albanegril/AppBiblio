@@ -4,32 +4,24 @@ export class Livre {
 
   private _id_L: string;
 
-  private _title: string;
+  private _titre: string;
   private _isbn: string;
-  private _dewey_decimal: string;
   private _format: string;
-  private _publisher: string; // = editeur ?
-  private _language: string;
-  private _date_published: Date;
+  private _editeur: string;
+  private _langue: string;
+  private _date: Date;
   private _edition: string;
-  private _pages: number;
+  private _nbPages: number;
   private _dimensions: string;
-  private _overview: string;
-  private _excerpt: string;
-  private _synopsys: string; // = resume
-  private _authors: string[];
-  private _subjects: string[]; // = genre ?
-  private _reviews: string[];
-
+  private _resume: string;
+  private _auteurs: string[];
+  private _avis: string[];
+  private _type: string;
   private _cover: string; //URL ? ou BD ?
-  //genre: Genre[] ?
+  private _genre: string; //Genre[] ? // type enum ?
 
   private _proprio_L: Lecteur;
   private _lecteurs: Lecteur[];
-
-  private _type: string;
-
-  // Faire type enum ?
 
 
   get id_L(): string {
@@ -40,12 +32,12 @@ export class Livre {
     this._id_L = value;
   }
 
-  get title(): string {
-    return this._title;
+  get titre(): string {
+    return this._titre;
   }
 
-  set title(value: string) {
-    this._title = value;
+  set titre(value: string) {
+    this._titre = value;
   }
 
   get isbn(): string {
@@ -56,14 +48,6 @@ export class Livre {
     this._isbn = value;
   }
 
-  get dewey_decimal(): string {
-    return this._dewey_decimal;
-  }
-
-  set dewey_decimal(value: string) {
-    this._dewey_decimal = value;
-  }
-
   get format(): string {
     return this._format;
   }
@@ -72,28 +56,28 @@ export class Livre {
     this._format = value;
   }
 
-  get publisher(): string {
-    return this._publisher;
+  get editeur(): string {
+    return this._editeur;
   }
 
-  set publisher(value: string) {
-    this._publisher = value;
+  set editeur(value: string) {
+    this._editeur = value;
   }
 
-  get language(): string {
-    return this._language;
+  get langue(): string {
+    return this._langue;
   }
 
-  set language(value: string) {
-    this._language = value;
+  set langue(value: string) {
+    this._langue = value;
   }
 
-  get date_published(): Date {
-    return this._date_published;
+  get date(): Date {
+    return this._date;
   }
 
-  set date_published(value: Date) {
-    this._date_published = value;
+  set date(value: Date) {
+    this._date = value;
   }
 
   get edition(): string {
@@ -104,12 +88,12 @@ export class Livre {
     this._edition = value;
   }
 
-  get pages(): number {
-    return this._pages;
+  get nbPages(): number {
+    return this._nbPages;
   }
 
-  set pages(value: number) {
-    this._pages = value;
+  set nbPages(value: number) {
+    this._nbPages = value;
   }
 
   get dimensions(): string {
@@ -120,52 +104,36 @@ export class Livre {
     this._dimensions = value;
   }
 
-  get overview(): string {
-    return this._overview;
+  get resume(): string {
+    return this._resume;
   }
 
-  set overview(value: string) {
-    this._overview = value;
+  set resume(value: string) {
+    this._resume = value;
   }
 
-  get excerpt(): string {
-    return this._excerpt;
+  get auteurs(): string[] {
+    return this._auteurs;
   }
 
-  set excerpt(value: string) {
-    this._excerpt = value;
+  set auteurs(value: string[]) {
+    this._auteurs = value;
   }
 
-  get synopsys(): string {
-    return this._synopsys;
+  get avis(): string[] {
+    return this._avis;
   }
 
-  set synopsys(value: string) {
-    this._synopsys = value;
+  set avis(value: string[]) {
+    this._avis = value;
   }
 
-  get authors(): string[] {
-    return this._authors;
+  get type(): string {
+    return this._type;
   }
 
-  set authors(value: string[]) {
-    this._authors = value;
-  }
-
-  get subjects(): string[] {
-    return this._subjects;
-  }
-
-  set subjects(value: string[]) {
-    this._subjects = value;
-  }
-
-  get reviews(): string[] {
-    return this._reviews;
-  }
-
-  set reviews(value: string[]) {
-    this._reviews = value;
+  set type(value: string) {
+    this._type = value;
   }
 
   get cover(): string {
@@ -174,6 +142,14 @@ export class Livre {
 
   set cover(value: string) {
     this._cover = value;
+  }
+
+  get genre(): string {
+    return this._genre;
+  }
+
+  set genre(value: string) {
+    this._genre = value;
   }
 
   get proprio_L(): Lecteur {
@@ -192,28 +168,47 @@ export class Livre {
     this._lecteurs = value;
   }
 
-  get type(): string {
-    return this._type;
-  }
-
-  set type(value: string) {
-    this._type = value;
-  }
-
-/*  addLivre(title:string, language: string, date_published: Date, authors: string[], cover: string) {
+  /*  addLivre(title:string, language: string, date_published: Date, authors: string[], cover: string) {
     //livre = new Livre(title, title,"", "", "", "", "", language, date_published, "", 0, "", "", "" , "", authors, null, null, cover);
     let livre = new Livre(title, "", "", language, date_published, "" , 0, "", authors, cover, null);
   }*/
 
 
-  setLivreOpenLibrary(title: string, isbn: string, publisher: string, language: string, date_published: Date, pages: number, authors: string[], subjects: string[]) {
-    this._title = title;
+  setLivre(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: Date, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: Lecteur, lecteurs: Lecteur[]) {
+    this._id_L = id_L;
+    this._titre = titre;
     this._isbn = isbn;
-    this._publisher = publisher;
-    this._language = language;
-    this._date_published = date_published;
-    this._pages = pages;
-    this._authors = authors;
-    this._subjects = subjects;
+    this._format = format;
+    this._editeur = editeur;
+    this._langue = langue;
+    this._date = date;
+    this._edition = edition;
+    this._nbPages = nbPages;
+    this._dimensions = dimensions;
+    this._resume = resume;
+    this._auteurs = auteurs;
+    this._avis = avis;
+    this._type = type;
+    this._cover = cover;
+    this._genre = genre;
+    this._proprio_L = proprio_L;
+    this._lecteurs = lecteurs;
   }
+
+  setLivreOpenLibrary(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: Date, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: Lecteur, lecteurs: Lecteur[]) {
+    this._id_L = id_L;
+    this._titre = titre;
+    this._editeur = editeur;
+    this._langue = langue;
+    this._date = date;
+    this._edition = edition;
+    this._nbPages = nbPages;
+    this._resume = resume;
+    this._auteurs = auteurs;
+    this._avis = avis;
+    this._type = type;
+    this._cover = cover;
+    this._proprio_L = proprio_L;
+  }
+
 }
