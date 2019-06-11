@@ -1,6 +1,13 @@
 import {Lecteur} from "./Lecteur";
 
 export class Livre {
+  get biblio_L(): string {
+    return this._biblio_L;
+  }
+
+  set biblio_L(value: string) {
+    this._biblio_L = value;
+  }
 
   private _id_L: string;
 
@@ -20,8 +27,9 @@ export class Livre {
   private _cover: string; //URL ? ou BD ?
   private _genre: string; //Genre[] ? // type enum ?
 
-  private _proprio_L: Lecteur;
-  private _lecteurs: Lecteur[];
+  private _proprio_L: string; //ID lecteur
+  private _lecteurs: string[]; // ID lecteurs
+  private _biblio_L: string; // ID biblio
 
 
   get id_L(): string {
@@ -152,29 +160,23 @@ export class Livre {
     this._genre = value;
   }
 
-  get proprio_L(): Lecteur {
+  get proprio_L(): string {
     return this._proprio_L;
   }
 
-  set proprio_L(value: Lecteur) {
+  set proprio_L(value: string) {
     this._proprio_L = value;
   }
 
-  get lecteurs(): Lecteur[] {
+  get lecteurs(): string[] {
     return this._lecteurs;
   }
 
-  set lecteurs(value: Lecteur[]) {
+  set lecteurs(value: string[]) {
     this._lecteurs = value;
   }
 
-  /*  addLivre(title:string, language: string, date_published: Date, authors: string[], cover: string) {
-    //livre = new Livre(title, title,"", "", "", "", "", language, date_published, "", 0, "", "", "" , "", authors, null, null, cover);
-    let livre = new Livre(title, "", "", language, date_published, "" , 0, "", authors, cover, null);
-  }*/
-
-
-  setLivre(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: Date, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: Lecteur, lecteurs: Lecteur[]) {
+  setLivre(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: Date, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: string, lecteurs: string[], biblio_L: string) {
     this._id_L = id_L;
     this._titre = titre;
     this._isbn = isbn;
@@ -193,22 +195,7 @@ export class Livre {
     this._genre = genre;
     this._proprio_L = proprio_L;
     this._lecteurs = lecteurs;
-  }
-
-  setLivreOpenLibrary(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: Date, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: Lecteur, lecteurs: Lecteur[]) {
-    this._id_L = id_L;
-    this._titre = titre;
-    this._editeur = editeur;
-    this._langue = langue;
-    this._date = date;
-    this._edition = edition;
-    this._nbPages = nbPages;
-    this._resume = resume;
-    this._auteurs = auteurs;
-    this._avis = avis;
-    this._type = type;
-    this._cover = cover;
-    this._proprio_L = proprio_L;
+    this._biblio_L = biblio_L;
   }
 
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
+import {Livre} from "../../models/Livre";
 
 /**
  * Generated class for the ListLivrePage page.
@@ -14,28 +16,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'list-livre.html',
 })
 export class ListLivrePage {
-  public idB:String;
-  public listLivre:any = [];
+  public listLivre:Livre[] = new Array();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private lienFirebaseService: LienFireBaseProvider) {
 
-    this.idB = this.navParams.get('id');
-    console.log(this.idB);
-    this.getListLivre(this.idB);
+    console.log(this.navParams.get('id'));
+    this.listLivre = this.lienFirebaseService.retrieveLivres(this.navParams.get('id'));
+    console.log('list de livre : ', this.listLivre);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListLivrePage');
   }
 
-  private getListLivre(idB: any) {
-    //return listLivre
+/*  private getListLivre(idB: any) {
 
-    this.listLivre = [
+   this.listLivre = [
       { titre:"titre1", id:1, date:"1998", langue:"FR", cover:"cover1", auteur:"Auteur1", sujets:"sujets" },
       { titre:"titre2", id:2, date:"1998", langue:"FR", cover:"cover2", auteur:"Auteur2", sujets:"sujets" },
     ];
-  }
+  }*/
 
   onClickLivre(idL: any) {
     this.navCtrl.push('FicheLivrePage', {'id':idL});

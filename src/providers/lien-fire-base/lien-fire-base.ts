@@ -141,7 +141,7 @@ export class LienFireBaseProvider {
 
         livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
           doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-          [], "null", doc.data().cover, "null", doc.data().proprioL, []);
+          [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
           console.log("livre titre :", livre.titre);
 
       } else {
@@ -155,7 +155,7 @@ export class LienFireBaseProvider {
     return livre;
   }
 
-  retrieveLivres() : Livre[]{
+/*  retrieveLivres() : Livre[]{
     let livres : Livre[] = new Array();
 
     this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(data => {
@@ -164,6 +164,45 @@ export class LienFireBaseProvider {
         console.log('Livre data : ', list.data());
         console.log('Livre nom : ', list.data().titre);
       }});
+
+    return livres;
+  }*/
+
+  retrieveLivres(idB) : Livre[]{
+    let livres : Livre[] = new Array();
+    console.log('IdB : ', idB);
+
+    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(data => {
+      for(let list of data.docs){
+        console.log('Livre data : ', list.data());
+        let livre:Livre = new Livre();
+        livre.setLivre(list.id, list.data().titre, "null", "null", list.data().editeur, list.data().langue,
+          list.data().date, "null", list.data().nbPages, "null", list.data().resume, list.data().auteurs,
+          [], "null", list.data().cover, "null", list.data().proprioL, [], list.data().biblioL);
+        livres.push(livre);
+        console.log('Livre data bis : ', livre);
+      }});
+
+     /* let data:any;
+
+      data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.where("biblioL", "==", idB).get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          let livre:Livre = new Livre();
+          livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
+            doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+            [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
+          console.log("livre titre :", livre.titre);
+          livres.push(livre);
+          console.log('Livre data bis : ', livre);
+        });
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+      });
+
+      console.log('data', data);*/
 
     return livres;
   }

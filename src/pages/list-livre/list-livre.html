@@ -19,12 +19,12 @@
 
 <ion-content padding>
   <ion-list inset *ngFor="let livre of listLivre;">
-    <ion-item (click)="onClickLivre(this.livre.id)">
+    <ion-item (click)="onClickLivre(this.livre.id_L)">
       <ion-thumbnail item-start>
         <img src="assets/imgs/logobooks.png">
       </ion-thumbnail>
-      <h2>{{this.livre.titre}} {{this.livre.auteur}}</h2>
-      <p>{{this.livre.date}} • {{this.livre.sujets}}</p>
+      <h2>{{this.livre.titre}} {{this.livre.auteurs}}</h2>
+      <p>{{this.livre.date}} • {{this.livre.genre}}</p>
 
      <!-- utiliser un Fabs ? ou Action Sheet ?-->
       <button ion-button outline (click)="deplacer()" >

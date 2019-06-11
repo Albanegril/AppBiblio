@@ -58,23 +58,42 @@
           <ion-label floating>Nombre pages</ion-label>
           <ion-input type="number" name="nbPages" ngModel></ion-input>
         </ion-item>
+
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-          <ion-label floating>Langue list</ion-label>
-          <ion-input type="text" name="langue" ngModel></ion-input>
+          <ion-label>Langue</ion-label>
+          <ion-select [(ngModel)]="langue" name="langue">
+            <ion-option value="FR">Français</ion-option>
+            <ion-option value="ENG">Anglais</ion-option>
+            <ion-option value="JAP">Japonais</ion-option>
+            <ion-option value="ALL">Allemand</ion-option>
+          </ion-select>
         </ion-item>
+
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Type list</ion-label>
           <ion-input type="text" name="type" ngModel></ion-input>
         </ion-item>
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-          <ion-label floating>Biblio list</ion-label>
-          <ion-input type="text" name="biblioL" ngModel></ion-input>
+          <ion-label>Biblio</ion-label>
+          <ion-select [(ngModel)]="biblioL" name="biblioL">
+            <ion-option value="FR">Français</ion-option>
+            <ion-option value="ENG">Anglais</ion-option>
+            <ion-option value="JAP">Japonais</ion-option>
+            <ion-option value="ALL">Allemand</ion-option>
+          </ion-select>
         </ion-item>
 
+
+
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-          <ion-label floating>Proprio</ion-label>
-          <ion-input type="text" name="proprioL" ngModel></ion-input>
+          <ion-label>Proprio</ion-label>
+          <ion-select [(ngModel)]="proprioL" name="proprioL">
+            <ion-option value="FR">Français</ion-option>
+            <ion-option value="ENG">Anglais</ion-option>
+            <ion-option value="JAP">Japonais</ion-option>
+            <ion-option value="ALL">Allemand</ion-option>
+          </ion-select>
         </ion-item>
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
