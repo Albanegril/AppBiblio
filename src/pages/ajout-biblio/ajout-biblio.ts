@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {AlertController, IonicPage, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {NgForm} from "@angular/forms";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
+import {Maison} from "../../models/Maison";
+import {Lecteur} from "../../models/Lecteur";
+import {ConnexionCreationPage} from "../connexion-creation/connexion-creation";
 
 /**
  * Generated class for the AjoutBiblioPage page.
@@ -19,7 +22,8 @@ export class AjoutBiblioPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -27,8 +31,7 @@ export class AjoutBiblioPage {
   }
 
   onSubmitForm(form: NgForm) {
-    console.log(form.value);
-    console.log("ajout biblio");
+    console.log("ajout biblio", form.value);
 
     // ajout BD
     this.lienFirebaseService.addBiblio(form)
@@ -43,19 +46,52 @@ export class AjoutBiblioPage {
       }, err => {
         console.log(err);
       })
-    this.lienFirebaseService.addBiblioToMaison(form.value.maison)
-      .then( res => {
-        let toast = this.toastCtrl.create({
-          message: 'Biblio add to Maison successfully',
-          duration: 3000
-        });
-        toast.present();
-        //  this.resetFields();
-        console.log("ajoute Biblio to Maison dans la BD OK ...")
-      }, err => {
-        console.log(err);
-      })
+
     // this.navCtrl.push('FicheBiblioPage');
     // vers ajout livre ?
+  }
+
+  nouvelleMaison() {
+    let alert = this.alertCtrl.create({
+      title: 'Nouvelle Maison',
+      inputs: [
+        {
+          name: 'nom',
+          placeholder: 'Nom'
+        },
+        {
+          name: 'adresse',
+          placeholder: 'Adresse',
+          type: 'text'
+        },
+        {
+          name: 'proprio',
+          placeholder: 'Nom propriétaire',
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Créer',
+          handler: data => {
+            if (data.nom != null) {
+              this.lienFirebaseService.addMaison(data.nom, data.adresse, data.proprio);
+            } else {
+              console.log("il faut au moins un nom pour créer une Maison");
+              // créer un toast
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

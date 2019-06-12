@@ -83,13 +83,14 @@ export class LienFireBaseProvider {
   addBiblio(form){
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/Biblio/VWf30cTxBYV5CidHmfKT/Biblio').add({
-        nomB: form.nom,
+        nomB: form.nomB,
         nbEtages: form.nbEtages,
         proprioB: form.proprioB,
         livres: null
       })
         .then(
           (res) => {
+            this.addBiblioToMaison(form.value.maison, res.id);
             resolve(res)
           },
           err => reject(err)
@@ -97,12 +98,12 @@ export class LienFireBaseProvider {
     })
   }
 
-  addMaison(form){
+  addMaison(nom, adresse, proprio){
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/Maison/bv394kJ4Bv6oJ0Dv0kWI/Maison').add({
-        nomM: form.nomM,
-        adresse: form.adresse,
-        proprioM: form.proprioM
+        nomM: nom,
+        adresse: adresse,
+        proprioM: proprio
       })
         .then(
           (res) => {
@@ -113,14 +114,14 @@ export class LienFireBaseProvider {
     })
   }
 
-  addBiblioToMaison(id) {
+  addBiblioToMaison(idM, idB) {
   // + id biblio ??
     // créé maison si n'existe pas !
     // avoir proposer création avant ?
     return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/Maison/bv394kJ4Bv6oJ0Dv0kWI/Maison').add({
-        BiblioListe: id
-      })
+      this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').doc(idM).ref.set({
+        Biblio: idB
+      }, { merge: true })
         .then(
           (res) => {
             resolve(res)
@@ -128,6 +129,14 @@ export class LienFireBaseProvider {
           err => reject(err)
         )
     });
+
+    // utiliser la fct update plutot que set ?
+/*    this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').doc(idM).update({
+      "Biblio.[i]": idB
+    })
+      .then(function() {
+        console.log("Document successfully updated!");
+      });*/
   }
 
   getLivre(idL) : Livre{
@@ -172,7 +181,8 @@ export class LienFireBaseProvider {
     let livres : Livre[] = new Array();
     console.log('IdB : ', idB);
 
-    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(data => {
+/*    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').where("biblioL", "==", idB)
+      .ref.get().then(data => {
       for(let list of data.docs){
         console.log('Livre data : ', list.data());
         let livre:Livre = new Livre();
@@ -181,9 +191,9 @@ export class LienFireBaseProvider {
           [], "null", list.data().cover, "null", list.data().proprioL, [], list.data().biblioL);
         livres.push(livre);
         console.log('Livre data bis : ', livre);
-      }});
+      }});*/
 
-     /* let data:any;
+      let data:any;
 
       data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.where("biblioL", "==", idB).get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -202,7 +212,7 @@ export class LienFireBaseProvider {
         console.log("Error getting documents: ", error);
       });
 
-      console.log('data', data);*/
+      console.log('data', data);
 
     return livres;
   }
@@ -240,6 +250,18 @@ export class LienFireBaseProvider {
   rechercheLivre(){
     /*this.teamAdminCollection = fireStore.collection<any>('userProfile', ref =>
       ref.where('titre', '==', true));*/
+  }
+
+  changemenentBiblio(idL, idB){
+    let livreRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
+
+    // Set le champs "biblioL" à l'id "idB"
+    return livreRef.update({
+      "biblioL": idB
+    })
+      .then(function() {
+        console.log("Document successfully updated!");
+      });
   }
 
 }

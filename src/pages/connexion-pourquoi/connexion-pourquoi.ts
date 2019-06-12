@@ -16,8 +16,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class ConnexionPourquoiPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public viewCtrl: ViewController
-  ) {
+              public viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {

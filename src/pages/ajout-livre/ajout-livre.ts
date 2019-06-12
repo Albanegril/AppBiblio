@@ -21,9 +21,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AjoutLivrePage{
   public livre:Livre = new Livre();
-  langue: string;
-  biblioL: any;
-  proprioL: any;
 
   constructor(private lienFirebaseService: LienFireBaseProvider,
               public navCtrl: NavController, public navParams: NavParams,

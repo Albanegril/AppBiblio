@@ -38,7 +38,6 @@ export class ConnexionPage {
   onSubmitForm(form: NgForm) {
     console.log(form.value);
     console.log("connexion compte");
-    //TODO
 
     const email = form.value.email;
     const mdp = form.value.mdp;
@@ -59,13 +58,11 @@ export class ConnexionPage {
 
 
   onClickCreationCompte() {
-    // TODO
     const modal = this.modalCtrl.create(ConnexionCreationPage);
     modal.present();
   }
 
   onClickPourquoiCompte() {
-    // TODO
     const modal = this.modalCtrl.create(ConnexionPourquoiPage);
     modal.present();
   }

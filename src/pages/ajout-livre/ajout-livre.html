@@ -61,7 +61,7 @@
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Langue</ion-label>
-          <ion-select [(ngModel)]="langue" name="langue">
+          <ion-select ngModel name="langue">
             <ion-option value="FR">Français</ion-option>
             <ion-option value="ENG">Anglais</ion-option>
             <ion-option value="JAP">Japonais</ion-option>
@@ -76,19 +76,17 @@
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Biblio</ion-label>
-          <ion-select [(ngModel)]="biblioL" name="biblioL">
-            <ion-option value="FR">Français</ion-option>
-            <ion-option value="ENG">Anglais</ion-option>
-            <ion-option value="JAP">Japonais</ion-option>
-            <ion-option value="ALL">Allemand</ion-option>
+          <ion-select ngModel name="biblioL">
+            <ion-option value="IdPalier">Palier</ion-option>
+            <ion-option value="IdSalon">Salon</ion-option>
+            <ion-option value="IdChambre">Chambre</ion-option>
           </ion-select>
         </ion-item>
 
 
-
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Proprio</ion-label>
-          <ion-select [(ngModel)]="proprioL" name="proprioL">
+          <ion-select ngModel name="proprioL">
             <ion-option value="FR">Français</ion-option>
             <ion-option value="ENG">Anglais</ion-option>
             <ion-option value="JAP">Japonais</ion-option>

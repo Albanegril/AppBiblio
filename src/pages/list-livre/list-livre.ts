@@ -38,19 +38,22 @@ export class ListLivrePage {
     ];
   }*/
 
-  onClickLivre(idL: any) {
+  onClickLivre(idL: string) {
     this.navCtrl.push('FicheLivrePage', {'id':idL});
   }
 
   ajouterLivre() {
-    // donner possibilité de déplacer des livres rapidement, selection multiple ?
+    // pour le moment le passage de l'ID biblio n'est pas géré au niveau des pages d'ajout
+    this.navCtrl.push('AjoutLivreOptionsPage', {'id':this.navParams.get('id')});
   }
 
-  lire() {
+  lire(idL: string) {
     // créé une lecture du livre pour le lecteur connecté
+    this.navCtrl.push('FicheLivrePage', {'id':idL});
   }
 
-  deplacer() {
+  deplacer(idL: string) {
     // déplacement rapide ? alerts ou modal
+    this.navCtrl.push('FicheLivrePage', {'id':idL});
   }
 }
