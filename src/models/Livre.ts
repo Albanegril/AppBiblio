@@ -1,14 +1,6 @@
 import {Lecteur} from "./Lecteur";
 
 export class Livre {
-  get biblio_L(): string {
-    return this._biblio_L;
-  }
-
-  set biblio_L(value: string) {
-    this._biblio_L = value;
-  }
-
   private _id_L: string;
 
   private _titre: string;
@@ -16,7 +8,7 @@ export class Livre {
   private _format: string;
   private _editeur: string;
   private _langue: string;
-  private _date: Date;
+  private _date: string;
   private _edition: string;
   private _nbPages: number;
   private _dimensions: string;
@@ -80,11 +72,11 @@ export class Livre {
     this._langue = value;
   }
 
-  get date(): Date {
+  get date(): string {
     return this._date;
   }
 
-  set date(value: Date) {
+  set date(value: string) {
     this._date = value;
   }
 
@@ -176,7 +168,15 @@ export class Livre {
     this._lecteurs = value;
   }
 
-  setLivre(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: Date, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: string, lecteurs: string[], biblio_L: string) {
+  get biblio_L(): string {
+    return this._biblio_L;
+  }
+
+  set biblio_L(value: string) {
+    this._biblio_L = value;
+  }
+
+  setLivre(id_L: string, titre: string, isbn: string, format: string, editeur: string, langue: string, date: string, edition: string, nbPages: number, dimensions: string, resume: string, auteurs: string[], avis: string[], type: string, cover: string, genre: string, proprio_L: string, lecteurs: string[], biblio_L: string) {
     this._id_L = id_L;
     this._titre = titre;
     this._isbn = isbn;

@@ -22,39 +22,35 @@ export class ListLivrePage {
               private lienFirebaseService: LienFireBaseProvider) {
 
     console.log(this.navParams.get('id'));
+    // pb car non sychrno ??
     this.listLivre = this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('id'));
     console.log('list de livre : ', this.listLivre);
-    // this.listLivre = this.lienFirebaseService.retrieveLivres();
-    // console.log('list de livre : ', this.listLivre);
+     //this.listLivre = this.lienFirebaseService.retrieveLivres();
+     //console.log('list de livre : ', this.listLivre);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListLivrePage');
   }
 
-/*  private getListLivre(idB: any) {
-
-   this.listLivre = [
-      { titre:"titre1", id:1, date:"1998", langue:"FR", cover:"cover1", auteur:"Auteur1", sujets:"sujets" },
-      { titre:"titre2", id:2, date:"1998", langue:"FR", cover:"cover2", auteur:"Auteur2", sujets:"sujets" },
-    ];
-  }*/
-
   onClickLivre(idL: string) {
     this.navCtrl.push('FicheLivrePage', {'id':idL});
   }
 
   ajouterLivre() {
+    //TODO
     // pour le moment le passage de l'ID biblio n'est pas géré au niveau des pages d'ajout
     this.navCtrl.push('AjoutLivreOptionsPage', {'id':this.navParams.get('id')});
   }
 
   lire(idL: string) {
+    //TODO
     // créé une lecture du livre pour le lecteur connecté
     this.navCtrl.push('FicheLivrePage', {'id':idL});
   }
 
   deplacer(idL: string) {
+    //TODO
     // déplacement rapide ? alerts ou modal
     this.navCtrl.push('FicheLivrePage', {'id':idL});
   }

@@ -29,22 +29,9 @@ export class ListBiblioPage {
     this.listMaison = this.lienFirebaseService.retrieveMaison();
     //this.listBiblio = this.lienFirebaseService.retrieveBiblio();
 
-
     console.log('list de maison : ', this.listMaison);
     console.log('list de biblio : ', this.listBiblio);
 
-
-    /*    this.listMaison = [
-          { nom:"Bougnoux", id:1, expanded: false},
-          { nom:"Gerbau", id:2, expanded: false},
-          { nom:"MtpEva", id:4, expanded: false},
-          { nom:"AppartClermont", id:5, expanded: false}
-        ];
-
-        this.listBiblio = [
-          { nom:"Palier", id:1},
-          { nom:"Salon", id:2},
-        ];*/
   }
 
   ionViewDidLoad() {

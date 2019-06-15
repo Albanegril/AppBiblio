@@ -5,6 +5,9 @@ import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-bas
 import {Camera} from "@ionic-native/camera";
 import {Livre} from "../../models/Livre";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Maison} from "../../models/Maison";
+import {Lecteur} from "../../models/Lecteur";
+import {Biblio} from "../../models/Biblio";
 
 
 /**
@@ -21,11 +24,15 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AjoutLivrePage{
   public livre:Livre = new Livre();
+  public biblios:Biblio[] = new Array();
+  public proprios: Lecteur[] = new Array();
 
   constructor(private lienFirebaseService: LienFireBaseProvider,
               public navCtrl: NavController, public navParams: NavParams,
               private toastCtrl: ToastController,
               private camera: Camera) {
+    this.biblios = this.lienFirebaseService.retrieveBiblio();
+    this.proprios = this.lienFirebaseService.retrieveLecteur();
   }
 
   ionViewDidLoad() {

@@ -19,18 +19,12 @@ import {Maison} from "../../models/Maison";
 */
 @Injectable()
 export class LienFireBaseProvider {
-  //data: any;
-  //livre: Observable<Livre[]>;
 
   constructor(public http: HttpClient,
              public afs: AngularFirestore
               ) {
     console.log('Hello LienFireBaseProvider Provider');
   }
-
-/*  emitLivres() {
-    this.livre$.next(this.livreList.slice());
-  }*/
 
   addLivre(form){
     return new Promise<any>((resolve, reject) => {
@@ -64,9 +58,10 @@ export class LienFireBaseProvider {
   addLecteur(form){
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/Lecteur/e1IWZmEdiqjLeTv4xs0F/Lecteur').add({
+        pseudo: form.value.pseudo,
+        mail: form.value.mail,
         nom: form.value.nom,
         prenom: form.value.prenom,
-        pseudo: form.value.pseudo,
         mdp: form.value.mdp,
         lectures: null,
         avatar: form.value.avatar
@@ -82,17 +77,15 @@ export class LienFireBaseProvider {
 
   addBiblio(form){
     return new Promise<any>((resolve, reject) => {
-      console.log('nomB :', form.nomB);
-      console.log('nomB :', form.value.nomB);
       this.afs.collection('/Biblio/VWf30cTxBYV5CidHmfKT/Biblio').add({
         nomB: form.value.nomB,
+        maisonB: form.value.maison,
         nbEtages: form.value.nbEtages,
-        proprioB: form.value.proprioB,
+        proprioB: form.value.proprio,
         livres: null,
       })
         .then(
           (res) => {
-            this.addMaisonToBiblio(form.value.maison, res.id);
             resolve(res)
           },
           err => reject(err)
@@ -117,22 +110,7 @@ export class LienFireBaseProvider {
     })
   }
 
-  addMaisonToBiblio(idM, idB) {
-  // + id biblio ??
-    // créé maison si n'existe pas !
-    // avoir proposer création avant ?
-    return new Promise<any>((resolve, reject) => {
-      this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').doc(idM).ref.set({
-        maisonB: idM
-      }, { merge: true })
-        .then(
-          (res) => {
-            resolve(res)
-          },
-          err => reject(err)
-        )
-    });
-
+    //TODO
     // utiliser la fct update plutot que set ?
 /*    this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').doc(idM).update({
       "Biblio.[i]": idB
@@ -140,7 +118,6 @@ export class LienFireBaseProvider {
       .then(function() {
         console.log("Document successfully updated!");
       });*/
-  }
 
   getLivre(idL) : Livre{
     let docRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
@@ -151,9 +128,12 @@ export class LienFireBaseProvider {
         console.log("Document data:", doc.data());
         console.log("Document titre :", doc.data().titre);
 
+        let lecteur : Lecteur = new Lecteur();
+        lecteur = this.retrieveLecteurID(doc.data().proprioL);
+
         livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
           doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-          [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
+          [], "null", doc.data().cover, "null", lecteur.pseudo, [], doc.data().biblioL);
           console.log("livre titre :", livre.titre);
 
       } else {
@@ -180,11 +160,7 @@ export class LienFireBaseProvider {
     return livres;
   }
 
-  retrieveLivresDeB(idB) : Livre[]{
-    let livres : Livre[] = new Array();
-    console.log('IdB : ', idB);
-
-/*    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').where("biblioL", "==", idB)
+  /*    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').where("biblioL", "==", idB)
       .ref.get().then(data => {
       for(let list of data.docs){
         console.log('Livre data : ', list.data());
@@ -196,28 +172,27 @@ export class LienFireBaseProvider {
         console.log('Livre data bis : ', livre);
       }});*/
 
-      let data:any;
+  retrieveLivresDeB(idB) : Livre[]{
+    let livres : Livre[] = new Array();
+    console.log('IdB : ', idB);
 
-      data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          let livre:Livre = new Livre();
-          livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
-            doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-            [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
-          if(livre.biblio_L==idB){
-            livres.push(livre);
-            console.log("ajouté !");
-          }
-          console.log('Livre data bis : ', livre);
-        });
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
+    this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        let livre:Livre = new Livre();
+        livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
+          doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+          [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
+        if(livre.biblio_L === idB){
+          livres.push(livre);
+          console.log("ajouté !");
+        }
+        console.log('Livre data  : ', livre.titre);
       });
-
-      console.log('data', data);
+    })
+    .catch(function(error) {
+      console.log("Error getting documents: ", error);
+    });
 
     return livres;
   }
@@ -245,12 +220,13 @@ export class LienFireBaseProvider {
     let biblios : Biblio[] = new Array();
 
     this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').ref.get().then(data => {
+      console.log('toutes les biblios : ', data.docs);
       for(let list of data.docs){
         console.log('Biblio data : ', list.data());
         let biblio:Biblio = new Biblio();
         biblio.setBiblio(list.id, list.data().nomB, 0, null, list.data().maisonB);
-        console.log(' maisonB : ', biblio.maisonB);
-        if( biblio.maisonB.match(idM) === null){
+        console.log(' maisonB : ', biblio.maisonB, ' idM : ', idM);
+        if( biblio.maisonB === idM){
           biblios.push(biblio);
           console.log("ajouté ! ");
         }
@@ -283,15 +259,37 @@ export class LienFireBaseProvider {
       for(let list of data.docs){
         console.log('Lecteur data : ', list.data());
         let lecteur:Lecteur = new Lecteur();
-        lecteur.setLecteur(list.id, list.data().nom, list.data().prenom, list.data().pseudo, list.data().mdp, [], list.data().avatar);
+        lecteur.setLecteur(list.id,  list.data().pseudo, list.data().mail, list.data().nom, list.data().prenom, list.data().mdp, [], list.data().avatar);
         lecteurs.push(lecteur);
-        console.log('Maison data bis : ', lecteur);
+        console.log('Lecteur data bis : ', lecteur);
       }});
 
     return lecteurs;
   }
 
+  retrieveLecteurID(idL) {
+    let docRef = this.afs.collection('Lecteur').doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').doc(idL);
+    let lecteur:Lecteur = new Lecteur();
+
+    docRef.ref.get().then(function(doc) {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+        lecteur.setLecteur(doc.id,  doc.data().pseudo, doc.data().mail, doc.data().nom, doc.data().prenom, doc.data().mdp, [], doc.data().avatar);
+        console.log("lecteur pseudo :", lecteur.pseudo);
+
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+    return lecteur;
+  }
+
+
   rechercheLivre(){
+    //TODO
     /*this.teamAdminCollection = fireStore.collection<any>('userProfile', ref =>
       ref.where('titre', '==', true));*/
   }

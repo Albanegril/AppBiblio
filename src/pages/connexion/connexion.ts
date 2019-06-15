@@ -42,6 +42,8 @@ export class ConnexionPage {
     const email = form.value.email;
     const mdp = form.value.mdp;
 
+    //TODO
+    // gérer la connexion avec le lecteur dans la BD (et non les comptes firebase)
     this.gestionnaireCompte.connexionLecteur(email, mdp).then(
       () => {
         console.log("connexion en cours");

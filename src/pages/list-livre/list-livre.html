@@ -27,11 +27,11 @@
       <p>{{this.livre.date}} • {{this.livre.genre}}</p>
 
      <!-- utiliser un Fabs ? ou Action Sheet ?-->
-      <button ion-button outline (click)="deplacer()" >
+      <button ion-button outline (click)="deplacer(this.livre.id_L)" >
         <ion-icon name="move"></ion-icon>
       </button>
 
-      <button ion-button outline (click)="lire()" >
+      <button ion-button outline (click)="lire(this.livre.id_L)" >
         <ion-icon name="book"></ion-icon>
       </button>
     </ion-item>

@@ -34,6 +34,8 @@ export class ConnexionCreationPage {
     const email = form.value.email;
     const mdp = form.value.mdp;
 
+    //TODO
+    // gérer la création de compte la page création lecteur dans BD (et non les comptes firebase)
     this.gestionnaireCompte.creationLecteur(email, mdp).then(
       () => {
         this.navCtrl.push('ConnexionPage').then(

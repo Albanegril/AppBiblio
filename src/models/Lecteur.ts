@@ -2,13 +2,22 @@ import {Lecture} from "./Lecture";
 
 export class Lecteur {
   private _id: string;
+  private _pseudo: string;
+  private _mail: string;
   private _nom: string;
   private _prenom: string;
-  private _pseudo: string;
   private _mdp: string; // à crypter !!
   private _lectures: Lecture[];
   private _avatar: string;
 
+
+  get mail(): string {
+    return this._mail;
+  }
+
+  set mail(value: string) {
+    this._mail = value;
+  }
 
   get id(): string {
     return this._id;
@@ -66,11 +75,12 @@ export class Lecteur {
     this._avatar = value;
   }
 
-  setLecteur(id: string, nom: string, prenom: string, pseudo: string, mdp: string, lectures: Lecture[], avatar: string) {
+  setLecteur(id: string, pseudo: string, mail: string, nom: string, prenom: string, mdp: string, lectures: Lecture[], avatar: string) {
     this._id = id;
+    this._pseudo = pseudo;
+    this._mail = mail;
     this._nom = nom;
     this._prenom = prenom;
-    this._pseudo = pseudo;
     this._mdp = mdp;
     this._lectures = lectures;
     this._avatar = avatar;

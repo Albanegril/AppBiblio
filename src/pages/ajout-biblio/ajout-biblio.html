@@ -49,16 +49,8 @@
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Proprio</ion-label>
-          <ion-select ngModel name="proprioB">
-            <ion-option value="IdAlbane">Albane</ion-option>
-            <ion-option value="IdEva">Eva</ion-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-          <ion-label>Proprio</ion-label>
           <ion-select (ngModel)="proprios" name="proprio">
-            <ion-option *ngFor="let proprio of proprios;" value="{{this.proprio.id}}">{{this.proprio.nom}}</ion-option>
+            <ion-option *ngFor="let proprio of proprios;" value="{{this.proprio.id}}">{{this.proprio.pseudo}}</ion-option>
           </ion-select>
         </ion-item>
 

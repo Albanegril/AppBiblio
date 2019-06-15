@@ -36,9 +36,7 @@ export class AjoutBiblioPage {
 
   onSubmitForm(form: NgForm) {
     console.log("ajout biblio", form.value);
-    console.log("ajout biblio", form.value.nomB);
 
-    // ajout BD
     this.lienFirebaseService.addBiblio(form)
       .then( res => {
         let toast = this.toastCtrl.create({
@@ -47,13 +45,12 @@ export class AjoutBiblioPage {
         });
         toast.present();
         //  this.resetFields();
-        console.log("ajoute Biblio dans la BD OK ...")
+        console.log("ajoute Biblio dans la BD OK ...");
+        this.navCtrl.push('ListBiblioPage');
+
       }, err => {
         console.log(err);
       })
-
-    // this.navCtrl.push('FicheBiblioPage');
-    // vers ajout livre ?
   }
 
   nouvelleMaison() {
@@ -90,6 +87,7 @@ export class AjoutBiblioPage {
               this.lienFirebaseService.addMaison(data.nom, data.adresse, data.proprio);
             } else {
               console.log("il faut au moins un nom pour créer une Maison");
+              //TODO
               // créer un toast
               return false;
             }

@@ -1,59 +1,95 @@
-export class DataISBN {
-  ISBN: DataLivre;
-}
-
-
-export interface DataLivre {
-  publishers: Publisher[];
-  pagination: string;
-  table_of_contents: TableOfContent[];
-  title: string;
-  url: string;
-  identifiers: Identifiers;
-  subjects: Subject[];
-  publish_date: string;
-  key: string;
-  authors: Author[];
-  subtitle: string;
-  publish_places: PublishPlace[];
-  subject_times: SubjectTime[];
-}
-
-
-export interface Publisher {
-    name: string;
+  export class DataISBN {
+    kind: string;
+    totalItems: number;
+    items: Item[];
   }
 
-  export interface TableOfContent {
+  export interface Item {
+    kind: string;
+    id: string;
+    etag: string;
+    selfLink: string;
+    volumeInfo: VolumeInfo;
+    saleInfo: SaleInfo;
+    accessInfo: AccessInfo;
+    searchInfo: SearchInfo;
+  }
+
+  export interface VolumeInfo {
     title: string;
-    label: string;
-    pagenum: string;
-    level: number;
+    authors: string[];
+    publisher: string;
+    publishedDate: string;
+    description: string;
+    industryIdentifiers: IndustryIdentifier[];
+    readingModes: ReadingModes;
+    pageCount: number;
+    printType: string;
+    averageRating: number;
+    ratingsCount: number;
+    maturityRating: string;
+    allowAnonLogging: boolean;
+    contentVersion: string;
+    panelizationSummary: PanelizationSummary;
+    imageLinks: ImageLinks;
+    language: string;
+    previewLink: string;
+    infoLink: string;
+    canonicalVolumeLink: string;
   }
 
-  export interface Identifiers {
-    openlibrary: string[];
-    isbn_10: string[];
+  export interface IndustryIdentifier {
+    type: string;
+    identifier: string;
   }
 
-  export interface Subject {
-    url: string;
-    name: string;
+  export interface ReadingModes {
+    text: boolean;
+    image: boolean;
   }
 
-  export interface Author {
-    url: string;
-    name: string;
+  export interface PanelizationSummary {
+    containsEpubBubbles: boolean;
+    containsImageBubbles: boolean;
   }
 
-  export interface PublishPlace {
-    name: string;
+  export interface ImageLinks {
+    smallThumbnail: string;
+    thumbnail: string;
   }
 
-  export interface SubjectTime {
-    url: string;
-    name: string;
+  export interface SaleInfo {
+    country: string;
+    saleability: string;
+    isEbook: boolean;
   }
+
+  export interface Epub {
+    isAvailable: boolean;
+  }
+
+  export interface Pdf {
+    isAvailable: boolean;
+  }
+
+  export interface AccessInfo {
+    country: string;
+    viewability: string;
+    embeddable: boolean;
+    publicDomain: boolean;
+    textToSpeechPermission: string;
+    epub: Epub;
+    pdf: Pdf;
+    webReaderLink: string;
+    accessViewStatus: string;
+    quoteSharingAllowed: boolean;
+  }
+
+  export interface SearchInfo {
+    textSnippet: string;
+  }
+
+
 
 
 

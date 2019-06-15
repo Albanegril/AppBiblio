@@ -36,10 +36,12 @@ export class FicheLivrePage {
 
 
   lire() {
+    //TODO
     // créer ficher lecteur + add lecteur
   }
 
   deplacer() {
+    //TODO
     // il faut créer des radioBtn dynamique des biblio dans l'alert !
       let alert = this.alertCtrl.create({
         title: 'Nouvelle Biblio',
@@ -80,6 +82,7 @@ export class FicheLivrePage {
   }
 
   emprunter() {
+    //TODO
     // lecteur exterieur
   }
 

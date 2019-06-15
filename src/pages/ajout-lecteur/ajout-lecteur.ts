@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
+import {NgForm} from "@angular/forms";
 
 /**
  * Generated class for the AjoutLecteurPage page.
@@ -15,11 +17,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AjoutLecteurPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private lienFirebaseService: LienFireBaseProvider,
+              private toastCtrl: ToastController,
+              private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AjoutLecteurPage');
+  }
+
+  onSubmitForm(form: NgForm) {
+    console.log("ajout lecteur", form.value);
+
+    // ajout BD
+    this.lienFirebaseService.addLecteur(form)
+      .then( res => {
+        let toast = this.toastCtrl.create({
+          message: 'Lecteur add successfully',
+          duration: 3000
+        });
+        toast.present();
+        //  this.resetFields();
+        console.log("ajoute Lecteur dans la BD OK ...");
+        this.navCtrl.push('ListBiblioPage');
+        //TODO
+        // faire rediriger vers liste lecteur dès que créé ..
+      }, err => {
+        console.log(err);
+      })
+
   }
 
 }
