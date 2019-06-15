@@ -22,8 +22,10 @@ export class ListLivrePage {
               private lienFirebaseService: LienFireBaseProvider) {
 
     console.log(this.navParams.get('id'));
-    this.listLivre = this.lienFirebaseService.retrieveLivres(this.navParams.get('id'));
+    this.listLivre = this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('id'));
     console.log('list de livre : ', this.listLivre);
+    // this.listLivre = this.lienFirebaseService.retrieveLivres();
+    // console.log('list de livre : ', this.listLivre);
   }
 
   ionViewDidLoad() {

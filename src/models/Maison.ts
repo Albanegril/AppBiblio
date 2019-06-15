@@ -6,7 +6,6 @@ export class Maison {
   private _nom_M: string;
   private _adresse: string;
   private _proprio_M: Lecteur;
-  private _biblios: Biblio[];
   expanded: boolean = false;
 
   get id_M(): string {
@@ -41,19 +40,10 @@ export class Maison {
     this._proprio_M = value;
   }
 
-  get biblios(): Biblio[] {
-    return this._biblios;
-  }
-
-  set biblios(value: Biblio[]) {
-    this._biblios = value;
-  }
-
-  setMaison(id_M: string, nom_M: string, adresse: string, proprio_M: Lecteur, biblios: Biblio[]) {
+  setMaison(id_M: string, nom_M: string, adresse: string, proprio_M: Lecteur) {
     this._id_M = id_M;
     this._nom_M = nom_M;
     this._adresse = adresse;
     this._proprio_M = proprio_M;
-    this._biblios = biblios;
   }
 }

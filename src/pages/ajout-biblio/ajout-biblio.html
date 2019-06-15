@@ -22,13 +22,22 @@
           <ion-input type="text" name="nomB" ngModel></ion-input>
         </ion-item>
 
-        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+<!--        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Maison</ion-label>
           <ion-select ngModel name="maison">
             <ion-option value="IdBougnoux">Bougnoux</ion-option>
             <ion-option value="IdGerbau">Gerbau</ion-option>
           </ion-select>
+        </ion-item>-->
+
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label>Maison</ion-label>
+          <ion-select (ngModel)="maisons" name="maison">
+            <ion-option *ngFor="let maison of maisons;" value="{{this.maison.id_M}}">{{this.maison.nom_M}}</ion-option>
+          </ion-select>
         </ion-item>
+
+        <br>
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <button ion-button block (click)="nouvelleMaison()" >Nouvelle Maison</button>
         </ion-item>
@@ -45,6 +54,14 @@
             <ion-option value="IdEva">Eva</ion-option>
           </ion-select>
         </ion-item>
+
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label>Proprio</ion-label>
+          <ion-select (ngModel)="proprios" name="proprio">
+            <ion-option *ngFor="let proprio of proprios;" value="{{this.proprio.id}}">{{this.proprio.nom}}</ion-option>
+          </ion-select>
+        </ion-item>
+
 
       </ion-row>
     </ion-list>

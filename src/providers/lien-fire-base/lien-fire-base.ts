@@ -64,12 +64,12 @@ export class LienFireBaseProvider {
   addLecteur(form){
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/Lecteur/e1IWZmEdiqjLeTv4xs0F/Lecteur').add({
-        nom: form.nom,
-        prenom: form.prenom,
-        pseudo: form.pseudo,
-        mdp: form.mdp,
+        nom: form.value.nom,
+        prenom: form.value.prenom,
+        pseudo: form.value.pseudo,
+        mdp: form.value.mdp,
         lectures: null,
-        avatar: form.avatar
+        avatar: form.value.avatar
       })
         .then(
           (res) => {
@@ -82,15 +82,17 @@ export class LienFireBaseProvider {
 
   addBiblio(form){
     return new Promise<any>((resolve, reject) => {
+      console.log('nomB :', form.nomB);
+      console.log('nomB :', form.value.nomB);
       this.afs.collection('/Biblio/VWf30cTxBYV5CidHmfKT/Biblio').add({
-        nomB: form.nomB,
-        nbEtages: form.nbEtages,
-        proprioB: form.proprioB,
-        livres: null
+        nomB: form.value.nomB,
+        nbEtages: form.value.nbEtages,
+        proprioB: form.value.proprioB,
+        livres: null,
       })
         .then(
           (res) => {
-            this.addBiblioToMaison(form.value.maison, res.id);
+            this.addMaisonToBiblio(form.value.maison, res.id);
             resolve(res)
           },
           err => reject(err)
@@ -103,7 +105,8 @@ export class LienFireBaseProvider {
       this.afs.collection('/Maison/bv394kJ4Bv6oJ0Dv0kWI/Maison').add({
         nomM: nom,
         adresse: adresse,
-        proprioM: proprio
+        proprioM: proprio,
+        expanded: false
       })
         .then(
           (res) => {
@@ -114,13 +117,13 @@ export class LienFireBaseProvider {
     })
   }
 
-  addBiblioToMaison(idM, idB) {
+  addMaisonToBiblio(idM, idB) {
   // + id biblio ??
     // créé maison si n'existe pas !
     // avoir proposer création avant ?
     return new Promise<any>((resolve, reject) => {
-      this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').doc(idM).ref.set({
-        Biblio: idB
+      this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').doc(idM).ref.set({
+        maisonB: idM
       }, { merge: true })
         .then(
           (res) => {
@@ -164,7 +167,7 @@ export class LienFireBaseProvider {
     return livre;
   }
 
-/*  retrieveLivres() : Livre[]{
+  retrieveLivres() : Livre[]{
     let livres : Livre[] = new Array();
 
     this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(data => {
@@ -175,9 +178,9 @@ export class LienFireBaseProvider {
       }});
 
     return livres;
-  }*/
+  }
 
-  retrieveLivres(idB) : Livre[]{
+  retrieveLivresDeB(idB) : Livre[]{
     let livres : Livre[] = new Array();
     console.log('IdB : ', idB);
 
@@ -195,7 +198,7 @@ export class LienFireBaseProvider {
 
       let data:any;
 
-      data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.where("biblioL", "==", idB).get().then(function(querySnapshot) {
+      data = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
@@ -203,8 +206,10 @@ export class LienFireBaseProvider {
           livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
             doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
             [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
-          console.log("livre titre :", livre.titre);
-          livres.push(livre);
+          if(livre.biblio_L==idB){
+            livres.push(livre);
+            console.log("ajouté !");
+          }
           console.log('Livre data bis : ', livre);
         });
       })
@@ -224,8 +229,31 @@ export class LienFireBaseProvider {
       for(let list of data.docs){
         console.log('Biblio data : ', list.data());
         let biblio:Biblio = new Biblio();
-        biblio.setBiblio(list.id, list.data().nom, 0, null, []);
+        biblio.setBiblio(list.id, list.data().nomB, 0, null, list.data().maisonB);
         biblios.push(biblio);
+        console.log('Biblio data bis : ', biblio);
+      }});
+
+    return biblios;
+  }
+
+  retrieveBiblioDeM(idM:string) : Biblio[]{
+    // get info maison idM
+    // foreach champs Biblio de maison idM
+    // add dans list biblio idB
+    // foreach biblio idB recupérer info + push dans list
+    let biblios : Biblio[] = new Array();
+
+    this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').ref.get().then(data => {
+      for(let list of data.docs){
+        console.log('Biblio data : ', list.data());
+        let biblio:Biblio = new Biblio();
+        biblio.setBiblio(list.id, list.data().nomB, 0, null, list.data().maisonB);
+        console.log(' maisonB : ', biblio.maisonB);
+        if( biblio.maisonB.match(idM) === null){
+          biblios.push(biblio);
+          console.log("ajouté ! ");
+        }
         console.log('Biblio data bis : ', biblio);
       }});
 
@@ -239,12 +267,28 @@ export class LienFireBaseProvider {
       for(let list of data.docs){
         console.log('Maison data : ', list.data());
         let maison:Maison = new Maison();
-        maison.setMaison(list.id, list.data().nom, "null", null, []);
+        maison.setMaison(list.id, list.data().nomM, "null", null);
         maisons.push(maison);
         console.log('Maison data bis : ', maison);
       }});
 
     return maisons;
+  }
+
+  retrieveLecteur() {
+    let lecteurs : Lecteur[] = new Array();
+
+
+    this.afs.collection('Lecteur').doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').ref.get().then(data => {
+      for(let list of data.docs){
+        console.log('Lecteur data : ', list.data());
+        let lecteur:Lecteur = new Lecteur();
+        lecteur.setLecteur(list.id, list.data().nom, list.data().prenom, list.data().pseudo, list.data().mdp, [], list.data().avatar);
+        lecteurs.push(lecteur);
+        console.log('Maison data bis : ', lecteur);
+      }});
+
+    return lecteurs;
   }
 
   rechercheLivre(){
@@ -263,5 +307,6 @@ export class LienFireBaseProvider {
         console.log("Document successfully updated!");
       });
   }
+
 
 }

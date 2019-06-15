@@ -27,7 +27,8 @@ export class ListBiblioPage {
               private lienFirebaseService: LienFireBaseProvider) {
 
     this.listMaison = this.lienFirebaseService.retrieveMaison();
-    this.listBiblio = this.lienFirebaseService.retrieveBiblio();
+    //this.listBiblio = this.lienFirebaseService.retrieveBiblio();
+
 
     console.log('list de maison : ', this.listMaison);
     console.log('list de biblio : ', this.listBiblio);
@@ -51,6 +52,7 @@ export class ListBiblioPage {
   }
 
   expandItem(maison){
+    this.listBiblio = this.lienFirebaseService.retrieveBiblioDeM(maison.id_M);
     this.listMaison.map((listBiblio) => {
       if(maison == listBiblio){
         listBiblio.expanded = !listBiblio.expanded;

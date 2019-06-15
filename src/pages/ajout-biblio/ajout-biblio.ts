@@ -19,11 +19,15 @@ import {ConnexionCreationPage} from "../connexion-creation/connexion-creation";
   templateUrl: 'ajout-biblio.html',
 })
 export class AjoutBiblioPage {
+  public maisons:Maison[] = new Array();
+  public proprios: Lecteur[] = new Array();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
+    this.maisons = this.lienFirebaseService.retrieveMaison();
+    this.proprios = this.lienFirebaseService.retrieveLecteur();
   }
 
   ionViewDidLoad() {
@@ -32,6 +36,7 @@ export class AjoutBiblioPage {
 
   onSubmitForm(form: NgForm) {
     console.log("ajout biblio", form.value);
+    console.log("ajout biblio", form.value.nomB);
 
     // ajout BD
     this.lienFirebaseService.addBiblio(form)
