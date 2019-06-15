@@ -31,6 +31,8 @@ export class AjoutLivrePage{
               public navCtrl: NavController, public navParams: NavParams,
               private toastCtrl: ToastController,
               private camera: Camera) {
+    this.livre = this.navParams.get('data');
+    console.log('livre == ', this.livre);
     this.biblios = this.lienFirebaseService.retrieveBiblio();
     this.proprios = this.lienFirebaseService.retrieveLecteur();
   }
@@ -42,8 +44,6 @@ export class AjoutLivrePage{
   onSubmitForm(form: NgForm) {
     console.log("ajout livre" + form.value);
 
-    // ajout BD
-    // verification des entrées min + si existant ?
     //TODO
     this.lienFirebaseService.addLivre(form)
       .then( res => {

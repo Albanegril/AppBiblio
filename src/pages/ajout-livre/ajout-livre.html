@@ -20,16 +20,16 @@
       <ion-row>
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Titre</ion-label>
-          <ion-input type="text" name="titre" ngModel></ion-input>
+          <ion-input type="text" name="titre" ngModel="{{this.livre.titre}}"></ion-input>
         </ion-item>
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Auteurs</ion-label>
-          <ion-input type="text" name="auteurs" ngModel></ion-input>
+          <ion-input type="text" name="auteurs" ngModel="{{this.livre.auteurs[0]}}"></ion-input>
         </ion-item>
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Couverture</ion-label>
-          <ion-input type="text" name="cover" ngModel></ion-input>
+          <ion-input type="text" name="cover" ngModel="{{this.livre.cover}}"></ion-input>
 
           <ion-buttons end>
             <button ion-button round large icon-only (click)="onTakePhoto()">
@@ -43,11 +43,12 @@
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Editeur</ion-label>
-          <ion-input type="text" name="editeur" ngModel></ion-input>
+          <ion-input type="text" name="editeur" ngModel="{{this.livre.editeur}}"></ion-input>
         </ion-item>
+
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label stacked>Date</ion-label>
-          <ion-input type="date" name="date" ngModel></ion-input>
+          <ion-input type="text" name="date" ngModel="{{this.livre.date}}"></ion-input>
         </ion-item>
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Edition</ion-label>
@@ -56,9 +57,10 @@
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Nombre pages</ion-label>
-          <ion-input type="number" name="nbPages" ngModel></ion-input>
+          <ion-input type="number" name="nbPages" ngModel="{{this.livre.nbPages}}"></ion-input>
         </ion-item>
 
+        <!-- TODO faire le two way binding sur un select -->
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Langue</ion-label>
           <ion-select ngModel name="langue">
@@ -75,7 +77,7 @@
         </ion-item>
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-          <ion-label>BIblio</ion-label>
+          <ion-label>Biblio</ion-label>
           <ion-select (ngModel)="biblios" name="biblioL">
             <ion-option *ngFor="let biblio of biblios;" value="{{this.biblio.id_B}}">{{this.biblio.nom_B}}</ion-option>
           </ion-select>
@@ -90,7 +92,7 @@
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label floating>Resume</ion-label>
-          <ion-input type="text" name="resume" ngModel></ion-input>
+          <ion-input type="text" name="resume" ngModel="{{this.livre.resume}}"></ion-input>
         </ion-item>
       </ion-row>
     </ion-list>
