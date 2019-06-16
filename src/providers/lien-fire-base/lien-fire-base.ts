@@ -137,71 +137,6 @@ export class LienFireBaseProvider {
         console.log("Document successfully updated!");
       });*/
 
-  getLivre(idL) : Livre{
-    let docRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
-    let livre :Livre = new Livre();
-
-    console.log('idL : ', idL);
-    console.log('livre : ', livre);
-
-    docRef.ref.get().then(function(doc) {
-      if (doc.exists) {
-        console.log("Document data:", doc.data());
-        console.log("Document titre :", doc.data().titre);
-
-
-        let lecteur : Lecteur = new Lecteur();
-
-        console.log('lecteur : ', lecteur);
-        console.log(doc.data().proprioL);
-
-/*
-        let proprio:string;
-        proprio = doc.data().proprioL;
-        console.log('proprio : ', proprio);
-
-        lecteur = this.retrieveLecteurID(proprio);
-
-        console.log('lecteur.pseudo : ', lecteur.pseudo)
-*/
-/*
-        let lecRef = this.afs.collection('Lecteur').
-        doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').doc(idL);
-
-        console.log('docRef : ', lecRef);
-
-        lecRef.ref.get().then(function(lec) {
-          if (lec.exists) {
-            console.log("Document data:", lec.data());
-            lecteur.setLecteur(lec.idLec,  lec.data().pseudo, lec.data().mail, lec.data().nom, lec.data().prenom,
-              lec.data().mdp, [], lec.data().avatar);
-            console.log("lecteur pseudo :", lecteur.pseudo);
-
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        }).catch(function(error) {
-          console.log("Error getting document:", error);
-        });
-*/
-
-        livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
-          doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-          [], "null", doc.data().cover, "null", lecteur.pseudo, [], doc.data().biblioL);
-          console.log("livre titre :", livre.titre);
-
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function(error) {
-      console.log("Error getting document:", error);
-    });
-
-    return livre;
-  }
-
   retrieveLivres() : Livre[]{
     let livres : Livre[] = [];
 
@@ -332,7 +267,7 @@ export class LienFireBaseProvider {
     return lecteur;
   }
 
-  retreiveLectureLivDeLec(idLiv, idLec){
+  retrieveLectureLivDeLec(idLiv, idLec){
     let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
     let lecture:Lecture = new Lecture();
 
@@ -351,7 +286,7 @@ export class LienFireBaseProvider {
     return lecture;
   }
 
-  retreiveLectureDeLec(idLec:string){
+  retrieveLectureDeLec(idLec:string){
     let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
     let lecture:Lecture = new Lecture();
     let lectures: Lecture[] = [];
@@ -370,6 +305,76 @@ export class LienFireBaseProvider {
     return lectures;
   }
 
+  retrieveLecteurDeLivre(idLiv:string){
+    let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
+    let lecteur:Lecteur = new Lecteur();
+    let lecteurs: Lecteur[] = [];
+
+    docRef.ref.get().then(data => {
+      console.log('toutes les lectures : ', data.docs);
+      for(let list of data.docs){
+        console.log('Lecture data : ', list.data());
+        if( list.data().idLiv === idLiv){
+          lecteur = this.retrieveLecteurID(list.data().idLec);
+          lecteurs.push(lecteur);
+          console.log("Lecteur ajouté : ", lecteur);
+        }
+      }});
+
+    return lecteurs;
+  }
+
+  getLivre(idL) : Livre{
+    let docRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
+    let livre :Livre = new Livre();
+
+    console.log('idL : ', idL);
+    console.log('livre : ', livre);
+
+    docRef.ref.get().then(function(doc) {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+        console.log("Document titre :", doc.data().titre);
+
+
+        let lecteur : Lecteur = new Lecteur();
+
+        console.log('lecteur : ', lecteur);
+        console.log(doc.data().proprioL);
+
+
+/*                let proprio:string;
+                proprio = doc.data().proprioL;
+                console.log('proprio : ', proprio);
+
+                lecteur = this.retrieveLecteurID(proprio);
+
+                console.log('lecteur.pseudo : ', lecteur.pseudo);*/
+
+        let listLectures: string[] = [];
+/*        let lectures: Lecture[];
+        lectures = this.retrieveLecteurDeLivre(doc.id);
+        for(let lecture of lectures){
+          if(lecture.idLec===doc.id){
+            listLectures.push(lecture.idLec);
+          }
+        }*/
+
+        livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
+          doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+          [], "null", doc.data().cover, "null", lecteur.pseudo, listLectures, doc.data().biblioL);
+        console.log("livre titre :", livre.titre);
+
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+
+    return livre;
+  }
 
   rechercheLivre(){
     //TODO

@@ -4,6 +4,8 @@ export class Lecture {
   private _idLiv: string; // idLec livre
   private _page: number; // page à laquelle est le lecteur dans le livre
   private _commentaire : string;
+  private dateDebut : Date;
+  private dateFin : Date;
 
 
   get id(): string {

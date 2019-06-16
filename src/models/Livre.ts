@@ -15,7 +15,7 @@ export class Livre {
   private _resume: string;
   private _auteurs: string[];
   private _avis: string[];
-  private _type: string;
+  private _type: string; // documentaire, biographie...
   private _cover: string; //URL ? ou BD ?
   private _genre: string; //Genre[] ? // type enum ?
 

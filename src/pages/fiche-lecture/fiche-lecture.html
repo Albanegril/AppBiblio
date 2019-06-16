@@ -14,5 +14,69 @@
 
 
 <ion-content padding>
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logobooks.png">
+      </ion-thumbnail>
+      <ion-card-title>
+        {{this.livre.titre}}
+      </ion-card-title>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="person" item-start large></ion-icon>
+      <h2>{{this.livre.auteurs}}</h2>
+    </ion-item>
+
+    <ion-item>
+      <h2>
+        <ion-icon name="color-palette" item-start large></ion-icon>
+        {{this.livre.genre}}
+      </h2>
+      <p>
+        <ion-icon name="cube"></ion-icon>
+        {{this.livre.type}}
+      </p>
+    </ion-item>
+
+    <ion-item>
+      <h2>
+        <ion-icon name="build" item-start large></ion-icon>
+        {{this.livre.editeur}}
+      </h2>
+      <p>
+        <ion-icon name="calendar"></ion-icon>
+        {{this.livre.date}}
+      </p>
+      <p>
+        <ion-icon name="globe" item-start></ion-icon>
+        {{this.livre.langue}}
+      </p>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="text" item-start large></ion-icon>
+      <p>{{this.livre.resume}}</p>
+    </ion-item>
+
+    <ion-item>
+      <span item-start>
+        <ion-icon name="ribbon" item-start></ion-icon>
+        {{this.livre.proprio_L}}
+      </span>
+    </ion-item>
+    <ion-item>
+      <button ion-button icon-start clear item-end (click)="supprimer()" >
+        <ion-icon name="close"></ion-icon>
+        Supprimer
+      </button>
+      <button ion-button icon-start clear item-end (click)="editer()" >
+        <ion-icon name="create"></ion-icon>
+        Editer
+      </button>
+    </ion-item>
+
+  </ion-card>
 
 </ion-content>

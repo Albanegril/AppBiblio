@@ -18,6 +18,7 @@ import {Lecture} from "../../models/Lecture";
 })
 export class FicheLecturePage {
   public lecture:Lecture = new Lecture();
+  public livre:Livre = new Livre();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
@@ -26,12 +27,20 @@ export class FicheLecturePage {
 
     console.log('idLec : ', this.navParams.get('idLec'));
     console.log('idLiv : ', this.navParams.get('idLiv'));
-    this.lecture = lienFirebaseService.retreiveLectureLivDeLec(this.navParams.get('idLiv'), this.navParams.get('idLec'));
+    this.lecture = lienFirebaseService.retrieveLectureLivDeLec(this.navParams.get('idLiv'), this.navParams.get('idLec'));
     console.log('Lecture data : ', this.lecture);
+    this.livre = this.navParams.get('livre');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FicheLecturePage');
   }
 
+  supprimer() {
+
+  }
+
+  editer() {
+
+  }
 }

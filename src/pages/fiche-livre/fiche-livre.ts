@@ -25,8 +25,8 @@ export class FicheLivrePage {
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
 
-    console.log('fiche livre idL : ', this.navParams.get('idL'));
-    this.livre = lienFirebaseService.getLivre(this.navParams.get('idL'));
+    console.log('fiche livre id : ', this.navParams.get('id'));
+    this.livre = lienFirebaseService.getLivre(this.navParams.get('id'));
     console.log('fiche livre data : ', this.livre);
 
   }
@@ -40,7 +40,7 @@ export class FicheLivrePage {
     //TODO
     // recupérer l'id lecteur grâce à un système de session
     // necessite stockage local !
-    this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L});
+    this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L, 'livre': this.livre});
   }
 
   deplacer() {
@@ -48,6 +48,7 @@ export class FicheLivrePage {
     // il faut créer des radioBtn dynamique des biblio dans l'alert !
     // json schema ?
     let biblios: Biblio[] = [];
+    //TODO pb car fct asynchron ?
     biblios = this.lienFirebaseService.retrieveBiblio();
     console.log('biblios : ', biblios);
 
@@ -55,10 +56,10 @@ export class FicheLivrePage {
         title: 'Choisir une biblio',
         inputs: [
           {
-            name: biblios[0].nom_B
+            name: "biblio1"//biblios[0].nom_B
           },
           {
-            name: biblios[1].nom_B
+            name: "biblio2"//biblios[1].nom_B
           },
         ],
         buttons: [
@@ -74,7 +75,7 @@ export class FicheLivrePage {
             handler: data => {
               if (data.nom != null) {
                 console.log("data ID : ",data.idLec);
-                this.lienFirebaseService.changemenentBiblio(this.navParams.get('idLec'), data.idLec);
+                this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
                 let toast = this.toastCtrl.create({
                   message: 'Success : Maison ajouté',
                   duration: 3000

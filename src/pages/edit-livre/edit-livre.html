@@ -36,7 +36,7 @@
             </ion-item>
             <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
               <ion-label floating>Auteurs</ion-label>
-              <ion-input type="text" name="auteurs" ngModel="{{this.livre.auteurs[0]}}"></ion-input>
+              <ion-input type="text" name="auteurs" ngModel="{{this.livre.auteurs}}"></ion-input>
             </ion-item>
 
             <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
@@ -50,7 +50,7 @@
             </ion-item>
 
             <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-              <ion-label stacked>Date</ion-label>
+              <ion-label floating>Date</ion-label>
               <ion-input type="text" name="date" ngModel="{{this.livre.date}}"></ion-input>
             </ion-item>
             <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
@@ -75,8 +75,14 @@
             </ion-item>
 
             <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-              <ion-label floating>Type list</ion-label>
-              <ion-input type="text" name="type" ngModel></ion-input>
+              <ion-label>Type</ion-label>
+              <ion-select ngModel name="type">
+                <ion-option value="documentaire">Documentaire</ion-option>
+                <ion-option value="album photo">Album photo</ion-option>
+                <ion-option value="roman">Roman</ion-option>
+                <ion-option value="poesie">Poesie</ion-option>
+                <ion-option value="theatre">Théâtre</ion-option>
+              </ion-select>
             </ion-item>
 
             <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>

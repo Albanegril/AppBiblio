@@ -53,7 +53,7 @@ export class AjoutLivrePage{
         toast.present();
       //  this.resetFields();
       console.log("livre ajouter")
-       this.navCtrl.push('FicheLivrePage', {'data':res, 'id':res.idLec});
+       this.navCtrl.push('FicheLivrePage', {'data':res, 'id':res.idL});
       }, err => {
         console.log(err);
       })

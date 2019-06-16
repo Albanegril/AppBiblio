@@ -16,14 +16,14 @@ import {Livre} from "../../models/Livre";
   templateUrl: 'list-livre.html',
 })
 export class ListLivrePage {
-  public listLivre:Livre[] = new Array();
+  public listLivre:Livre[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider) {
 
-    console.log(this.navParams.get('idLec'));
+    console.log(this.navParams.get('id'));
     // pb car non sychrno ??
-    this.listLivre = this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('idLec'));
+    this.listLivre = this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('id'));
     console.log('list de livre : ', this.listLivre);
      //this.listLivre = this.lienFirebaseService.retrieveLivres();
      //console.log('list de livre : ', this.listLivre);
@@ -40,7 +40,7 @@ export class ListLivrePage {
   ajouterLivre() {
     //TODO
     // pour le moment le passage de l'ID biblio n'est pas géré au niveau des pages d'ajout
-    this.navCtrl.push('AjoutLivreOptionsPage', {'id':this.navParams.get('idLec')});
+    this.navCtrl.push('AjoutLivreOptionsPage', {'id':this.navParams.get('id')});
   }
 
   lire(idL: string) {
