@@ -111,6 +111,23 @@ export class LienFireBaseProvider {
     })
   }
 
+  addLecture(id: string, id_L: string, num_page: number, commentaire: string){
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection('/Lecture/t6TbbwaGN5OXFY3cpWoo/Lecture').add({
+        idLec: id,
+        idLiv: id_L,
+        page: num_page,
+        commentaire: commentaire
+      })
+        .then(
+          (res) => {
+            resolve(res)
+          },
+          err => reject(err)
+        )
+    })
+  }
+
     //TODO
     // utiliser la fct update plutot que set ?
 /*    this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').doc(idM).update({
@@ -156,7 +173,7 @@ export class LienFireBaseProvider {
         lecRef.ref.get().then(function(lec) {
           if (lec.exists) {
             console.log("Document data:", lec.data());
-            lecteur.setLecteur(lec.id,  lec.data().pseudo, lec.data().mail, lec.data().nom, lec.data().prenom,
+            lecteur.setLecteur(lec.idLec,  lec.data().pseudo, lec.data().mail, lec.data().nom, lec.data().prenom,
               lec.data().mdp, [], lec.data().avatar);
             console.log("lecteur pseudo :", lecteur.pseudo);
 
@@ -315,6 +332,44 @@ export class LienFireBaseProvider {
     return lecteur;
   }
 
+  retreiveLectureLivDeLec(idLiv, idLec){
+    let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
+    let lecture:Lecture = new Lecture();
+
+    docRef.ref.get().then(data => {
+      console.log('toutes les lectures : ', data.docs);
+      for(let list of data.docs){
+        console.log('Lecture data : ', list.data());
+        if( list.data().idLec === idLec){
+          if(list.data().idLiv === idLiv){
+            lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire);
+            console.log("Lecture trouvée ! ");
+          }
+        }
+      }});
+
+    return lecture;
+  }
+
+  retreiveLectureDeLec(idLec:string){
+    let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
+    let lecture:Lecture = new Lecture();
+    let lectures: Lecture[] = [];
+
+    docRef.ref.get().then(data => {
+      console.log('toutes les lectures : ', data.docs);
+      for(let list of data.docs){
+        console.log('Lecture data : ', list.data());
+        if( list.data().idLec === idLec){
+          lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire);
+          lectures.push(lecture);
+          console.log("Lecture ajoutée : ", lecture);
+        }
+      }});
+
+    return lectures;
+  }
+
 
   rechercheLivre(){
     //TODO
@@ -325,7 +380,7 @@ export class LienFireBaseProvider {
   changemenentBiblio(idL, idB){
     let livreRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
 
-    // Set le champs "biblioL" à l'id "idB"
+    // Set le champs "biblioL" à l'idLec "idB"
     return livreRef.update({
       "biblioL": idB
     })

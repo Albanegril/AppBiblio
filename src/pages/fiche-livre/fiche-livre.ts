@@ -25,9 +25,9 @@ export class FicheLivrePage {
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
 
-    console.log('fiche livre id : '+ this.navParams.get('id'));
-    this.livre = lienFirebaseService.getLivre(this.navParams.get('id'));
-    console.log('fiche livre data : '+ this.livre);
+    console.log('fiche livre idL : ', this.navParams.get('idL'));
+    this.livre = lienFirebaseService.getLivre(this.navParams.get('idL'));
+    console.log('fiche livre data : ', this.livre);
 
   }
 
@@ -38,12 +38,15 @@ export class FicheLivrePage {
 
   lire() {
     //TODO
-    // créer ficher lecteur + add lecteur
+    // recupérer l'id lecteur grâce à un système de session
+    // necessite stockage local !
+    this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L});
   }
 
   deplacer() {
     //TODO
     // il faut créer des radioBtn dynamique des biblio dans l'alert !
+    // json schema ?
     let biblios: Biblio[] = [];
     biblios = this.lienFirebaseService.retrieveBiblio();
     console.log('biblios : ', biblios);
@@ -70,17 +73,17 @@ export class FicheLivrePage {
             text: 'Valider',
             handler: data => {
               if (data.nom != null) {
-                console.log("data ID : ",data.id);
-                this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+                console.log("data ID : ",data.idLec);
+                this.lienFirebaseService.changemenentBiblio(this.navParams.get('idLec'), data.idLec);
                 let toast = this.toastCtrl.create({
                   message: 'Success : Maison ajouté',
                   duration: 3000
                 });
                 toast.present();
               } else {
-                console.log("il faut au moins un nom pour créer une Maison");
+                console.log("il faut un nom pour créer une Maison");
                 let toast = this.toastCtrl.create({
-                  message: 'ERROR : il faut un nom pour créer une Maison',
+                  message: 'ERROR : champs NomMaison vide',
                   duration: 3000
                 });
                 toast.present();
@@ -96,10 +99,10 @@ export class FicheLivrePage {
   emprunter() {
     //TODO
     // lecteur exterieur
+    // lien annuaire telephone
   }
 
   editer() {
-    //TODO
-    // vers page editLivre (modifier/supprimer/dédoubler/...)
+    this.navCtrl.push('EditLivrePage', {'data':this.livre, 'id':this.livre.id_L});
   }
 }

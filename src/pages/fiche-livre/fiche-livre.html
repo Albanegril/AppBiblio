@@ -68,15 +68,25 @@
     </ion-item>
 
     <ion-item>
-      <ion-icon name="color-palette" item-start large></ion-icon>
-      <h2>{{this.livre.genre}}</h2>
-      <p>{{this.livre.type}}</p>
+      <h2>
+        <ion-icon name="color-palette" item-start large></ion-icon>
+        {{this.livre.genre}}
+      </h2>
+      <p>
+        <ion-icon name="cube"></ion-icon>
+        {{this.livre.type}}
+      </p>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="build" item-start large></ion-icon>
-      <h2>{{this.livre.editeur}}</h2>
-      <p>{{this.livre.date}}</p>
+      <h2>
+        <ion-icon name="build" item-start large></ion-icon>
+        {{this.livre.editeur}}
+      </h2>
+      <p>
+        <ion-icon name="calendar"></ion-icon>
+        {{this.livre.date}}
+      </p>
       <p>
         <ion-icon name="globe" item-start></ion-icon>
         {{this.livre.langue}}

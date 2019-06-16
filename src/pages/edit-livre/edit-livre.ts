@@ -54,7 +54,7 @@ export class EditLivrePage {
         });
         toast.present();
         console.log("livre modifier")
-        this.navCtrl.push('FicheLivrePage', {'data':res, 'id':res.id});
+        this.navCtrl.push('FicheLivrePage', {'data':res, 'id':res.idLec});
       }, err => {
         console.log(err);
       })

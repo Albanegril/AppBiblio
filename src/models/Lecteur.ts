@@ -85,17 +85,4 @@ export class Lecteur {
     this._lectures = lectures;
     this._avatar = avatar;
   }
-
-  ajouterLecture(idL:string, num_page:number ){
-    let lecture = new Lecture(this._id, idL, num_page);
-    this._lectures.push(lecture);
-  }
-
-  majLecture(idL, page){
-    //if(idL existe in lectures)
-      //cettelecture.num_page = page;
-    // else
-      this.ajouterLecture(idL, page);
-  }
-
 }
