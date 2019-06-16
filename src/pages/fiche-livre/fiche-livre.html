@@ -19,6 +19,7 @@
 
 <ion-content padding>
 
+<!--
   <ion-grid>
     <ion-row>
       <ion-col col-6>
@@ -48,11 +49,74 @@
     </ion-row>
   </ion-grid>
 
-  <button ion-button outline (click)="lire()" >Lire</button>
-  <button ion-button outline (click)="emprunter()" >Emprunter</button>
-  <button ion-button outline (click)="deplacer()" >Deplacer</button>
 
-  <div padding>
+-->
 
-  </div>
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logobooks.png">
+      </ion-thumbnail>
+      <ion-card-title>
+        {{this.livre.titre}}
+      </ion-card-title>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="person" item-start large></ion-icon>
+      <h2>{{this.livre.auteurs}}</h2>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="color-palette" item-start large></ion-icon>
+      <h2>{{this.livre.genre}}</h2>
+      <p>{{this.livre.type}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="build" item-start large></ion-icon>
+      <h2>{{this.livre.editeur}}</h2>
+      <p>{{this.livre.date}}</p>
+      <p>
+        <ion-icon name="globe" item-start></ion-icon>
+        {{this.livre.langue}}
+      </p>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="text" item-start large></ion-icon>
+      <p>{{this.livre.resume}}</p>
+    </ion-item>
+
+    <ion-item>
+      <span item-start>
+        <ion-icon name="ribbon" item-start></ion-icon>
+        {{this.livre.proprio_L}}
+      </span>
+      <span item-start>
+        <ion-icon name="people" item-start></ion-icon>
+        {{this.livre.lecteurs}}
+      </span>
+    </ion-item>
+    <ion-item>
+      <button ion-button icon-start clear item-end (click)="lire()" >
+        <ion-icon name="eye"></ion-icon>
+        Lire
+      </button>
+      <button ion-button icon-start clear item-end (click)="emprunter()" >
+        <ion-icon name="share-alt"></ion-icon>
+        Emprunter
+      </button>
+      <button ion-button icon-start clear item-end (click)="deplacer()" >
+        <ion-icon name="move"></ion-icon>
+        Deplacer
+      </button>
+      <button ion-button icon-start clear item-end (click)="editer()" >
+        <ion-icon name="edit"></ion-icon>
+        Editer
+      </button>
+    </ion-item>
+
+  </ion-card>
+
 </ion-content>

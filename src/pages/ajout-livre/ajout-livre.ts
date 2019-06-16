@@ -27,8 +27,8 @@ export class AjoutLivrePage{
   public biblios:Biblio[] = new Array();
   public proprios: Lecteur[] = new Array();
 
-  constructor(private lienFirebaseService: LienFireBaseProvider,
-              public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private lienFirebaseService: LienFireBaseProvider,
               private toastCtrl: ToastController,
               private camera: Camera) {
     this.livre = this.navParams.get('data');
@@ -42,9 +42,8 @@ export class AjoutLivrePage{
   }
 
   onSubmitForm(form: NgForm) {
-    console.log("ajout livre" + form.value);
+    console.log("ajout livre", form.value);
 
-    //TODO
     this.lienFirebaseService.addLivre(form)
       .then( res => {
         let toast = this.toastCtrl.create({
@@ -53,7 +52,7 @@ export class AjoutLivrePage{
         });
         toast.present();
       //  this.resetFields();
-    console.log("ajoute du livre dans la BD OK ...")
+      console.log("livre ajouter")
        this.navCtrl.push('FicheLivrePage', {'data':res, 'id':res.id});
       }, err => {
         console.log(err);

@@ -3,6 +3,7 @@ import {AlertController, IonicPage, NavController, NavParams, ToastController} f
 import {Livre} from "../../models/Livre";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Maison} from "../../models/Maison";
+import {Biblio} from "../../models/Biblio";
 
 /**
  * Generated class for the FicheLivrePage page.
@@ -43,16 +44,18 @@ export class FicheLivrePage {
   deplacer() {
     //TODO
     // il faut créer des radioBtn dynamique des biblio dans l'alert !
+    let biblios: Biblio[] = [];
+    biblios = this.lienFirebaseService.retrieveBiblio();
+    console.log('biblios : ', biblios);
+
       let alert = this.alertCtrl.create({
-        title: 'Nouvelle Biblio',
+        title: 'Choisir une biblio',
         inputs: [
           {
-            name: 'nom',
-            placeholder: 'Nom'
+            name: biblios[0].nom_B
           },
           {
-            name: 'id',
-            placeholder: 'ID'
+            name: biblios[1].nom_B
           },
         ],
         buttons: [
@@ -64,14 +67,23 @@ export class FicheLivrePage {
             }
           },
           {
-            text: 'Créer',
+            text: 'Valider',
             handler: data => {
               if (data.nom != null) {
                 console.log("data ID : ",data.id);
                 this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+                let toast = this.toastCtrl.create({
+                  message: 'Success : Maison ajouté',
+                  duration: 3000
+                });
+                toast.present();
               } else {
                 console.log("il faut au moins un nom pour créer une Maison");
-                // créer un toast
+                let toast = this.toastCtrl.create({
+                  message: 'ERROR : il faut un nom pour créer une Maison',
+                  duration: 3000
+                });
+                toast.present();
                 return false;
               }
             }
@@ -86,4 +98,8 @@ export class FicheLivrePage {
     // lecteur exterieur
   }
 
+  editer() {
+    //TODO
+    // vers page editLivre (modifier/supprimer/dédoubler/...)
+  }
 }

@@ -24,9 +24,9 @@ export class AjoutLivreIsbnScannerPage {
               private biblioServiceprovider: BiblioServiceProvider) {
 
     this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
+      console.log('Barcode data : ', barcodeData);
       // envoyer code dans service ISBN BD
-      this.biblioServiceprovider.getLivreISBN(barcodeData).then( data => {
+      this.biblioServiceprovider.getLivreISBN(barcodeData.text).then( data => {
         console.log('title', data);
         this.navCtrl.push('AjoutLivrePage', {'data':data});
       }).catch(err => {

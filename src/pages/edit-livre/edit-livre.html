@@ -1,0 +1,120 @@
+<!--
+  Generated template for the EditLivrePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>editLivre</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div padding>
+    <ion-segment [(ngModel)]="options">
+      <ion-segment-button value="modifier">
+        Modifier
+      </ion-segment-button>
+      <ion-segment-button value="supprimer">
+        Supprimer
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="options">
+    <ion-list *ngSwitchCase="'modifier'">
+      <form #form="ngForm" (ngSubmit)="modifier(form)">
+        <ion-list col12 offset-md-3 offset-lg-3>
+          <ion-row>
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Titre</ion-label>
+              <ion-input type="text" name="titre" ngModel="{{this.livre.titre}}"></ion-input>
+            </ion-item>
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Auteurs</ion-label>
+              <ion-input type="text" name="auteurs" ngModel="{{this.livre.auteurs[0]}}"></ion-input>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Couverture</ion-label>
+              <ion-input type="text" name="cover" ngModel="{{this.livre.cover}}"></ion-input>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Editeur</ion-label>
+              <ion-input type="text" name="editeur" ngModel="{{this.livre.editeur}}"></ion-input>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label stacked>Date</ion-label>
+              <ion-input type="text" name="date" ngModel="{{this.livre.date}}"></ion-input>
+            </ion-item>
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Edition</ion-label>
+              <ion-input type="text" name="edition" ngModel></ion-input>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Nombre pages</ion-label>
+              <ion-input type="number" name="nbPages" ngModel="{{this.livre.nbPages}}"></ion-input>
+            </ion-item>
+
+            <!-- TODO faire le two way binding sur un select -->
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label>Langue</ion-label>
+              <ion-select ngModel name="langue">
+                <ion-option value="FR">Français</ion-option>
+                <ion-option value="ENG">Anglais</ion-option>
+                <ion-option value="JAP">Japonais</ion-option>
+                <ion-option value="ALL">Allemand</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Type list</ion-label>
+              <ion-input type="text" name="type" ngModel></ion-input>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label>Biblio</ion-label>
+              <ion-select (ngModel)="biblios" name="biblioL">
+                <ion-option *ngFor="let biblio of biblios;" value="{{this.biblio.id_B}}">{{this.biblio.nom_B}}</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label>Proprio</ion-label>
+              <ion-select (ngModel)="proprios" name="proprioL">
+                <ion-option *ngFor="let proprio of proprios;" value="{{this.proprio.id}}">{{this.proprio.pseudo}}</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+              <ion-label floating>Resume</ion-label>
+              <ion-input type="text" name="resume" ngModel="{{this.livre.resume}}"></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-list>
+        <button type="submit" ion-button block >Modifier</button>
+      </form>
+
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'supprimer'">
+      <ion-item>
+        <h2>Sûr ?</h2>
+      </ion-item>
+      <ion-item>
+        <button ion-button icon-start clear item-end (click)="supprimer(this.livre.id_L)" >
+          <ion-icon name="close"></ion-icon>
+          Supprimer
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>
