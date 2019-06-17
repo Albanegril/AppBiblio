@@ -3,6 +3,7 @@ import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angula
 import {ConnexionPourquoiPage} from "../connexion-pourquoi/connexion-pourquoi";
 import {AjoutLivreIsbnScannerPage} from "../ajout-livre-isbn-scanner/ajout-livre-isbn-scanner";
 import {AjoutLivreQrScannerPage} from "../ajout-livre-qr-scanner/ajout-livre-qr-scanner";
+import {Livre} from "../../models/Livre";
 
 /**
  * Generated class for the AjoutLivreOptionsPage page.
@@ -34,7 +35,8 @@ export class AjoutLivreOptionsPage {
 
   onClickForm() {
     console.log("go Form !");
-    this.navCtrl.push('AjoutLivrePage');
+    let livre:Livre = new Livre();
+    this.navCtrl.push('AjoutLivrePage', {'data':livre});
   }
 
   onClickQR() {

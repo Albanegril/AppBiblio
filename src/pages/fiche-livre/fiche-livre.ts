@@ -7,6 +7,7 @@ import {Biblio} from "../../models/Biblio";
 import {Lecteur} from "../../models/Lecteur";
 import {Lecture} from "../../models/Lecture";
 import {findLocaleData} from "@angular/common/src/i18n/locale_data_api";
+import {b} from "@angular/core/src/render3";
 
 /**
  * Generated class for the FicheLivrePage page.
@@ -83,42 +84,44 @@ export class FicheLivrePage {
     biblios = this.lienFirebaseService.retrieveBiblio();
     console.log('biblios : ', biblios);
 
+    let alert = this.alertCtrl.create();
 
-      let alert = this.alertCtrl.create();
-      alert.setTitle('Choisie une nouvelle biblio');
+    let biblio:Biblio;
+    for(biblio of biblios){
+      console.log('biblio id : ', biblio.id_B, 'biblio nom : ', biblio.nom_B);
+      alert.addInput({
+        type: 'radio',
+        label: biblio.nom_B,
+        value: biblio.id_B,
+        checked: true
+      });
+    }
 
-      for(let biblio of biblios){
-        alert.addInput({
-          type: 'radio',
-          label: biblio.nom_B,
-          value: biblio.id_B,
-          checked: true
-        });
-      }
+    alert.setTitle('Choisie une nouvelle biblio');
 
-      alert.addButton('Cancel');
-      alert.addButton({
-        text: 'Valider',
-        handler: data => {
-          if (data.nom != null) {
-            console.log("data ID : ", data.idLec);
-            this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
-            let toast = this.toastCtrl.create({
-              message: 'Success : Maison ajouté',
-              duration: 3000
-            });
-            toast.present();
-          } else {
-            console.log("il faut un nom pour créer une Maison");
-            let toast = this.toastCtrl.create({
-              message: 'ERROR : champs NomMaison vide',
-              duration: 3000
-            });
-            toast.present();
-            return false;
-          }
-        }});
-      alert.present();
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Valider',
+      handler: data => {
+        if (data.nom != null) {
+          console.log("data ID : ", data.idLec);
+          this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+          let toast = this.toastCtrl.create({
+            message: 'Success : Maison ajouté',
+            duration: 3000
+          });
+          toast.present();
+        } else {
+          console.log("il faut un nom pour créer une Maison");
+          let toast = this.toastCtrl.create({
+            message: 'ERROR : champs NomMaison vide',
+            duration: 3000
+          });
+          toast.present();
+          return false;
+        }
+      }});
+    alert.present();
 
   }
 
@@ -129,6 +132,7 @@ export class FicheLivrePage {
   }
 
   editer() {
+    this.navCtrl.pop();
     this.navCtrl.push('EditLivrePage', {'data':this.livre, 'id':this.livre.id_L});
   }
 }

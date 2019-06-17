@@ -40,7 +40,17 @@ export class EditLivrePage {
   }
 
   supprimer(idL: string) {
-
+    console.log(' idL : ', idL);
+    this.lienFirebaseService.deleteLivre(idL).then( res => {
+      let toast = this.toastCtrl.create({
+        message: 'Livre deleted',
+        duration: 3000
+      });
+      toast.present();
+      this.navCtrl.pop();
+    }, err => {
+      console.log(err);
+    })
   }
 
   modifier(form: NgForm) {
@@ -49,11 +59,11 @@ export class EditLivrePage {
     this.lienFirebaseService.modifierLivre(form, this.livre, this.livre.id_L)
       .then( res => {
         let toast = this.toastCtrl.create({
-          message: 'Livre add successfully',
+          message: 'Livre updated',
           duration: 3000
         });
         toast.present();
-        console.log("livre modifier")
+        this.navCtrl.pop();
         this.navCtrl.push('FicheLivrePage', {'data':res, 'id':this.navParams.get('id')});
       }, err => {
         console.log(err);

@@ -1,27 +1,27 @@
 import {Lecteur} from "./Lecteur";
 
 export class Livre {
-  private _id_L: string;
+  private _id_L: string = null;
 
-  private _titre: string;
-  private _isbn: string;
-  private _format: string;
-  private _editeur: string;
-  private _langue: string;
-  private _date: string;
-  private _edition: string;
-  private _nbPages: number;
-  private _dimensions: string;
-  private _resume: string;
-  private _auteurs: string[];
-  private _avis: string[];
-  private _type: string; // documentaire, biographie...
-  private _cover: string; //URL ? ou BD ?
-  private _genre: string; //Genre[] ? // type enum ?
+  private _titre: string = null;
+  private _isbn: string = null;
+  private _format: string = null;
+  private _editeur: string = null;
+  private _langue: string = null;
+  private _date: string = null;
+  private _edition: string = null;
+  private _nbPages: number = null;
+  private _dimensions: string = null;
+  private _resume: string = null;
+  private _auteurs: string[] = null;
+  private _avis: string[] = null;
+  private _type: string = null; // documentaire, roman, album...
+  private _cover: string = null; //URL ? ou BD ?
+  private _genre: string = null; //Genre[] ? // type enum ?
 
-  private _proprio_L: string; //ID lecteur
-  private _lecteurs: string[]; // ID lecteurs
-  private _biblio_L: string; // ID biblio
+  private _proprio_L: string = null; //ID lecteur
+  private _lecteurs: string[] = null; // ID lecteurs
+  private _biblio_L: string = null; // ID biblio
 
 
   get id_L(): string {

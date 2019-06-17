@@ -37,7 +37,7 @@ export class LienFireBaseProvider {
         editeur: form.value.editeur,
         langue: form.value.langue,
         date: form.value.date,
-        //edition: form.value.edition,
+        edition: form.value.edition,
         genre: form.value.genre,
         type: form.value.type,
         nbPages: form.value.nbPages,
@@ -161,8 +161,8 @@ export class LienFireBaseProvider {
         // doc.data() is never undefined for query doc snapshots
         let livre:Livre = new Livre();
         livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
-          doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-          [], "null", doc.data().cover, "null", doc.data().proprioL, [], doc.data().biblioL);
+          doc.data().date, doc.data().edition, doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+          [], doc.data().type, doc.data().cover, doc.data().genre, doc.data().proprioL, [], doc.data().biblioL);
         if(livre.biblio_L === idB){
           livres.push(livre);
           console.log("ajouté !");
@@ -186,7 +186,7 @@ export class LienFireBaseProvider {
         let biblio:Biblio = new Biblio();
         biblio.setBiblio(list.id, list.data().nomB, 0, null, list.data().maisonB);
         biblios.push(biblio);
-        console.log('Biblio data bis : ', biblio);
+        //console.log('Biblio data bis : ', biblio);
       }});
 
     return biblios;
@@ -238,7 +238,8 @@ export class LienFireBaseProvider {
       for(let list of data.docs){
         console.log('Lecteur data : ', list.data());
         let lecteur:Lecteur = new Lecteur();
-        lecteur.setLecteur(list.id,  list.data().pseudo, list.data().mail, list.data().nom, list.data().prenom, list.data().mdp, [], list.data().avatar);
+        lecteur.setLecteur(list.id,  list.data().pseudo, list.data().mail, list.data().nom, list.data().prenom,
+          list.data().mdp, [], list.data().avatar);
         lecteurs.push(lecteur);
         console.log('Lecteur data bis : ', lecteur);
       }});
@@ -256,7 +257,8 @@ export class LienFireBaseProvider {
       console.log('doc : ', doc);
       if (doc.exists) {
         console.log("Document data:", doc.data());
-        lecteur.setLecteur(doc.id,  doc.data().pseudo, doc.data().mail, doc.data().nom, doc.data().prenom, doc.data().mdp, [], doc.data().avatar);
+        lecteur.setLecteur(doc.id,  doc.data().pseudo, doc.data().mail, doc.data().nom, doc.data().prenom, doc.data().mdp,
+          [], doc.data().avatar);
         console.log("lecteur pseudo :", lecteur.pseudo);
 
       } else {
@@ -364,7 +366,7 @@ export class LienFireBaseProvider {
         }*/
 
         livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
-          doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+          doc.data().date, doc.data().edition, doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
           [], doc.data().type, doc.data().cover, doc.data().genre, lecteur.pseudo, listLecteurs, doc.data().biblioL);
         console.log("livre titre :", livre.titre);
 
@@ -414,6 +416,10 @@ export class LienFireBaseProvider {
       if (typeof form.value.date === "undefined" || form.value.date === null) {date = livre.date;}
       else {date = form.value.date;}
 
+      let edition:string;
+      if (typeof form.value.edition === "undefined" || form.value.edition === null) {edition = livre.edition;}
+      else {edition = form.value.edition;}
+
       let pages:number;
       if (typeof form.value.nbPages === "undefined" || form.value.nbPages === null) {pages = livre.nbPages;}
       else {pages = form.value.nbPages;}
@@ -453,7 +459,7 @@ export class LienFireBaseProvider {
           editeur: editeur,
           langue: langue,
           date: date,
-          //edition: edition,
+          edition: edition,
           genre: genre,
           type: type,
           nbPages: pages,
@@ -472,5 +478,15 @@ export class LienFireBaseProvider {
           err => reject(err)
         )
     })
+  }
+
+  deleteLivre(idL:string){
+    let livreRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
+
+    return livreRef.delete().then(function() {
+      console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      console.error("Error removing document: ", error);
+    });
   }
 }
