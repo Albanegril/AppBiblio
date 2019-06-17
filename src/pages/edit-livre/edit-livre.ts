@@ -46,7 +46,7 @@ export class EditLivrePage {
   modifier(form: NgForm) {
     console.log("modif livre", form.value);
 
-    this.lienFirebaseService.modifierLivre(form, this.livre.id_L)
+    this.lienFirebaseService.modifierLivre(form, this.livre, this.livre.id_L)
       .then( res => {
         let toast = this.toastCtrl.create({
           message: 'Livre add successfully',

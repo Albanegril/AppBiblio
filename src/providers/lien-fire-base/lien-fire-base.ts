@@ -342,7 +342,7 @@ export class LienFireBaseProvider {
         console.log("Document biblio : ", doc.data().biblioL);
 
         lecteur.pseudo = proprio;
-        // TODO error pourquoi ?
+        // TODO error pourquoi ?! impossible d'appeller une fct propre dans le provider ?
 /*        if (typeof doc.data().proprioL === "undefined" || doc.data().proprioL === null )
         {
           lecteur.pseudo = proprio;
@@ -377,16 +377,10 @@ export class LienFireBaseProvider {
     return livre;
   }
 
-  rechercheLivre(){
-    //TODO
-    /*this.teamAdminCollection = fireStore.collection<any>('userProfile', ref =>
-      ref.where('titre', '==', true));*/
-  }
-
   changemenentBiblio(idL, idB){
     let livreRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
 
-    // Set le champs "biblioL" à l'idLec "idB"
+    // Set le champs "biblioL" à l'idL "idB"
     return livreRef.update({
       "biblioL": idB
     })
@@ -396,12 +390,12 @@ export class LienFireBaseProvider {
   }
 
 
-  modifierLivre(form, id_L: string) {
+  modifierLivre(form, data, id_L: string) {
     return new Promise<any>((resolve, reject) => {
       console.log(form.value);
 
       let livre: Livre = new Livre();
-      livre = this.getLivre(id_L);
+      livre = data;
       let titre:string;
       if (typeof form.value.titre === "undefined" || form.value.title === null) {titre = livre.titre;}
       else {titre = form.value.titre;}
@@ -442,8 +436,6 @@ export class LienFireBaseProvider {
       if (typeof form.value.biblioL === "undefined" || form.value.biblioL === null || form.value.biblioL === "") {biblio = livre.biblio_L;}
       else {biblio = form.value.biblioL;}
 
-      console.log('Livre biblio : ', livre.biblio_L, ' Livre proprio : ', livre.proprio_L);
-      console.log('biblio : ', biblio, ' proprio : ', proprio);
       this.afs.collection('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').doc(id_L).update(
         {
           titre: titre,
