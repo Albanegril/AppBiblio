@@ -334,24 +334,25 @@ export class LienFireBaseProvider {
     docRef.ref.get().then(function(doc) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
-        console.log("Document titre :", doc.data().titre);
-
 
         let lecteur : Lecteur = new Lecteur();
+        let proprio:string;
+        proprio = doc.data().proprioL;
+        console.log("Document proprio : ", doc.data().proprioL, " proprio : ", proprio);
+        console.log("Document biblio : ", doc.data().biblioL);
 
-        console.log('lecteur : ', lecteur);
-        console.log(doc.data().proprioL);
+        lecteur.pseudo = proprio;
+        // TODO error pourquoi ?
+/*        if (typeof doc.data().proprioL === "undefined" || doc.data().proprioL === null )
+        {
+          lecteur.pseudo = proprio;
+        } else {
+          lecteur = this.retrieveLecteurID(proprio);
+          console.log('proprio : ', proprio);
+        }*/
+        console.log('lecteur.pseudo : ', lecteur.pseudo);
 
-
-/*                let proprio:string;
-                proprio = doc.data().proprioL;
-                console.log('proprio : ', proprio);
-
-                lecteur = this.retrieveLecteurID(proprio);
-
-                console.log('lecteur.pseudo : ', lecteur.pseudo);*/
-
-        let listLectures: string[] = [];
+        let listLecteurs: string[] = [];
 /*        let lectures: Lecture[];
         lectures = this.retrieveLecteurDeLivre(doc.id);
         for(let lecture of lectures){
@@ -362,7 +363,7 @@ export class LienFireBaseProvider {
 
         livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
           doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-          [], "null", doc.data().cover, "null", lecteur.pseudo, listLectures, doc.data().biblioL);
+          [], "null", doc.data().cover, "null", lecteur.pseudo, listLecteurs, doc.data().biblioL);
         console.log("livre titre :", livre.titre);
 
       } else {
@@ -402,45 +403,47 @@ export class LienFireBaseProvider {
       let livre: Livre = new Livre();
       livre = this.getLivre(id_L);
       let titre:string;
-      if (typeof form.value.titre === "undefined") {titre = livre.titre;}
+      if (typeof form.value.titre === "undefined" || form.value.title === null) {titre = livre.titre;}
       else {titre = form.value.titre;}
 
       let editeur:string;
-      if (typeof form.value.editeur === "undefined") {editeur = livre.editeur;}
+      if (typeof form.value.editeur === "undefined" || form.value.editeur === null) {editeur = livre.editeur;}
       else {editeur = form.value.editeur;}
 
       let langue:string;
-      if (typeof form.value.langue === "undefined") {langue = livre.langue;}
+      if (typeof form.value.langue === "undefined" || form.value.langue === null) {langue = livre.langue;}
       else {langue = form.value.langue;}
 
       let date:string;
-      if (typeof form.value.date === "undefined") {date = livre.date;}
+      if (typeof form.value.date === "undefined" || form.value.date === null) {date = livre.date;}
       else {date = form.value.date;}
 
       let pages:number;
-      if (typeof form.value.nbPages === "undefined") {pages = livre.nbPages;}
+      if (typeof form.value.nbPages === "undefined" || form.value.nbPages === null) {pages = livre.nbPages;}
       else {pages = form.value.nbPages;}
 
       let resume:string;
-      if (typeof form.value.resume === "undefined") {resume = livre.resume;}
+      if (typeof form.value.resume === "undefined" || form.value.resume === null) {resume = livre.resume;}
       else {resume = form.value.resume;}
 
       let auteurs:string[];
-      if (typeof form.value.auteurs === "undefined") {auteurs = livre.auteurs;}
+      if (typeof form.value.auteurs === "undefined" || form.value.auteurs === null) {auteurs = livre.auteurs;}
       else {auteurs = form.value.auteurs;}
 
       let cover:string;
-      if (typeof form.value.cover === "undefined") {cover = livre.cover;}
+      if (typeof form.value.cover === "undefined" || form.value.cover === null) {cover = livre.cover;}
       else {cover = form.value.cover;}
 
       let proprio:string;
-      if (typeof form.value.proprioL === "undefined") {proprio = livre.proprio_L;}
+      if (typeof form.value.proprioL === "undefined" || form.value.proprioL === null || form.value.proprioL === "") {proprio = livre.proprio_L;}
       else {proprio = form.value.proprioL;}
 
       let biblio:string;
-      if (typeof form.value.biblioL === "undefined") {biblio = livre.biblio_L;}
+      if (typeof form.value.biblioL === "undefined" || form.value.biblioL === null || form.value.biblioL === "") {biblio = livre.biblio_L;}
       else {biblio = form.value.biblioL;}
 
+      console.log('Livre biblio : ', livre.biblio_L, ' Livre proprio : ', livre.proprio_L);
+      console.log('biblio : ', biblio, ' proprio : ', proprio);
       this.afs.collection('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').doc(id_L).update(
         {
           titre: titre,
