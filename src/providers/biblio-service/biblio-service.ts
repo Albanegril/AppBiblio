@@ -65,9 +65,9 @@ export class BiblioServiceProvider {
         if (typeof json.items[0].volumeInfo.authors === "undefined") {auteurs = null;}
           else {auteurs = json.items[0].volumeInfo.authors;}
 
-        let cover:string;
+        let cover:string = "";/*
         if (typeof json.items[0].volumeInfo.imageLinks.thumbnail === "undefined") {cover = "";}
-          else {cover = json.items[0].volumeInfo.imageLinks.thumbnail;}
+          else {cover = json.items[0].volumeInfo.imageLinks.thumbnail;}*/
 
         let livre: Livre = new Livre();
         livre.setLivre("", titre, isbn.toString(), "", editeur, langue, date, "", pages, "", resume, auteurs, [], "", cover, "", "", [], "")

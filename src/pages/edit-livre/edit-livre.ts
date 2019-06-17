@@ -21,8 +21,8 @@ import {NgForm} from "@angular/forms";
 })
 export class EditLivrePage {
   public livre:Livre = new Livre();
-  public biblios:Biblio[] = new Array();
-  public proprios: Lecteur[] = new Array();
+  public biblios:Biblio[] = [];
+  public proprios: Lecteur[] = [];
   options: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -54,7 +54,7 @@ export class EditLivrePage {
         });
         toast.present();
         console.log("livre modifier")
-        this.navCtrl.push('FicheLivrePage', {'data':res, 'id':res.id});
+        this.navCtrl.push('FicheLivrePage', {'data':res, 'id':this.navParams.get('id')});
       }, err => {
         console.log(err);
       })

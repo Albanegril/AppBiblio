@@ -25,6 +25,13 @@ export class AjoutLivreIsbnScannerPage {
 
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data : ', barcodeData);
+
+      this.biblioServiceprovider.getLivreISBN(barcodeData.text);
+    }).catch(err => {
+      console.log('Error', err);
+    });
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data : ', barcodeData);
       // envoyer code dans service ISBN BD
       this.biblioServiceprovider.getLivreISBN(barcodeData.text).then( data => {
         console.log('title', data);

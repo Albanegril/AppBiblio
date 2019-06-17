@@ -24,8 +24,8 @@ import {Biblio} from "../../models/Biblio";
 })
 export class AjoutLivrePage{
   public livre:Livre = new Livre();
-  public biblios:Biblio[] = new Array();
-  public proprios: Lecteur[] = new Array();
+  public biblios:Biblio[] = [];
+  public proprios: Lecteur[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,

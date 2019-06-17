@@ -244,7 +244,7 @@ export class LienFireBaseProvider {
     return lecteurs;
   }
 
-  retrieveLecteurID(idL:string) {
+  retrieveLecteurID(idL:string):Lecteur {
     let docRef = this.afs.collection('Lecteur').doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').doc(idL);
     let lecteur:Lecteur = new Lecteur();
 
@@ -433,20 +433,28 @@ export class LienFireBaseProvider {
       if (typeof form.value.cover === "undefined") {cover = livre.cover;}
       else {cover = form.value.cover;}
 
+      let proprio:string;
+      if (typeof form.value.proprioL === "undefined") {proprio = livre.proprio_L;}
+      else {proprio = form.value.proprioL;}
+
+      let biblio:string;
+      if (typeof form.value.biblioL === "undefined") {biblio = livre.biblio_L;}
+      else {biblio = form.value.biblioL;}
+
       this.afs.collection('/Livre/Fa1vm1fYmsuKwCUuup31/Livre').doc(id_L).update(
         {
-          titre: form.value.titre,
-          //isbn: form.value.isbn,
-          editeur: form.value.editeur,
-          langue: form.value.langue,
-          date: form.value.date,
-          //edition: form.value.edition,
-          nbPages: form.value.nbPages,
-          resume: form.value.resume,
-          auteurs: form.value.auteurs,
-          cover: form.value.cover,
-          proprioL: form.value.proprioL,
-          biblioL: form.value.biblioL
+          titre: titre,
+          //isbn: isbn,
+          editeur: editeur,
+          langue: langue,
+          date: date,
+          //edition: edition,
+          nbPages: pages,
+          resume: resume,
+          auteurs: auteurs,
+          cover: cover,
+          proprioL: proprio,
+          biblioL: biblio
 
         })
         .then(

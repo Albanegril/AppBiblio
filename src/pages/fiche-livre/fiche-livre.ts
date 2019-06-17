@@ -29,6 +29,12 @@ export class FicheLivrePage {
     this.livre = lienFirebaseService.getLivre(this.navParams.get('id'));
     console.log('fiche livre data : ', this.livre);
 
+/*    let pseudoP:string;
+    console.log('Proprio id : ',this.livre.proprio_L);
+    pseudoP = this.lienFirebaseService.retrieveLecteurID(this.livre.proprio_L).pseudo;
+    this.livre.proprio_L = pseudoP;
+    console.log(this.livre.proprio_L);*/
+
   }
 
   ionViewDidLoad() {
