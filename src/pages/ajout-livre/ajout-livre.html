@@ -83,6 +83,11 @@
         </ion-item>
 
         <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
+          <ion-label floating>Genre</ion-label>
+          <ion-input type="text" name="genre" ngModel></ion-input>
+        </ion-item>
+
+        <ion-item col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
           <ion-label>Biblio</ion-label>
           <ion-select (ngModel)="biblios" name="biblioL">
             <ion-option *ngFor="let biblio of biblios;" value="{{this.biblio.id_B}}">{{this.biblio.nom_B}}</ion-option>

@@ -6,6 +6,7 @@ import {Maison} from "../../models/Maison";
 import {Biblio} from "../../models/Biblio";
 import {Lecteur} from "../../models/Lecteur";
 import {Lecture} from "../../models/Lecture";
+import {findLocaleData} from "@angular/common/src/i18n/locale_data_api";
 
 /**
  * Generated class for the FicheLivrePage page.
@@ -82,49 +83,43 @@ export class FicheLivrePage {
     biblios = this.lienFirebaseService.retrieveBiblio();
     console.log('biblios : ', biblios);
 
-      let alert = this.alertCtrl.create({
-        title: 'Choisir une biblio',
-        inputs: [
-          {
-            name: "biblio1"//biblios[0].nom_B
-          },
-          {
-            name: "biblio2"//biblios[1].nom_B
-          },
-        ],
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'Valider',
-            handler: data => {
-              if (data.nom != null) {
-                console.log("data ID : ",data.idLec);
-                this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
-                let toast = this.toastCtrl.create({
-                  message: 'Success : Maison ajouté',
-                  duration: 3000
-                });
-                toast.present();
-              } else {
-                console.log("il faut un nom pour créer une Maison");
-                let toast = this.toastCtrl.create({
-                  message: 'ERROR : champs NomMaison vide',
-                  duration: 3000
-                });
-                toast.present();
-                return false;
-              }
-            }
+
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Choisie une nouvelle biblio');
+
+      for(let biblio of biblios){
+        alert.addInput({
+          type: 'radio',
+          label: biblio.nom_B,
+          value: biblio.id_B,
+          checked: true
+        });
+      }
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'Valider',
+        handler: data => {
+          if (data.nom != null) {
+            console.log("data ID : ", data.idLec);
+            this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+            let toast = this.toastCtrl.create({
+              message: 'Success : Maison ajouté',
+              duration: 3000
+            });
+            toast.present();
+          } else {
+            console.log("il faut un nom pour créer une Maison");
+            let toast = this.toastCtrl.create({
+              message: 'ERROR : champs NomMaison vide',
+              duration: 3000
+            });
+            toast.present();
+            return false;
           }
-        ]
-      });
+        }});
       alert.present();
+
   }
 
   emprunter() {

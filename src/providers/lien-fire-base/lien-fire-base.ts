@@ -38,6 +38,8 @@ export class LienFireBaseProvider {
         langue: form.value.langue,
         date: form.value.date,
         //edition: form.value.edition,
+        genre: form.value.genre,
+        type: form.value.type,
         nbPages: form.value.nbPages,
         resume: form.value.resume,
         auteurs: form.value.auteurs,
@@ -363,7 +365,7 @@ export class LienFireBaseProvider {
 
         livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
           doc.data().date, "null", doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
-          [], "null", doc.data().cover, "null", lecteur.pseudo, listLecteurs, doc.data().biblioL);
+          [], doc.data().type, doc.data().cover, doc.data().genre, lecteur.pseudo, listLecteurs, doc.data().biblioL);
         console.log("livre titre :", livre.titre);
 
       } else {
@@ -416,6 +418,14 @@ export class LienFireBaseProvider {
       if (typeof form.value.nbPages === "undefined" || form.value.nbPages === null) {pages = livre.nbPages;}
       else {pages = form.value.nbPages;}
 
+      let genre:string;
+      if (typeof form.value.genre === "undefined" || form.value.genre === null || form.value.genre === "") {genre = livre.genre;}
+      else {genre = form.value.genre;}
+
+      let type:string;
+      if (typeof form.value.type === "undefined" || form.value.type === null || form.value.type === "") {type = livre.type;}
+      else {type = form.value.type;}
+
       let resume:string;
       if (typeof form.value.resume === "undefined" || form.value.resume === null) {resume = livre.resume;}
       else {resume = form.value.resume;}
@@ -444,6 +454,8 @@ export class LienFireBaseProvider {
           langue: langue,
           date: date,
           //edition: edition,
+          genre: genre,
+          type: type,
           nbPages: pages,
           resume: resume,
           auteurs: auteurs,
