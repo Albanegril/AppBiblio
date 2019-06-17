@@ -17,7 +17,7 @@
   <ion-list inset *ngFor="let lecteur of listLecteurs;">
     <ion-item (click)="onClickLecteur(this.lecteur.id)">
       <ion-thumbnail item-start>
-        <img src="assets/imgs/logobooks.png">
+        <ion-icon name="person" item-start large></ion-icon>
       </ion-thumbnail>
       <h2>{{this.lecteur.pseudo}}</h2>
       <p>{{this.lecteur.nom}} • {{this.lecteur.prenom}}</p>

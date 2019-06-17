@@ -15,38 +15,31 @@
 
 <ion-content padding>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col col-10 offset-1>
-        <span>Choisir un moyen rapide d'ajouter votre livre</span>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-        <ion-card (click)="onClickISBN()">
-          <img src="assets/imgs/bar-code.png" width="200px">
-          <ion-card-title text-center>
-            ISBN
-          </ion-card-title>
-        </ion-card>
-      </ion-col>
-      <ion-col col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-        <ion-card (click)="onClickForm()">
-          <img src="assets/imgs/form.png" width="200px">
-          <ion-card-title text-center>
-            Formulaire
-          </ion-card-title>
-        </ion-card>
-      </ion-col>
-      <ion-col col-12 col-sm-9 col-md-4 col-lg-4 col-xl-4>
-        <ion-card (click)="onClickQR()">
-          <img src="assets/imgs/qr-code.png" width="200px">
-          <ion-card-title text-center>
-            QRcode
-          </ion-card-title>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      <ion-list no-lines>
+        <ion-list-header>
+          Choisir un moyen rapide d'ajouter votre livre
+        </ion-list-header>
+
+        <ion-item (click)="onClickISBN()">
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/bar-code.png">
+          </ion-thumbnail>
+          <h2>ISBN</h2>
+        </ion-item>
+
+        <ion-item (click)="onClickForm()">
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/form.png">
+          </ion-thumbnail>
+          <h2>Formulaire</h2>
+        </ion-item>
+
+        <ion-item (click)="onClickQR()">
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/qr-code.png">
+          </ion-thumbnail>
+          <h2>QR Code</h2>
+        </ion-item>
+      </ion-list>
 
 </ion-content>

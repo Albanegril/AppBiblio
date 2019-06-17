@@ -70,6 +70,9 @@ export class AjoutLivrePage{
       (data) => {
         if (data) {
           this.livre.cover = normalizeURL(data);
+          console.log('data : ', data, ' livre.cover : ', this.livre.cover);
+          this.navCtrl.pop();
+          this.navCtrl.push('AjoutLivrePage', {'data':this.livre, 'id':this.livre.id_L});
         }
       }
     ).catch(
@@ -84,6 +87,6 @@ export class AjoutLivrePage{
   }
 
   onGalerie() {
-
+  // TODO
   }
 }

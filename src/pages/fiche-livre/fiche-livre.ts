@@ -8,6 +8,7 @@ import {Lecteur} from "../../models/Lecteur";
 import {Lecture} from "../../models/Lecture";
 import {findLocaleData} from "@angular/common/src/i18n/locale_data_api";
 import {b} from "@angular/core/src/render3";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 /**
  * Generated class for the FicheLivrePage page.
@@ -35,7 +36,7 @@ export class FicheLivrePage {
 
     console.log('Id proprio : ', this.livre.proprio_L);
 
-/*
+    // TODO fix, pseudo proprio non instancier ...
     let proprio:string;
     proprio = this.livre.proprio_L;
     if (typeof this.livre.proprio_L === "undefined" || this.livre.proprio_L === null )
@@ -48,16 +49,27 @@ export class FicheLivrePage {
     console.log('Proprio pseudo : ',this.livre.proprio_L);
 
     let listLecteurs: string[] = [];
-    let lectures: Lecture[];
-    let lecteurs: Lecteur[] = [];
+    let lecteurs: Lecteur[];
     lecteurs = this.lienFirebaseService.retrieveLecteurDeLivre(this.livre.id_L);
-    for(let lecture of lectures){
-      if(lecture.idLec === this.livre.id_L){
-        listLecteurs.push(this.lienFirebaseService.retrieveLecteurID(lecture.idLec).pseudo);
+    if (typeof lecteurs === "undefined" || lecteurs === null )
+    {
+      listLecteurs = ["Pas de Lecteur"];
+    } else {
+      for(let lecteur of lecteurs){
+          listLecteurs.push(lecteur.pseudo);
+
       }
     }
     console.log('Liste lecteur pseudo : ', listLecteurs);
-*/
+
+    console.log('livre cover pres : ', this.livre.cover);
+
+    // TODO prendre en compte que ssi sur mobile, image stockable sur firebase ?
+    if (typeof this.livre.cover === "undefined" || this.livre.cover === null )
+    {
+      this.livre.cover = "assets/imgs/logobooks.png";
+    }
+    console.log('livre cover : ', this.livre.cover);
 
   }
 
@@ -86,7 +98,7 @@ export class FicheLivrePage {
 
     let alert = this.alertCtrl.create();
 
-    let biblio:Biblio;
+    let biblio:Biblio = new Biblio();
     for(biblio of biblios){
       console.log('biblio id : ', biblio.id_B, 'biblio nom : ', biblio.nom_B);
       alert.addInput({
@@ -103,23 +115,25 @@ export class FicheLivrePage {
     alert.addButton({
       text: 'Valider',
       handler: data => {
-        if (data.nom != null) {
-          console.log("data ID : ", data.idLec);
-          this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+        console.log('data alert : ', data);
+        if (data === "undefined" || data === null ) {
+          console.log("Biblio non séléctionné");
           let toast = this.toastCtrl.create({
-            message: 'Success : Maison ajouté',
-            duration: 3000
-          });
-          toast.present();
-        } else {
-          console.log("il faut un nom pour créer une Maison");
-          let toast = this.toastCtrl.create({
-            message: 'ERROR : champs NomMaison vide',
+            message: 'ERROR : champs vide',
             duration: 3000
           });
           toast.present();
           return false;
-        }
+        } else {
+        console.log("data value : ", data.value);
+        //this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+        let toast = this.toastCtrl.create({
+       // message: 'Success : Livre deplacé',
+          message: 'ERROR : Non fonctionnel',
+        duration: 3000
+        });
+        toast.present();
+            }
       }});
     alert.present();
 

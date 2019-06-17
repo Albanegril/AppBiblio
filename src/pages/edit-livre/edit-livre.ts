@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, normalizeURL, ToastController} from 'ionic-angular';
 import {Livre} from "../../models/Livre";
 import {Biblio} from "../../models/Biblio";
 import {Lecteur} from "../../models/Lecteur";
@@ -68,5 +68,35 @@ export class EditLivrePage {
       }, err => {
         console.log(err);
       })
+  }
+
+  onTakePhoto() {
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true
+    }).then(
+      (data) => {
+        if (data) {
+          this.livre.cover = normalizeURL(data);
+          console.log('data : ', data, ' livre.cover : ', this.livre.cover);
+          this.navCtrl.pop();
+          this.navCtrl.push('EditLivrePage', {'data':this.livre, 'id':this.livre.id_L});
+        }
+      }
+    ).catch(
+      (error) => {
+        this.toastCtrl.create({
+          message: error.message,
+          duration: 3000,
+          position: 'bottom'
+        }).present();
+      }
+    )
+  }
+
+  onGalerie() {
+    //TODO
   }
 }
