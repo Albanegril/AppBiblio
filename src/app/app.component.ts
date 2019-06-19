@@ -41,7 +41,10 @@ export class MyApp {
   }
 
   openPage(page: any) {
-    this.app.getActiveNav().push(page);
+    this.app.getActiveNav().push(page).then(
+      ()=>{
+        this.app.getActiveNav().setRoot(page);
+      });
   }
 
   closeMenu() {

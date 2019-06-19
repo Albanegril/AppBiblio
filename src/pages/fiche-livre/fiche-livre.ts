@@ -52,16 +52,16 @@ export class FicheLivrePage {
       let lecteurs: Lecteur[];
       this.lienFirebaseService.retrieveLecteurDeLivre(this.livre.id_L).then(data => {
         lecteurs = data;
-        if (typeof lecteurs === "undefined" || lecteurs === null )
+        if (typeof lecteurs === "undefined" || lecteurs === null || lecteurs.length == 0 )
         {
           listLecteurs = ["Pas de Lecteur"];
         } else {
           for(let lecteur of lecteurs){
             listLecteurs.push(lecteur.pseudo);
-
           }
         }
         console.log('Liste lecteur pseudo : ', listLecteurs);
+        this.livre.lecteurs = listLecteurs;
         console.log('livre cover pres : ', this.livre.cover);
       });
 
@@ -108,7 +108,7 @@ export class FicheLivrePage {
           type: 'radio',
           label: biblio.nom_B,
           value: biblio.id_B,
-          checked: true
+          checked: false
         });
       }
 
