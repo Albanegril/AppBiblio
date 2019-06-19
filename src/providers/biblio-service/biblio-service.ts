@@ -65,8 +65,10 @@ export class BiblioServiceProvider {
         if (typeof json.items[0].volumeInfo.authors === "undefined") {auteurs = null;}
           else {auteurs = json.items[0].volumeInfo.authors;}
 
+        let iscover:any = 'imageLinks' in json.items[0].volumeInfo;
+          console.log('is cover ? ', iscover);
         let cover:string = "";
-        if (typeof json.items[0].volumeInfo.imageLinks.thumbnail === "undefined" || json.items[0].volumeInfo.imageLinks.thumbnail === null) {cover = "";}
+        if (iscover === false || typeof json.items[0].volumeInfo.imageLinks.thumbnail === "undefined" || json.items[0].volumeInfo.imageLinks.thumbnail === null ) {cover = "";}
           else {cover = json.items[0].volumeInfo.imageLinks.thumbnail;}
 
         let livre: Livre = new Livre();
