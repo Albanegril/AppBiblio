@@ -31,8 +31,12 @@ export class EditLivrePage {
               private camera: Camera) {
     this.livre = this.navParams.get('data');
     console.log('livre == ', this.livre);
-    this.biblios = this.lienFirebaseService.retrieveBiblio();
-    this.proprios = this.lienFirebaseService.retrieveLecteur();
+    this.lienFirebaseService.retrieveBiblio().then(data => {
+      this.biblios = data;
+    });
+    this.lienFirebaseService.retrieveLecteur().then(data => {
+      this.proprios = data;
+    });
   }
 
   ionViewDidLoad() {

@@ -22,8 +22,11 @@ export class ListLecteursPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider) {
 
-    this.listLecteurs = this.lienFirebaseService.retrieveLecteur();
-    console.log('list lecteurs : ', this.listLecteurs);
+    this.lienFirebaseService.retrieveLecteur().then(data => {
+      this.listLecteurs = data;
+      console.log('list lecteurs : ', this.listLecteurs);
+    });
+
   }
 
   ionViewDidLoad() {

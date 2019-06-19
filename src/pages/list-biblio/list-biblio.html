@@ -25,6 +25,10 @@
         {{this.maison.nom_M}}
       </h2>
 
+<!--      <ion-thumbnail item-start>
+        <img src="assets/imgs/home.png">
+      </ion-thumbnail>-->
+
       <expandable [expandHeight]="maisonExpandHeight" [expanded]="this.maison.expanded">
         <ion-list inset *ngFor="let biblio of listBiblio;">
           <ion-item (click)="onClickBiblio(this.biblio.id_B)">

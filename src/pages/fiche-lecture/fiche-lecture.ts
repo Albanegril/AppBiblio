@@ -27,9 +27,12 @@ export class FicheLecturePage {
 
     console.log('idLec : ', this.navParams.get('idLec'));
     console.log('idLiv : ', this.navParams.get('idLiv'));
-    this.lecture = lienFirebaseService.retrieveLectureLivDeLec(this.navParams.get('idLiv'), this.navParams.get('idLec'));
-    console.log('Lecture data : ', this.lecture);
-    this.livre = this.navParams.get('livre');
+    lienFirebaseService.retrieveLectureLivDeLec(this.navParams.get('idLiv'), this.navParams.get('idLec')).
+    then(data => {
+      this.lecture = data;
+      console.log('Lecture data : ', this.lecture);
+      this.livre = this.navParams.get('livre');
+    });
   }
 
   ionViewDidLoad() {

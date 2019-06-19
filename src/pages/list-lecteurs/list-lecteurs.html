@@ -12,13 +12,12 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <ion-list inset *ngFor="let lecteur of listLecteurs;">
     <ion-item (click)="onClickLecteur(this.lecteur.id)">
-      <ion-thumbnail item-start>
-        <ion-icon name="person" item-start large></ion-icon>
-      </ion-thumbnail>
+      <ion-avatar item-start>
+        <img src="assets/imgs/student.png">
+      </ion-avatar>
       <h2>{{this.lecteur.pseudo}}</h2>
       <p>{{this.lecteur.nom}} • {{this.lecteur.prenom}}</p>
 

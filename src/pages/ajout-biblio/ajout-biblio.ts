@@ -26,8 +26,12 @@ export class AjoutBiblioPage {
               private lienFirebaseService: LienFireBaseProvider,
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
-    this.maisons = this.lienFirebaseService.retrieveMaison();
-    this.proprios = this.lienFirebaseService.retrieveLecteur();
+    this.lienFirebaseService.retrieveMaison().then(data => {
+      this.maisons = data;
+    });
+    this.lienFirebaseService.retrieveLecteur().then(data => {
+      this.proprios = data;
+    });
   }
 
   ionViewDidLoad() {
@@ -87,8 +91,11 @@ export class AjoutBiblioPage {
               this.lienFirebaseService.addMaison(data.nom, data.adresse, data.proprio);
             } else {
               console.log("il faut au moins un nom pour créer une Maison");
-              //TODO
-              // créer un toast
+              let toast = this.toastCtrl.create({
+                message: 'Maison add successfully',
+                duration: 3000
+              });
+              toast.present();
               return false;
             }
           }

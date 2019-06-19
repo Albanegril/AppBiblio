@@ -23,8 +23,12 @@ export class ListLivrePage {
 
     console.log(this.navParams.get('id'));
     // pb car non sychrno ??
-    this.listLivre = this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('id'));
-    console.log('list de livre : ', this.listLivre);
+    this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('id')).
+    then(data => {
+      this.listLivre = data;
+      console.log('list de livre : ', this.listLivre);
+    });
+
      //this.listLivre = this.lienFirebaseService.retrieveLivres();
      //console.log('list de livre : ', this.listLivre);
   }

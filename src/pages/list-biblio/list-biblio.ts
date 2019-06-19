@@ -18,20 +18,19 @@ import {Maison} from "../../models/Maison";
   templateUrl: 'list-biblio.html',
 })
 export class ListBiblioPage {
-  public listMaison:Maison[] = new Array();
-  public listBiblio:Biblio[] = new Array();
+  public listMaison:Maison[] = [];
+  public listBiblio:Biblio[] = [];
 
+  //TODO valeur fix ne permert pas l'affichage de plus de 2 biblios par maison ...
   maisonExpandHeight: number = 100;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider) {
 
-    this.listMaison = this.lienFirebaseService.retrieveMaison();
-    //this.listBiblio = this.lienFirebaseService.retrieveBiblio();
-
-    console.log('list de maison : ', this.listMaison);
-    console.log('list de biblio : ', this.listBiblio);
-
+    this.lienFirebaseService.retrieveMaison().then(data => {
+      this.listMaison = data;
+      console.log('list de maison : ', this.listMaison);
+    });
   }
 
   ionViewDidLoad() {
@@ -39,14 +38,16 @@ export class ListBiblioPage {
   }
 
   expandItem(maison){
-    this.listBiblio = this.lienFirebaseService.retrieveBiblioDeM(maison.id_M);
-    this.listMaison.map((listBiblio) => {
-      if(maison == listBiblio){
-        listBiblio.expanded = !listBiblio.expanded;
-      } else {
-        listBiblio.expanded = false;
-      }
-      return listBiblio;
+    this.lienFirebaseService.retrieveBiblioDeM(maison.id_M).then(data => {
+      this.listBiblio = data;
+      this.listMaison.map((listBiblio) => {
+        if(maison == listBiblio){
+          listBiblio.expanded = !listBiblio.expanded;
+        } else {
+          listBiblio.expanded = false;
+        }
+        return listBiblio;
+      });
     });
   }
 

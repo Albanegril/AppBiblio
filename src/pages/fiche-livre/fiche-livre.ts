@@ -31,46 +31,47 @@ export class FicheLivrePage {
               private alertCtrl: AlertController) {
 
     console.log('fiche livre id : ', this.navParams.get('id'));
-    this.livre = lienFirebaseService.getLivre(this.navParams.get('id'));
-    console.log('fiche livre data : ', this.livre);
 
-    console.log('Id proprio : ', this.livre.proprio_L);
+    this.lienFirebaseService.getLivre(this.navParams.get('id')).then(data => {
+      this.livre = data;
+      console.log('fiche livre data : ', this.livre);
+      console.log("Den " + JSON.stringify(this.livre));
+      console.log('Id proprio : ', this.livre.proprio_L);
 
-    // TODO fix, pseudo proprio non instancier ...
-    let proprio:string;
-    proprio = this.livre.proprio_L;
-    if (typeof this.livre.proprio_L === "undefined" || this.livre.proprio_L === null )
-    {
-      this.livre.proprio_L = "Pas de Proprio";
-    } else {
-      this.livre.proprio_L = this.lienFirebaseService.retrieveLecteurID(proprio).pseudo;
-      console.log('proprio : ', proprio);
-    }
-    console.log('Proprio pseudo : ',this.livre.proprio_L);
 
-    let listLecteurs: string[] = [];
-    let lecteurs: Lecteur[];
-    lecteurs = this.lienFirebaseService.retrieveLecteurDeLivre(this.livre.id_L);
-    if (typeof lecteurs === "undefined" || lecteurs === null )
-    {
-      listLecteurs = ["Pas de Lecteur"];
-    } else {
-      for(let lecteur of lecteurs){
-          listLecteurs.push(lecteur.pseudo);
-
+      if (typeof this.livre.proprio_L === "undefined" || this.livre.proprio_L === null )
+      {
+        this.livre.proprio_L = "Pas de Proprio";
+      } else {
+        this.lienFirebaseService.retrieveLecteurID(this.livre.proprio_L).then(data => {
+          this.livre.proprio_L = data.pseudo;
+          console.log('Proprio pseudo : ', this.livre.proprio_L);
+        });
       }
-    }
-    console.log('Liste lecteur pseudo : ', listLecteurs);
+      let listLecteurs: string[] = [];
+      let lecteurs: Lecteur[];
+      this.lienFirebaseService.retrieveLecteurDeLivre(this.livre.id_L).then(data => {
+        lecteurs = data;
+        if (typeof lecteurs === "undefined" || lecteurs === null )
+        {
+          listLecteurs = ["Pas de Lecteur"];
+        } else {
+          for(let lecteur of lecteurs){
+            listLecteurs.push(lecteur.pseudo);
 
-    console.log('livre cover pres : ', this.livre.cover);
+          }
+        }
+        console.log('Liste lecteur pseudo : ', listLecteurs);
+        console.log('livre cover pres : ', this.livre.cover);
+      });
 
-    // TODO prendre en compte que ssi sur mobile, image stockable sur firebase ?
-    if (typeof this.livre.cover === "undefined" || this.livre.cover === null )
-    {
-      this.livre.cover = "assets/imgs/logobooks.png";
-    }
-    console.log('livre cover : ', this.livre.cover);
-
+      // TODO prendre en compte que ssi sur mobile, image stockable sur firebase ?
+      if (typeof this.livre.cover === "undefined" || this.livre.cover === null )
+      {
+        this.livre.cover = "assets/imgs/logobooks.png";
+      }
+      console.log('livre cover : ', this.livre.cover);
+    });
   }
 
   ionViewDidLoad() {
@@ -84,6 +85,7 @@ export class FicheLivrePage {
     // necessite stockage local !
     // créer la lecture !
     // alerte ?
+    // popup de creation lecture
     this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L, 'livre': this.livre});
   }
 
@@ -93,50 +95,51 @@ export class FicheLivrePage {
     // json schema ?
     let biblios: Biblio[] = [];
     //TODO pb car fct asynchron ?
-    biblios = this.lienFirebaseService.retrieveBiblio();
-    console.log('biblios : ', biblios);
+    this.lienFirebaseService.retrieveBiblio().then(data => {
+      biblios = data;
+      console.log('biblios : ', biblios);
 
-    let alert = this.alertCtrl.create();
+      let alert = this.alertCtrl.create();
 
-    let biblio:Biblio = new Biblio();
-    for(biblio of biblios){
-      console.log('biblio id : ', biblio.id_B, 'biblio nom : ', biblio.nom_B);
-      alert.addInput({
-        type: 'radio',
-        label: biblio.nom_B,
-        value: biblio.id_B,
-        checked: true
-      });
-    }
-
-    alert.setTitle('Choisie une nouvelle biblio');
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'Valider',
-      handler: data => {
-        console.log('data alert : ', data);
-        if (data === "undefined" || data === null ) {
-          console.log("Biblio non séléctionné");
-          let toast = this.toastCtrl.create({
-            message: 'ERROR : champs vide',
-            duration: 3000
-          });
-          toast.present();
-          return false;
-        } else {
-        console.log("data value : ", data.value);
-        //this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
-        let toast = this.toastCtrl.create({
-       // message: 'Success : Livre deplacé',
-          message: 'ERROR : Non fonctionnel',
-        duration: 3000
+      let biblio:Biblio = new Biblio();
+      for(biblio of biblios){
+        console.log('biblio id : ', biblio.id_B, 'biblio nom : ', biblio.nom_B);
+        alert.addInput({
+          type: 'radio',
+          label: biblio.nom_B,
+          value: biblio.id_B,
+          checked: true
         });
-        toast.present();
-            }
-      }});
-    alert.present();
+      }
 
+      alert.setTitle('Choisie une nouvelle biblio');
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'Valider',
+        handler: data => {
+          console.log('data alert : ', data);
+          if (data === "undefined" || data === null ) {
+            console.log("Biblio non séléctionné");
+            let toast = this.toastCtrl.create({
+              message: 'ERROR : champs vide',
+              duration: 3000
+            });
+            toast.present();
+            return false;
+          } else {
+            console.log("data value : ", data.value);
+            //this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+            let toast = this.toastCtrl.create({
+              // message: 'Success : Livre deplacé',
+              message: 'ERROR : Non fonctionnel',
+              duration: 3000
+            });
+            toast.present();
+          }
+        }});
+      alert.present();
+    });
   }
 
   emprunter() {

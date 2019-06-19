@@ -22,9 +22,10 @@ export class RechercheLivrePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider) {
-    this.listLivre = this.lienFirebaseService.retrieveLivres();
-    console.log('list de livre : ', this.listLivre);
-
+     this.lienFirebaseService.retrieveLivres().then(data => {
+      this.listLivre = data;
+      console.log('list de livre : ', this.listLivre);
+     });
   }
 
   ionViewDidLoad() {
@@ -33,18 +34,21 @@ export class RechercheLivrePage {
 
   getItems(ev: any) {
     // Reset items back to all of the items
-    this.listLivre = this.lienFirebaseService.retrieveLivres();
-    console.log('list de livre : ', this.listLivre);
+    this.lienFirebaseService.retrieveLivres().then(data => {
+      this.listLivre = data;
+      console.log('list de livre : ', this.listLivre);
 
-    // set val to the value of the searchbar
-    const val = ev.target.value;
+      // set val to the value of the searchbar
+      const val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.listLivre = this.listLivre.filter((livre) => {
-        return (livre.titre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
+      // if the value is an empty string don't filter the items
+      if (val && val.trim() != '') {
+        this.listLivre = this.listLivre.filter((livre) => {
+          return (livre.titre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+
+    });
   }
 
 }

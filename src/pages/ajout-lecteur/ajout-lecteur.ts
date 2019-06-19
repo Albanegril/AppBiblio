@@ -40,9 +40,7 @@ export class AjoutLecteurPage {
         toast.present();
         //  this.resetFields();
         console.log("ajoute Lecteur dans la BD OK ...");
-        this.navCtrl.push('ListBiblioPage');
-        //TODO
-        // faire rediriger vers liste lecteur dès que créé ..
+        this.navCtrl.push('ListLecteursPage');
       }, err => {
         console.log(err);
       })

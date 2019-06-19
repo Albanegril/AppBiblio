@@ -23,8 +23,11 @@ export class ListLecturesPage {
               private lienFirebaseService: LienFireBaseProvider) {
 
     console.log(this.navParams.get('id'));
-    this.listLectures = this.lienFirebaseService.retrieveLectureDeLec(this.navParams.get('id'));
-    console.log('list de lectures : ', this.listLectures);
+    this.lienFirebaseService.retrieveLectureDeLec(this.navParams.get('id')).
+    then(data => {
+      this.listLectures = data;
+      console.log('list de lectures : ', this.listLectures);
+    });
   }
 
   ionViewDidLoad() {
