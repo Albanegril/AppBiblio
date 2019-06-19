@@ -17,19 +17,20 @@
 
 
 <ion-content padding>
+  <h6>Pas d'id lecteur pour le moment, en attente du stockage local</h6>
   <ion-list inset *ngFor="let lecture of listLectures;">
-    <ion-item (click)="onClickLecture(this.lecture.idLiv)">
+    <ion-item (click)="onClickLecture(this.lecture.id)">
       <ion-thumbnail item-start>
         <img src="assets/imgs/logobooks.png">
       </ion-thumbnail>
-      <h2>{{this.lecture.idLiv}} • Titre</h2>
+      <h2>{{lecture.idLiv}} • {{lecture.idLec}} </h2>
       <p>DateDebut • DateFin</p>
 
-      <button ion-button outline (click)="supprimer(this.lecture.id)" >
+      <button ion-button outline (click)="supprimer(lecture.id)" >
         <ion-icon name="close"></ion-icon>
       </button>
 
-      <button ion-button outline (click)="modifier(this.lecture.id)" >
+      <button ion-button outline (click)="modifier(lecture.id)" >
         <ion-icon name="create"></ion-icon>
       </button>
     </ion-item>

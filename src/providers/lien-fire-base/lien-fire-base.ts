@@ -110,7 +110,7 @@ export class LienFireBaseProvider {
     })
   }
 
-  addLecture(idLec: string, idLiv: string, num_page: number, commentaire: string, dateD: Date, dateF: Date) : Promise<any> {
+  addLecture(idLiv: string, idLec: string, num_page: number, commentaire: string, dateD: Date, dateF: Date) : Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/Lecture/t6TbbwaGN5OXFY3cpWoo/Lecture').add({
         idLec: idLec,
@@ -338,6 +338,27 @@ export class LienFireBaseProvider {
     });
   }
 
+  retrieveLecture() : Promise<Lecture[]>{
+    return new Promise<Lecture[]>((resolve, reject) => {
+      let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
+      let lecture:Lecture = new Lecture();
+      let lectures: Lecture[] = [];
+
+      return docRef.ref.get().then(data => {
+        for(let list of data.docs){
+          console.log('Lecture data : ', list.data());
+          lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire,
+            list.data().dateDebut, list.data().dateFin);
+          lectures.push(lecture);
+         // console.log('Lecture data bis : ', lecture);
+        }
+        resolve(lectures);
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+    });
+  }
+
   retrieveLecteurDeLivre(idLiv:string){
     return new Promise<Lecteur[]>((resolve, reject) => {
       let docRef = this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture');
@@ -531,4 +552,5 @@ export class LienFireBaseProvider {
       console.error("Error removing document: ", error);
     });
   }
+
 }

@@ -16,7 +16,6 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Pas d'id lecteur pour le moment, en attente du stockage local</h3>
   <ion-list inset *ngFor="let lecteur of listLecteurs;">
     <ion-item (click)="onClickLecteur(this.lecteur.id)">
       <ion-avatar item-start>
