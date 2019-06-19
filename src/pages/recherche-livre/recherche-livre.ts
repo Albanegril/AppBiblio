@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Livre} from "../../models/Livre";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 /**
  * Generated class for the RechercheLivrePage page.
@@ -18,7 +19,6 @@ import {Livre} from "../../models/Livre";
 export class RechercheLivrePage {
   public listLivre:Livre[] = [];
   searchQuery: string = '';
-  items: string[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider) {
@@ -42,8 +42,10 @@ export class RechercheLivrePage {
       const val = ev.target.value;
 
       // if the value is an empty string don't filter the items
+
       if (val && val.trim() != '') {
         this.listLivre = this.listLivre.filter((livre) => {
+          console.log('recherche var : ', livre.titre.toLowerCase().indexOf(val.toLowerCase()));
           return (livre.titre.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
@@ -51,4 +53,7 @@ export class RechercheLivrePage {
     });
   }
 
+  onClickLivre(idL: string) {
+    this.navCtrl.push('FicheLivrePage', {'id':idL});
+  }
 }

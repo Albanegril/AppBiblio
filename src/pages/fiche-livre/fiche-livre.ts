@@ -35,9 +35,8 @@ export class FicheLivrePage {
     this.lienFirebaseService.getLivre(this.navParams.get('id')).then(data => {
       this.livre = data;
       console.log('fiche livre data : ', this.livre);
-      console.log("Den " + JSON.stringify(this.livre));
+    //  console.log("Den " + JSON.stringify(this.livre));
       console.log('Id proprio : ', this.livre.proprio_L);
-
 
       if (typeof this.livre.proprio_L === "undefined" || this.livre.proprio_L === null )
       {
@@ -48,6 +47,7 @@ export class FicheLivrePage {
           console.log('Proprio pseudo : ', this.livre.proprio_L);
         });
       }
+
       let listLecteurs: string[] = [];
       let lecteurs: Lecteur[];
       this.lienFirebaseService.retrieveLecteurDeLivre(this.livre.id_L).then(data => {

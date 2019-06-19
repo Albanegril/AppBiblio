@@ -19,8 +19,11 @@
 <ion-content padding>
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      {{ item }}
+    <ion-item *ngFor="let livre of listLivre">
+      <ion-label (click)="onClickLivre(livre.id_L)" >
+        {{this.livre.titre}} • {{this.livre.auteurs}}
+      </ion-label>
+      <p>{{this.livre.titre}} • {{this.livre.auteurs}}</p>
     </ion-item>
   </ion-list>
 

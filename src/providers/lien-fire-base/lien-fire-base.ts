@@ -133,10 +133,13 @@ export class LienFireBaseProvider {
 
       return this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().
       then(data => {
-        for(let list of data.docs){
-          let listData = list.data();
-          console.log('Livre data : ', list.data());
-          console.log('Livre nom : ', list.data().titre);
+        for(let doc of data.docs){
+          console.log('Livre data : ', doc.data());
+          let livre:Livre = new Livre();
+          livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
+            doc.data().date, doc.data().edition, doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
+            [], doc.data().type, doc.data().cover, doc.data().genre, doc.data().proprioL, [], doc.data().biblioL);
+          livres.push(livre);
           resolve(livres);
         }}).catch(function (error) {
         console.log("Error getting document:", error);
