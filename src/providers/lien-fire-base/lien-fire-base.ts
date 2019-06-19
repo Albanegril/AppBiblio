@@ -110,13 +110,15 @@ export class LienFireBaseProvider {
     })
   }
 
-  addLecture(id: string, id_L: string, num_page: number, commentaire: string) : Promise<any> {
+  addLecture(idLec: string, idLiv: string, num_page: number, commentaire: string, dateD: Date, dateF: Date) : Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/Lecture/t6TbbwaGN5OXFY3cpWoo/Lecture').add({
-        idLec: id,
-        idLiv: id_L,
+        idLec: idLec,
+        idLiv: idLiv,
         page: num_page,
-        commentaire: commentaire
+        commentaire: commentaire,
+        dateDebut: dateD,
+        dateFin: dateF
       })
         .then(
           (res) => {
@@ -256,7 +258,9 @@ export class LienFireBaseProvider {
             list.data().mdp, [], list.data().avatar);
           lecteurs.push(lecteur);
           console.log('Lecteur data bis : ', lecteur);
-        }}).catch(function (error) {
+        }
+        resolve(lecteurs);
+      }).catch(function (error) {
         console.log("Error getting document:", error);
       });
     });
@@ -299,7 +303,7 @@ export class LienFireBaseProvider {
           console.log('Lecture data : ', list.data());
           if (list.data().idLec === idLec) {
             if (list.data().idLiv === idLiv) {
-              lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire);
+              lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire, list.data().dateDebut, list.data().dateFin);
               console.log("Lecture trouvée ! ");
             }
           }
@@ -323,7 +327,7 @@ export class LienFireBaseProvider {
         for(let list of data.docs){
           console.log('Lecture data : ', list.data());
           if( list.data().idLec === idLec){
-            lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire);
+            lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire, list.data().dateDebut, list.data().dateFin);
             lectures.push(lecture);
             console.log("Lecture ajoutée : ", lecture);
           }

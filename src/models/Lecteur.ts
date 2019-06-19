@@ -9,6 +9,7 @@ export class Lecteur {
   private _mdp: string; // à crypter !!
   private _lectures: Lecture[];
   private _avatar: string;
+  private telephone: number;
 
 
   get mail(): string {

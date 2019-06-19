@@ -26,7 +26,7 @@
   </div>
 
   <div [ngSwitch]="options">
-    <ion-list *ngSwitchCase="'modifier'">
+    <ion-list *ngSwitchCase="modifier">
       <form #form="ngForm" (ngSubmit)="modifier(form)">
         <ion-list col12 offset-md-3 offset-lg-3>
           <ion-row>
@@ -124,7 +124,7 @@
 
     </ion-list>
 
-    <ion-list *ngSwitchCase="'supprimer'">
+    <ion-list *ngSwitchCase="supprimer">
       <ion-item>
         <h2>Sûr ?</h2>
       </ion-item>

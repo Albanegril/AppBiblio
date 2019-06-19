@@ -37,6 +37,7 @@ export class EditLivrePage {
     this.lienFirebaseService.retrieveLecteur().then(data => {
       this.proprios = data;
     });
+    this.options = "modifier";
   }
 
   ionViewDidLoad() {

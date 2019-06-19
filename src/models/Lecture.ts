@@ -4,8 +4,9 @@ export class Lecture {
   private _idLiv: string; // idLec livre
   private _page: number; // page à laquelle est le lecteur dans le livre
   private _commentaire : string;
-  private dateDebut : Date;
-  private dateFin : Date;
+  private _dateDebut : Date;
+  private _dateFin : Date;
+  private note: number;
 
 
   get id(): string {
@@ -48,11 +49,29 @@ export class Lecture {
     this._commentaire = value;
   }
 
-  setLecture(id: string, idLec: string, idLiv: string, page: number, commentaire: string) {
+  get dateDebut(): Date {
+    return this._dateDebut;
+  }
+
+  set dateDebut(value: Date) {
+    this._dateDebut = value;
+  }
+
+  get dateFin(): Date {
+    return this._dateFin;
+  }
+
+  set dateFin(value: Date) {
+    this._dateFin = value;
+  }
+
+  setLecture(id: string, idLec: string, idLiv: string, page: number, commentaire: string, dateDebut: Date, dateFin: Date) {
     this._id = id;
     this._idLec = idLec;
     this._idLiv = idLiv;
     this._page = page;
     this._commentaire = commentaire;
+    this._dateDebut = dateDebut;
+    this._dateFin = dateFin;
   }
 }

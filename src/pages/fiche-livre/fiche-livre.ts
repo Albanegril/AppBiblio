@@ -78,31 +78,65 @@ export class FicheLivrePage {
     console.log('ionViewDidLoad FicheLivrePage');
   }
 
-
   lire() {
-    //TODO
-    // recupérer l'id lecteur grâce à un système de session
-    // necessite stockage local !
-    // créer la lecture !
-    // alerte ?
-    // popup de creation lecture
-    this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L, 'livre': this.livre});
+    let lecteurs: Lecteur[] = [];
+    this.lienFirebaseService.retrieveLecteur().then(data => {
+      lecteurs = data;
+      console.log('lecteurs : ', lecteurs);
+
+      let alert = this.alertCtrl.create();
+
+      alert.setTitle('Choisir un lecteur pour commencer la lecture de ce livre');
+
+      for(let lecteur of lecteurs){
+        console.log('lecteur id : ', lecteur.id, 'lecteur pseudo : ', lecteur.pseudo);
+        alert.addInput({
+          type: 'radio',
+          label: lecteur.pseudo,
+          value: lecteur.id,
+          checked: false
+        });
+      }
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'Valider',
+        handler: data => {
+          console.log('data alert : ', data);
+          if (data === "undefined" || data === null ) {
+            console.log("Lecteur non séléctionné");
+            let toast = this.toastCtrl.create({
+              message: 'ERROR : champs vide',
+              duration: 3000
+            });
+            toast.present();
+            return false;
+          } else {
+            this.lienFirebaseService.addLecture(this.navParams.get('id'), data, 0, "", new Date(), null).
+            then(data => {
+              this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L, 'livre': this.livre});
+            });
+            let toast = this.toastCtrl.create({
+              message: 'Success : Lecture créé',
+              duration: 3000
+            });
+            toast.present();
+          }
+        }});
+      alert.present();
+    });
   }
 
   deplacer() {
-    //TODO
-    // il faut créer des radioBtn dynamique des biblio dans l'alert !
-    // json schema ?
+
     let biblios: Biblio[] = [];
-    //TODO pb car fct asynchron ?
     this.lienFirebaseService.retrieveBiblio().then(data => {
       biblios = data;
       console.log('biblios : ', biblios);
 
       let alert = this.alertCtrl.create();
 
-      let biblio:Biblio = new Biblio();
-      for(biblio of biblios){
+      for(let biblio of biblios){
         console.log('biblio id : ', biblio.id_B, 'biblio nom : ', biblio.nom_B);
         alert.addInput({
           type: 'radio',
@@ -128,11 +162,10 @@ export class FicheLivrePage {
             toast.present();
             return false;
           } else {
-            console.log("data value : ", data.value);
-            //this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data.id);
+            this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data);
             let toast = this.toastCtrl.create({
-              // message: 'Success : Livre deplacé',
-              message: 'ERROR : Non fonctionnel',
+               message: 'Success : Livre deplacé',
+             // message: 'ERROR : Non fonctionnel',
               duration: 3000
             });
             toast.present();
@@ -149,7 +182,6 @@ export class FicheLivrePage {
   }
 
   editer() {
-    this.navCtrl.pop();
     this.navCtrl.push('EditLivrePage', {'data':this.livre, 'id':this.livre.id_L});
   }
 }
