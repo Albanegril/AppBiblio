@@ -48,7 +48,7 @@ export class ListLecturesPage {
   }
 
   onClickLecture(id: string) {
-    //TODO gérer la fiche lecteur selon l'id lecture 
+    //TODO gérer la fiche lecteur selon l'id lecture
     //this.navCtrl.push('FicheLecturePage', {'id':id});
   }
 
