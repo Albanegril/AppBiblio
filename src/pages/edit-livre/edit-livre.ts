@@ -37,7 +37,7 @@ export class EditLivrePage {
     this.lienFirebaseService.retrieveLecteur().then(data => {
       this.proprios = data;
     });
-    this.options = "modifier";
+    this.options = "'modifier'";
   }
 
   ionViewDidLoad() {
@@ -68,6 +68,7 @@ export class EditLivrePage {
           duration: 3000
         });
         toast.present();
+        this.navCtrl.pop();
         this.navCtrl.pop();
         this.navCtrl.push('FicheLivrePage', {'data':res, 'id':this.navParams.get('id')});
       }, err => {

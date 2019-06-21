@@ -32,7 +32,7 @@ export class FicheLivrePage {
 
     console.log('fiche livre id : ', this.navParams.get('id'));
 
-    this.lienFirebaseService.getLivre(this.navParams.get('id')).then(data => {
+    this.lienFirebaseService.retrieveLivre(this.navParams.get('id')).then(data => {
       this.livre = data;
       console.log('fiche livre data : ', this.livre);
     //  console.log("Den " + JSON.stringify(this.livre));

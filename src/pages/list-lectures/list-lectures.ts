@@ -29,7 +29,7 @@ export class ListLecturesPage {
       this.listLectures = data;
       console.log('list de lectures : ', this.listLectures);
       for(let lecture of this.listLectures){
-        this.lienFirebaseService.getLivre(lecture.idLiv).then(data => {
+        this.lienFirebaseService.retrieveLivre(lecture.idLiv).then(data => {
           //TODO /!\ l'id du livre est perdu pr cet objet...
           lecture.idLiv = data.titre;
           console.log('titre livre : ', lecture.idLiv);

@@ -24,11 +24,11 @@
       <h2>{{this.lecteur.pseudo}}</h2>
       <p>{{this.lecteur.nom}} • {{this.lecteur.prenom}}</p>
 
-      <button ion-button outline (click)="modifier(this.lecteur.id)" >
+      <button ion-button outline disabled (click)="modifier(this.lecteur.id)" >
         <ion-icon name="close"></ion-icon>
       </button>
 
-      <button ion-button outline (click)="supprimer(this.lecteur.id)" >
+      <button ion-button outline disabled (click)="supprimer(this.lecteur.id)" >
         <ion-icon name="create"></ion-icon>
       </button>
     </ion-item>

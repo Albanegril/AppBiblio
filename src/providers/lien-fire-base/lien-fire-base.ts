@@ -382,7 +382,7 @@ export class LienFireBaseProvider {
     });
   }
 
-  getLivre(idL): Promise<Livre> {
+  retrieveLivre(idL): Promise<Livre> {
 
     return new Promise<Livre>((resolve, reject) => {
 
@@ -395,36 +395,6 @@ export class LienFireBaseProvider {
       return docRef.ref.get().then(function (doc) {
         if (doc.exists) {
           console.log("Doc data:", doc.data());
-
-          let lecteur: Lecteur = new Lecteur();
-          /*     let proprio: string;
-               proprio = doc.data().proprioL;
-               console.log("Document proprio : ", doc.data().proprioL, " proprio : ", proprio);
-               console.log("Document biblio : ", doc.data().biblioL);
-
-               lecteur.pseudo = proprio;
-
-            // TODO error pourquoi ?! impossible d'appeller une fct propre dans le provider ?
-
-             if (typeof doc.data().proprioL === "undefined" || doc.data().proprioL === null )
-              {
-                lecteur.pseudo = proprio;
-              } else {
-                lecteur = this.retrieveLecteurID(proprio);
-                 console.log('proprio : ', proprio);
-               }
-               console.log('lecteur.pseudo : ', lecteur.pseudo);
-
-               let listLecteurs: string[] = [];
-                  let lectures: Lecture[];
-                   lectures = this.retrieveLecteurDeLivre(doc.id);
-                   for(let lecture of lectures){
-                     if(lecture.idLec===doc.id){
-                       listLectures.push(lecture.idLec);
-                     }
-                   }
-
-                  */
 
           livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
             doc.data().date, doc.data().edition, doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,

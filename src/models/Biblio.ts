@@ -2,13 +2,6 @@ import {Livre} from "./Livre";
 import {Lecteur} from "./Lecteur";
 
 export class Biblio {
-  get maisonB(): string {
-    return this._maisonB;
-  }
-
-  set maisonB(value: string) {
-    this._maisonB = value;
-  }
   private _id_B: string;
   private _nom_B: string;
   private _nb_etages: number;
@@ -47,7 +40,13 @@ export class Biblio {
     this._proprio_B = value;
   }
 
+  get maisonB(): string {
+    return this._maisonB;
+  }
 
+  set maisonB(value: string) {
+    this._maisonB = value;
+  }
 
   setBiblio(id_B: string, nom_B: string, nb_etages: number, proprio_B: Lecteur, maisonB: string) {
     this._id_B = id_B;

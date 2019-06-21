@@ -26,11 +26,11 @@
       <h2>{{lecture.idLiv}} • {{lecture.idLec}} </h2>
       <p>DateDebut • DateFin</p>
 
-      <button ion-button outline (click)="supprimer(lecture.id)" >
+      <button ion-button outline disabled (click)="supprimer(lecture.id)" >
         <ion-icon name="close"></ion-icon>
       </button>
 
-      <button ion-button outline (click)="modifier(lecture.id)" >
+      <button ion-button outline disabled (click)="modifier(lecture.id)" >
         <ion-icon name="create"></ion-icon>
       </button>
     </ion-item>
