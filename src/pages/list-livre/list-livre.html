@@ -23,8 +23,8 @@
       <ion-thumbnail item-start>
         <img src="assets/imgs/logobooks.png">
       </ion-thumbnail>
-      <h2>{{this.livre.titre}} • {{this.livre.auteurs}}</h2>
-      <p>{{this.livre.genre}} • {{this.livre.type}}</p>
+      <h2 text-wrap>{{this.livre.titre}} • {{this.livre.auteurs}}</h2>
+      <p text-wrap>{{this.livre.genre}} • {{this.livre.type}}</p>
 
      <!-- utiliser un Fabs ? ou Action Sheet ?-->
       <button ion-button outline disabled (click)="deplacer(this.livre.id_L)" >

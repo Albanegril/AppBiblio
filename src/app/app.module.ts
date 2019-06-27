@@ -24,6 +24,7 @@ import {AngularFireModule} from "@angular/fire";
 import { firebaseConfig } from './credentials';
 import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
 import {IonicStorageModule} from "@ionic/storage";
+import { LienStorageProvider } from '../providers/lien-storage/lien-storage';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,9 @@ import {IonicStorageModule} from "@ionic/storage";
     HttpClientModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(firebaseConfig),
+  //  IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -61,6 +64,7 @@ import {IonicStorageModule} from "@ionic/storage";
     BarcodeScanner,
     Camera,
     AngularFirestore,
+    LienStorageProvider,
   ]
 })
 export class AppModule {}
