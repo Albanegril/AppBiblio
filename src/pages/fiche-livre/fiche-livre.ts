@@ -9,6 +9,7 @@ import {Lecture} from "../../models/Lecture";
 import {findLocaleData} from "@angular/common/src/i18n/locale_data_api";
 import {b} from "@angular/core/src/render3";
 import {el} from "@angular/platform-browser/testing/src/browser_util";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the FicheLivrePage page.
@@ -27,14 +28,23 @@ export class FicheLivrePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider,
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
 
     console.log('fiche livre id : ', this.navParams.get('id'));
 
-    this.lienFirebaseService.retrieveLivre(this.navParams.get('id')).then(data => {
+      this.lienStorageService.getlivre(this.navParams.get('id')).then(data => {
+        console.log('GET STORAGE : ', data);
+       /*
+           this.lienStorageService.setLivre(this.livre).then(set => {
+      console.log('SET STORAGE: ', set);
+      });
+    }); */
+  //  this.lienFirebaseService.retrieveLivre(this.navParams.get('id')).then(data => {
       this.livre = data;
       console.log('fiche livre data : ', this.livre);
+
     //  console.log("Den " + JSON.stringify(this.livre));
       console.log('Id proprio : ', this.livre.proprio_L);
 
@@ -44,7 +54,7 @@ export class FicheLivrePage {
       } else {
         this.lienFirebaseService.retrieveLecteurID(this.livre.proprio_L).then(data => {
           this.livre.proprio_L = data.pseudo;
-          console.log('Proprio pseudo : ', this.livre.proprio_L);
+        //  console.log('Proprio pseudo : ', this.livre.proprio_L);
         });
       }
 
@@ -60,7 +70,7 @@ export class FicheLivrePage {
             listLecteurs.push(lecteur.pseudo);
           }
         }
-        console.log('Liste lecteur pseudo : ', listLecteurs);
+       // console.log('Liste lecteur pseudo : ', listLecteurs);
         this.livre.lecteurs = listLecteurs;
         console.log('livre cover pres : ', this.livre.cover);
       });
@@ -72,6 +82,7 @@ export class FicheLivrePage {
       }
       console.log('livre cover : ', this.livre.cover);
     });
+
   }
 
   ionViewDidLoad() {

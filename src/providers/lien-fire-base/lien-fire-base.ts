@@ -135,7 +135,7 @@ export class LienFireBaseProvider {
 
       return this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(data => {
         for (let doc of data.docs) {
-          console.log('Livre data : ', doc.data());
+         // console.log('Livre data : ', doc.data());
           let livre: Livre = new Livre();
           livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
             doc.data().date, doc.data().edition, doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
@@ -152,7 +152,7 @@ export class LienFireBaseProvider {
   retrieveLivresDeB(idB: string): Promise<Livre[]> {
     return new Promise<Livre[]>((resolve, reject) => {
       let livres: Livre[] = [];
-      console.log('IdB : ', idB);
+    //  console.log('IdB : ', idB);
 
       //TODO attention utilisation querySnapshot
       return this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').ref.get().then(function (querySnapshot) {
@@ -164,9 +164,9 @@ export class LienFireBaseProvider {
             [], doc.data().type, doc.data().cover, doc.data().genre, doc.data().proprioL, [], doc.data().biblioL);
           if (livre.biblio_L === idB) {
             livres.push(livre);
-            console.log("ajouté !");
+          //  console.log("ajouté !");
           }
-          console.log('Livre data  : ', livre.titre);
+        //  console.log('Livre data  : ', livre.titre);
         });
         resolve(livres);
       })
@@ -184,7 +184,7 @@ export class LienFireBaseProvider {
 
       this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').ref.get().then(data => {
         for (let list of data.docs) {
-          console.log('Biblio data : ', list.data());
+        //  console.log('Biblio data : ', list.data());
           let biblio: Biblio = new Biblio();
           biblio.setBiblio(list.id, list.data().nomB, 0, null, list.data().maisonB);
           biblios.push(biblio);
@@ -206,17 +206,17 @@ export class LienFireBaseProvider {
       let biblios: Biblio[] = [];
 
       return this.afs.collection('Biblio').doc('VWf30cTxBYV5CidHmfKT').collection('Biblio').ref.get().then(data => {
-        console.log('toutes les biblios : ', data.docs);
+       // console.log('toutes les biblios : ', data.docs);
         for (let list of data.docs) {
-          console.log('Biblio data : ', list.data());
+        //  console.log('Biblio data : ', list.data());
           let biblio: Biblio = new Biblio();
           biblio.setBiblio(list.id, list.data().nomB, 0, null, list.data().maisonB);
-          console.log(' maisonB : ', biblio.maisonB, ' idM : ', idM);
+        //  console.log(' maisonB : ', biblio.maisonB, ' idM : ', idM);
           if (biblio.maisonB === idM) {
             biblios.push(biblio);
-            console.log("ajouté ! ");
+         //   console.log("ajouté ! ");
           }
-          console.log('Biblio data bis : ', biblio);
+        //  console.log('Biblio data bis : ', biblio);
           resolve(biblios);
         }
       }).catch(function (error) {
@@ -250,12 +250,12 @@ export class LienFireBaseProvider {
 
       return this.afs.collection('Lecteur').doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').ref.get().then(data => {
         for (let list of data.docs) {
-          console.log('Lecteur data : ', list.data());
+        //  console.log('Lecteur data : ', list.data());
           let lecteur: Lecteur = new Lecteur();
           lecteur.setLecteur(list.id, list.data().pseudo, list.data().mail, list.data().nom, list.data().prenom,
             list.data().mdp, [], list.data().avatar);
           lecteurs.push(lecteur);
-          console.log('Lecteur data bis : ', lecteur);
+        //  console.log('Lecteur data bis : ', lecteur);
         }
         resolve(lecteurs);
       }).catch(function (error) {
@@ -269,15 +269,15 @@ export class LienFireBaseProvider {
       let docRef = this.afs.collection('Lecteur').doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').doc(idL);
       let lecteur: Lecteur = new Lecteur();
 
-      console.log('docRef : ', docRef);
+    //  console.log('docRef : ', docRef);
 
       return docRef.ref.get().then(function (doc) {
-        console.log('doc : ', doc);
+       // console.log('doc : ', doc);
         if (doc.exists) {
-          console.log("Document data:", doc.data());
+       //   console.log("Document data:", doc.data());
           lecteur.setLecteur(doc.id, doc.data().pseudo, doc.data().mail, doc.data().nom, doc.data().prenom, doc.data().mdp,
             [], doc.data().avatar);
-          console.log("lecteur pseudo :", lecteur.pseudo);
+      //    console.log("lecteur pseudo :", lecteur.pseudo);
           resolve(lecteur);
         } else {
           // doc.data() will be undefined in this case
@@ -296,13 +296,13 @@ export class LienFireBaseProvider {
       let lecture: Lecture = new Lecture();
 
       return docRef.ref.get().then(data => {
-        console.log('toutes les lectures : ', data.docs);
+      //  console.log('toutes les lectures : ', data.docs);
         for (let list of data.docs) {
-          console.log('Lecture data : ', list.data());
+        //  console.log('Lecture data : ', list.data());
           if (list.data().idLec === idLec) {
             if (list.data().idLiv === idLiv) {
               lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire, list.data().dateDebut, list.data().dateFin);
-              console.log("Lecture trouvée ! ");
+          //    console.log("Lecture trouvée ! ");
             }
           }
           resolve(lecture);
@@ -321,13 +321,13 @@ export class LienFireBaseProvider {
       let lectures: Lecture[] = [];
 
       docRef.ref.get().then(data => {
-        console.log('toutes les lectures : ', data.docs);
+      //  console.log('toutes les lectures : ', data.docs);
         for (let list of data.docs) {
-          console.log('Lecture data : ', list.data());
+        //  console.log('Lecture data : ', list.data());
           if (list.data().idLec === idLec) {
             lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire, list.data().dateDebut, list.data().dateFin);
             lectures.push(lecture);
-            console.log("Lecture ajoutée : ", lecture);
+        //    console.log("Lecture ajoutée : ", lecture);
           }
           resolve(lectures);
         }
@@ -345,7 +345,7 @@ export class LienFireBaseProvider {
 
       return docRef.ref.get().then(data => {
         for (let list of data.docs) {
-          console.log('Lecture data : ', list.data());
+        //  console.log('Lecture data : ', list.data());
           lecture.setLecture(list.id, list.data().idLec, list.data().idLiv, list.data().page, list.data().commentaire,
             list.data().dateDebut, list.data().dateFin);
           lectures.push(lecture);
@@ -364,15 +364,15 @@ export class LienFireBaseProvider {
       let lecteur: Lecteur = new Lecteur();
       let lecteurs: Lecteur[] = [];
       return docRef.ref.get().then(data => {
-        console.log('toutes les lectures : ', data.docs);
+       // console.log('toutes les lectures : ', data.docs);
         for (let list of data.docs) {
-          console.log('Lecture data : ', list.data());
+        //  console.log('Lecture data : ', list.data());
           if (list.data().idLiv === idLiv) {
             this.retrieveLecteurID(list.data().idLec).then(data => {
               lecteur = data;
             });
             lecteurs.push(lecteur);
-            console.log("Lecteur ajouté : ", lecteur);
+          //  console.log("Lecteur ajouté : ", lecteur);
           }
         }
         resolve(lecteurs);
@@ -389,17 +389,17 @@ export class LienFireBaseProvider {
       let docRef = this.afs.collection('Livre').doc('Fa1vm1fYmsuKwCUuup31').collection('Livre').doc(idL);
       let livre: Livre = new Livre();
 
-      console.log('idL : ', idL);
+    //  console.log('idL : ', idL);
       console.log('livre : ', livre);
 
       return docRef.ref.get().then(function (doc) {
         if (doc.exists) {
-          console.log("Doc data:", doc.data());
+       //   console.log("Doc data:", doc.data());
 
           livre.setLivre(doc.id, doc.data().titre, "null", "null", doc.data().editeur, doc.data().langue,
             doc.data().date, doc.data().edition, doc.data().nbPages, "null", doc.data().resume, doc.data().auteurs,
             [], doc.data().type, doc.data().cover, doc.data().genre, doc.data().proprioL, null, doc.data().biblioL);
-          console.log("livre proprio :", livre.proprio_L);
+       //   console.log("livre proprio :", livre.proprio_L);
           resolve(livre);
 
         } else {

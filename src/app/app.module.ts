@@ -42,8 +42,12 @@ import { LienStorageProvider } from '../providers/lien-storage/lien-storage';
     AngularFirestoreModule,
     AngularFireModule.initializeApp(firebaseConfig),
   //  IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
-
+    IonicStorageModule.forRoot(
+  /*    {
+      name: '__mydb',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }*/
+    )
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,6 +68,7 @@ import { LienStorageProvider } from '../providers/lien-storage/lien-storage';
     BarcodeScanner,
     Camera,
     AngularFirestore,
+    IonicStorageModule,
     LienStorageProvider,
   ]
 })

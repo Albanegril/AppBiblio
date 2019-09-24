@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Livre} from "../../models/Livre";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the ListLivrePage page.
@@ -19,7 +20,8 @@ export class ListLivrePage {
   public listLivre:Livre[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private lienFirebaseService: LienFireBaseProvider) {
+              private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider) {
 
     console.log(this.navParams.get('id'));
     // pb car non sychrno ??
@@ -27,6 +29,10 @@ export class ListLivrePage {
     then(data => {
       this.listLivre = data;
       console.log('list de livre : ', this.listLivre);
+      this.lienStorageService.setLivres(this.listLivre).
+      then(dataBis => {
+        console.log('data: ', dataBis);
+      });
     });
 
      //this.listLivre = this.lienFirebaseService.retrieveLivres();
