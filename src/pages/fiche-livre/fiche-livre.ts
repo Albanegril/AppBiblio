@@ -34,33 +34,37 @@ export class FicheLivrePage {
 
     console.log('fiche livre id : ', this.navParams.get('id'));
 
-      this.lienStorageService.getlivre(this.navParams.get('id')).then(data => {
+      this.lienStorageService.getLivre(this.navParams.get('id')).then(data => {
         console.log('GET STORAGE : ', data);
        /*
-           this.lienStorageService.setLivre(this.livre).then(set => {
+      this.lienStorageService.setLivre(this.livre).then(set => {
       console.log('SET STORAGE: ', set);
       });
-    }); */
-  //  this.lienFirebaseService.retrieveLivre(this.navParams.get('id')).then(data => {
+
+      this.lienFirebaseService.retrieveLivre(this.navParams.get('id')).then(set => {
+        console.log('retrieveLivre : ', set);
+      });
+      */
       this.livre = data;
       console.log('fiche livre data : ', this.livre);
 
-    //  console.log("Den " + JSON.stringify(this.livre));
+      // console.log("Den " + JSON.stringify(this.livre));
       console.log('Id proprio : ', this.livre.proprio_L);
 
       if (typeof this.livre.proprio_L === "undefined" || this.livre.proprio_L === null )
       {
         this.livre.proprio_L = "Pas de Proprio";
       } else {
-        this.lienFirebaseService.retrieveLecteurID(this.livre.proprio_L).then(data => {
+        this.lienStorageService.getLecteur(this.livre.proprio_L).then(data => {
           this.livre.proprio_L = data.pseudo;
-        //  console.log('Proprio pseudo : ', this.livre.proprio_L);
+          console.log('Proprio pseudo : ', this.livre.proprio_L);
         });
       }
 
       let listLecteurs: string[] = [];
       let lecteurs: Lecteur[];
-      this.lienFirebaseService.retrieveLecteurDeLivre(this.livre.id_L).then(data => {
+      console.log("this.livre.id_L : ", this.livre.id_L);
+      this.lienStorageService.getLecteursDeLivre(this.livre.id_L).then(data => {
         lecteurs = data;
         if (typeof lecteurs === "undefined" || lecteurs === null || lecteurs.length == 0 )
         {
@@ -70,9 +74,9 @@ export class FicheLivrePage {
             listLecteurs.push(lecteur.pseudo);
           }
         }
-       // console.log('Liste lecteur pseudo : ', listLecteurs);
+        console.log('Liste lecteur pseudo : ', listLecteurs);
         this.livre.lecteurs = listLecteurs;
-        console.log('livre cover pres : ', this.livre.cover);
+       // console.log('livre cover pres : ', this.livre.cover);
       });
 
       // TODO prendre en compte que ssi sur mobile, image stockable sur firebase ?
@@ -91,7 +95,7 @@ export class FicheLivrePage {
 
   lire() {
     let lecteurs: Lecteur[] = [];
-    this.lienFirebaseService.retrieveLecteur().then(data => {
+    this.lienStorageService.getLecteurs().then(data => {
       lecteurs = data;
       console.log('lecteurs : ', lecteurs);
 
@@ -112,9 +116,9 @@ export class FicheLivrePage {
       alert.addButton('Cancel');
       alert.addButton({
         text: 'Valider',
-        handler: data => {
-          console.log('data alert : ', data);
-          if (data === "undefined" || data === null ) {
+        handler: LecID => {
+          console.log('data alert : ', LecID);
+          if (LecID === "undefined" || LecID === null ) {
             console.log("Lecteur non séléctionné");
             let toast = this.toastCtrl.create({
               message: 'ERROR : champs vide',
@@ -123,8 +127,12 @@ export class FicheLivrePage {
             toast.present();
             return false;
           } else {
-            this.lienFirebaseService.addLecture(this.navParams.get('id'), data, 0, "", new Date(), null).
-            then(data => {
+            // TODO : /!\ Attention création d'abord dans Cloud
+            this.lienFirebaseService.addLecture(this.navParams.get('id'), LecID, 0, "", new Date(), null).
+            then(result => {
+              let lecture:Lecture = new Lecture();
+              // TODO : result --> remplacer par ID_Lecture
+              lecture.setLecture(result, LecID, this.navParams.get('id'), 0, "", new Date(), null);
               this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L, 'livre': this.livre});
             });
             let toast = this.toastCtrl.create({
@@ -141,7 +149,7 @@ export class FicheLivrePage {
   deplacer() {
 
     let biblios: Biblio[] = [];
-    this.lienFirebaseService.retrieveBiblio().then(data => {
+    this.lienStorageService.getBiblios().then(data => {
       biblios = data;
       console.log('biblios : ', biblios);
 
@@ -173,7 +181,8 @@ export class FicheLivrePage {
             toast.present();
             return false;
           } else {
-            this.lienFirebaseService.changemenentBiblio(this.navParams.get('id'), data);
+            // TODO : /!\ fct moveFormBiblio à refaire !!
+            this.lienStorageService.moveFromBiblio(this.navParams.get('id'), data);
             let toast = this.toastCtrl.create({
                message: 'Success : Livre deplacé',
              // message: 'ERROR : Non fonctionnel',
