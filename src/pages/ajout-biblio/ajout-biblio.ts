@@ -5,6 +5,7 @@ import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-bas
 import {Maison} from "../../models/Maison";
 import {Lecteur} from "../../models/Lecteur";
 import {ConnexionCreationPage} from "../connexion-creation/connexion-creation";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the AjoutBiblioPage page.
@@ -24,12 +25,13 @@ export class AjoutBiblioPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider,
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
-    this.lienFirebaseService.retrieveMaison().then(data => {
+    this.lienStorageService.getMaisons().then(data => {
       this.maisons = data;
     });
-    this.lienFirebaseService.retrieveLecteur().then(data => {
+    this.lienStorageService.getLecteurs().then(data => {
       this.proprios = data;
     });
   }
@@ -43,6 +45,8 @@ export class AjoutBiblioPage {
 
     this.lienFirebaseService.addBiblio(form)
       .then( res => {
+        // TODO
+        //this.lienStorageService.setBiblio(res.data);
         let toast = this.toastCtrl.create({
           message: 'Biblio add successfully',
           duration: 3000
@@ -89,6 +93,7 @@ export class AjoutBiblioPage {
           handler: data => {
             if (data.nom != null) {
               this.lienFirebaseService.addMaison(data.nom, data.adresse, data.proprio);
+              // TODO : then --> this.lienStorageService.setMaison();
             } else {
               console.log("il faut au moins un nom pour créer une Maison");
               let toast = this.toastCtrl.create({

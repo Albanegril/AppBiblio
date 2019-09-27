@@ -105,6 +105,27 @@ export class LienStorageProvider {
     });
   }
 
+  getLivresDeB(idB): Promise<Livre[]>{
+    return new Promise<Livre[]>((resolve, reject) => {
+      return this.storage.get('livre ' ).then((val) => {
+        let livres: Livre[] = [];
+        for (let liv of val) {
+          if(liv._biblioL == idB){
+            let livre: Livre = new Livre();
+            console.log('livre : ', val);
+            livre.setLivre(liv._id_L, liv._titre, liv.isbn || "null", liv.format || "null", liv._editeur, liv._langue,
+              liv._date, liv._edition, liv._nbPages, liv.dimensions || "null", liv._resume, liv._auteurs,
+              liv.avis || [], liv._type, liv._cover, liv._genre, liv._proprioL, liv.lecteurs || null, liv._biblioL);
+            livres.push(livre);
+          }
+        }
+        resolve(livres);
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      })
+    });
+  }
+
   /*BIBLIO*/
   setBiblio(biblio:Biblio): Promise<any>{
     return new Promise<any>((resolve, reject) => {

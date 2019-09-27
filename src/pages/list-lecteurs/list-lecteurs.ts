@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Livre} from "../../models/Livre";
 import {Lecteur} from "../../models/Lecteur";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the ListLecteursPage page.
@@ -20,9 +21,9 @@ export class ListLecteursPage {
   public listLecteurs:Lecteur[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private lienFirebaseService: LienFireBaseProvider) {
+              private lienStorageService: LienStorageProvider) {
 
-    this.lienFirebaseService.retrieveLecteur().then(data => {
+    this.lienStorageService.getLecteurs().then(data => {
       this.listLecteurs = data;
       console.log('list lecteurs : ', this.listLecteurs);
     });
@@ -34,14 +35,14 @@ export class ListLecteursPage {
   }
 
   onClickLecteur(id: string) {
-    
+
   }
 
   modifier(id: string) {
-    
+
   }
 
   supprimer(id: string) {
-    
+
   }
 }

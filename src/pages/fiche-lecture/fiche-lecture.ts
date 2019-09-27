@@ -3,6 +3,7 @@ import {AlertController, IonicPage, NavController, NavParams, ToastController} f
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Livre} from "../../models/Livre";
 import {Lecture} from "../../models/Lecture";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the FicheLecturePage page.
@@ -22,15 +23,13 @@ export class FicheLecturePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider,
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
 
-    console.log('idLec : ', this.navParams.get('idLec'));
-    console.log('idLiv : ', this.navParams.get('idLiv'));
-    lienFirebaseService.retrieveLectureLivDeLec(this.navParams.get('idLiv'), this.navParams.get('idLec')).
+    this.lienStorageService.getLectureLivDeLec(this.navParams.get('idLiv'), this.navParams.get('idLec')).
     then(data => {
       this.lecture = data;
-      console.log('Lecture data : ', this.lecture);
       this.livre = this.navParams.get('livre');
     });
   }
@@ -40,10 +39,10 @@ export class FicheLecturePage {
   }
 
   supprimer() {
-
+    // TODO
   }
 
   editer() {
-
+    // TODO
   }
 }

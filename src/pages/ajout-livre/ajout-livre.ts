@@ -8,6 +8,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Maison} from "../../models/Maison";
 import {Lecteur} from "../../models/Lecteur";
 import {Biblio} from "../../models/Biblio";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 
 /**
@@ -29,14 +30,14 @@ export class AjoutLivrePage{
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider,
               private toastCtrl: ToastController,
               private camera: Camera) {
     this.livre = this.navParams.get('data');
-    console.log('livre == ', this.livre);
-    this.lienFirebaseService.retrieveBiblio().then(data => {
+    this.lienStorageService.getBiblios().then(data => {
       this.biblios = data;
     });
-    this.lienFirebaseService.retrieveLecteur().then(data => {
+    this.lienStorageService.getLecteurs().then(data => {
       this.proprios = data;
     });
   }
@@ -50,6 +51,8 @@ export class AjoutLivrePage{
 
     this.lienFirebaseService.addLivre(form)
       .then( res => {
+        // TODO :
+        // this.lienStorageService.setLivre()
         let toast = this.toastCtrl.create({
           message: 'Livre add successfully',
           duration: 3000

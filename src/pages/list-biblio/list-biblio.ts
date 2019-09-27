@@ -4,6 +4,7 @@ import {Lecteur} from "../../models/Lecteur";
 import {Biblio} from "../../models/Biblio";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Maison} from "../../models/Maison";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the ListBiblioPage page.
@@ -25,9 +26,9 @@ export class ListBiblioPage {
   maisonExpandHeight: number = 100;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private lienFirebaseService: LienFireBaseProvider) {
+              private lienStorageService: LienStorageProvider) {
 
-    this.lienFirebaseService.retrieveMaison().then(data => {
+    this.lienStorageService.getMaisons().then(data => {
       this.listMaison = data;
       console.log('list de maison : ', this.listMaison);
     });
@@ -38,7 +39,7 @@ export class ListBiblioPage {
   }
 
   expandItem(maison){
-    this.lienFirebaseService.retrieveBiblioDeM(maison.id_M).then(data => {
+    this.lienStorageService.getBiblioDeM(maison.id_M).then(data => {
       this.listBiblio = data;
       this.listMaison.map((listBiblio) => {
         if(maison == listBiblio){

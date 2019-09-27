@@ -20,12 +20,10 @@ export class ListLivrePage {
   public listLivre:Livre[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private lienFirebaseService: LienFireBaseProvider,
               private lienStorageService: LienStorageProvider) {
 
-    console.log(this.navParams.get('id'));
-    // pb car non sychrno ??
-    this.lienFirebaseService.retrieveLivresDeB(this.navParams.get('id')).
+   // console.log(this.navParams.get('id'));
+    this.lienStorageService.getLivresDeB(this.navParams.get('id')).
     then(data => {
       this.listLivre = data;
       console.log('list de livre : ', this.listLivre);
@@ -34,9 +32,6 @@ export class ListLivrePage {
         console.log('data: ', dataBis);
       });
     });
-
-     //this.listLivre = this.lienFirebaseService.retrieveLivres();
-     //console.log('list de livre : ', this.listLivre);
   }
 
   ionViewDidLoad() {

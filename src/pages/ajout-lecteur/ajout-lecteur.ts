@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {NgForm} from "@angular/forms";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the AjoutLecteurPage page.
@@ -19,6 +20,7 @@ export class AjoutLecteurPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider,
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
   }
@@ -33,6 +35,8 @@ export class AjoutLecteurPage {
     // ajout BD
     this.lienFirebaseService.addLecteur(form)
       .then( res => {
+        // TODO
+        // this.lienStorageService.setLecteur()
         let toast = this.toastCtrl.create({
           message: 'Lecteur add successfully',
           duration: 3000

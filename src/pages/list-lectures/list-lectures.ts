@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Livre} from "../../models/Livre";
 import {Lecture} from "../../models/Lecture";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the ListLecturesPage page.
@@ -20,27 +21,28 @@ export class ListLecturesPage {
   public listLectures:Lecture[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private lienFirebaseService: LienFireBaseProvider) {
+              private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider) {
 
     console.log(this.navParams.get('id'));
  //   this.lienFirebaseService.retrieveLectureDeLec(this.navParams.get('id')).
-    this.lienFirebaseService.retrieveLecture().
-    then(data => {
-      this.listLectures = data;
-      console.log('list de lectures : ', this.listLectures);
-      for(let lecture of this.listLectures){
-        this.lienFirebaseService.retrieveLivre(lecture.idLiv).then(data => {
-          //TODO /!\ l'id du livre est perdu pr cet objet...
-          lecture.idLiv = data.titre;
-          console.log('titre livre : ', lecture.idLiv);
-        });
-        this.lienFirebaseService.retrieveLecteurID(lecture.idLec).then(data => {
-          //TODO /!\ l'id du lecteur est perdu pr cet objet ...
-          lecture.idLec = data.pseudo;
-          console.log('pseudo lecteur : ', lecture.idLec);
-        });
-      }
-    });
+    this.lienStorageService.getLectures()
+      .then(data => {
+        this.listLectures = data;
+        console.log('list de lectures : ', this.listLectures);
+        for(let lecture of this.listLectures){
+          this.lienStorageService.getLivre(lecture.idLiv).then(data => {
+            //TODO /!\ l'id du livre est perdu pr cet objet...
+            lecture.idLiv = data.titre;
+            console.log('titre livre : ', lecture.idLiv);
+          });
+          this.lienStorageService.getLecteur(lecture.idLec).then(data => {
+            //TODO /!\ l'id du lecteur est perdu pr cet objet ...
+            lecture.idLec = data.pseudo;
+            console.log('pseudo lecteur : ', lecture.idLec);
+          });
+        }
+      });
   }
 
   ionViewDidLoad() {

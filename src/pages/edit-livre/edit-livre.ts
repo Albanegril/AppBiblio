@@ -6,6 +6,7 @@ import {Lecteur} from "../../models/Lecteur";
 import {LienFireBaseProvider} from "../../providers/lien-fire-base/lien-fire-base";
 import {Camera} from "@ionic-native/camera";
 import {NgForm} from "@angular/forms";
+import {LienStorageProvider} from "../../providers/lien-storage/lien-storage";
 
 /**
  * Generated class for the EditLivrePage page.
@@ -27,14 +28,15 @@ export class EditLivrePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienFirebaseService: LienFireBaseProvider,
+              private lienStorageService: LienStorageProvider,
               private toastCtrl: ToastController,
               private camera: Camera) {
+
     this.livre = this.navParams.get('data');
-    console.log('livre == ', this.livre);
-    this.lienFirebaseService.retrieveBiblio().then(data => {
+    this.lienStorageService.getBiblios().then(data => {
       this.biblios = data;
     });
-    this.lienFirebaseService.retrieveLecteur().then(data => {
+    this.lienStorageService.getLecteurs().then(data => {
       this.proprios = data;
     });
     this.options = "'modifier'";
@@ -47,6 +49,7 @@ export class EditLivrePage {
   supprimer(idL: string) {
     console.log(' idL : ', idL);
     this.lienFirebaseService.deleteLivre(idL).then( res => {
+      this.lienStorageService.removeLivre(idL); // TODO : Handle error
       let toast = this.toastCtrl.create({
         message: 'Livre deleted',
         duration: 3000
@@ -61,6 +64,8 @@ export class EditLivrePage {
   modifier(form: NgForm) {
     console.log("modif livre", form.value);
 
+    // TODO
+    // this.lienStorageService.editLivre()
     this.lienFirebaseService.modifierLivre(form, this.livre, this.livre.id_L)
       .then( res => {
         let toast = this.toastCtrl.create({

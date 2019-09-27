@@ -133,14 +133,14 @@ export class LienFireBaseProvider {
         .then(data => {
           let livres: Livre[] = [];
           for (let doc of data.docs) {
-          let livre: Livre = new Livre();
-          livre.setLivre(doc.id, doc.data().titre, doc.data().isbn || "null", doc.data().format || "null",
-            doc.data().editeur, doc.data().langue, doc.data().date, doc.data().edition, doc.data().nbPages,
-            doc.data().dimensions || "null", doc.data().resume, doc.data().auteurs, doc.data().avis || [],
-            doc.data().type, doc.data().cover, doc.data().genre, doc.data().proprioL, doc.data().lecteurs || [], doc.data().biblioL);
-          livres.push(livre);
-        }
-          resolve(livres);
+            let livre: Livre = new Livre();
+            livre.setLivre(doc.id, doc.data().titre, doc.data().isbn || "null", doc.data().format || "null",
+              doc.data().editeur, doc.data().langue, doc.data().date, doc.data().edition, doc.data().nbPages,
+              doc.data().dimensions || "null", doc.data().resume, doc.data().auteurs, doc.data().avis || [],
+              doc.data().type, doc.data().cover, doc.data().genre, doc.data().proprioL, doc.data().lecteurs || [], doc.data().biblioL);
+            livres.push(livre);
+          }
+            resolve(livres);
         }).catch(function (error) {
         console.log("Error getting document:", error);
       });
@@ -207,7 +207,7 @@ export class LienFireBaseProvider {
     });
   }
 
-  retrieveMaison(): Promise<Maison[]> {
+  retrieveMaisons(): Promise<Maison[]> {
     return new Promise<Maison[]>((resolve, reject) => {
       return this.afs.collection('Maison').doc('bv394kJ4Bv6oJ0Dv0kWI').collection('Maison').ref.get().then(data => {
         let maisons: Maison[] = [];
@@ -223,7 +223,7 @@ export class LienFireBaseProvider {
     });
   }
 
-  retrieveLecteur(): Promise<Lecteur[]> {
+  retrieveLecteurs(): Promise<Lecteur[]> {
     return new Promise<Lecteur[]>((resolve, reject) => {
       return this.afs.collection('Lecteur').doc('e1IWZmEdiqjLeTv4xs0F').collection('Lecteur').ref.get()
         .then(data => {
@@ -300,7 +300,7 @@ export class LienFireBaseProvider {
     });
   }
 
-  retrieveLecture(): Promise<Lecture[]> {
+  retrieveLectures(): Promise<Lecture[]> {
     return new Promise<Lecture[]>((resolve, reject) => {
       return this.afs.collection('Lecture').doc('t6TbbwaGN5OXFY3cpWoo').collection('Lecture').ref.get()
         .then(data => {

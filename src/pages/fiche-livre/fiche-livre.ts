@@ -32,25 +32,8 @@ export class FicheLivrePage {
               private toastCtrl: ToastController,
               private alertCtrl: AlertController) {
 
-    console.log('fiche livre id : ', this.navParams.get('id'));
-
       this.lienStorageService.getLivre(this.navParams.get('id')).then(data => {
-        console.log('GET STORAGE : ', data);
-       /*
-      this.lienStorageService.setLivre(this.livre).then(set => {
-      console.log('SET STORAGE: ', set);
-      });
-
-      this.lienFirebaseService.retrieveLivre(this.navParams.get('id')).then(set => {
-        console.log('retrieveLivre : ', set);
-      });
-      */
       this.livre = data;
-      console.log('fiche livre data : ', this.livre);
-
-      // console.log("Den " + JSON.stringify(this.livre));
-      console.log('Id proprio : ', this.livre.proprio_L);
-
       if (typeof this.livre.proprio_L === "undefined" || this.livre.proprio_L === null )
       {
         this.livre.proprio_L = "Pas de Proprio";
@@ -64,8 +47,8 @@ export class FicheLivrePage {
       let listLecteurs: string[] = [];
       let lecteurs: Lecteur[];
       console.log("this.livre.id_L : ", this.livre.id_L);
-      this.lienStorageService.getLecteursDeLivre(this.livre.id_L).then(data => {
-        lecteurs = data;
+      this.lienStorageService.getLecteursDeLivre(this.livre.id_L).then(dataBis => {
+        lecteurs = dataBis;
         if (typeof lecteurs === "undefined" || lecteurs === null || lecteurs.length == 0 )
         {
           listLecteurs = ["Pas de Lecteur"];
@@ -74,9 +57,7 @@ export class FicheLivrePage {
             listLecteurs.push(lecteur.pseudo);
           }
         }
-        console.log('Liste lecteur pseudo : ', listLecteurs);
         this.livre.lecteurs = listLecteurs;
-       // console.log('livre cover pres : ', this.livre.cover);
       });
 
       // TODO prendre en compte que ssi sur mobile, image stockable sur firebase ?
@@ -84,7 +65,6 @@ export class FicheLivrePage {
       {
         this.livre.cover = "assets/imgs/logobooks.png";
       }
-      console.log('livre cover : ', this.livre.cover);
     });
 
   }
@@ -97,14 +77,10 @@ export class FicheLivrePage {
     let lecteurs: Lecteur[] = [];
     this.lienStorageService.getLecteurs().then(data => {
       lecteurs = data;
-      console.log('lecteurs : ', lecteurs);
 
       let alert = this.alertCtrl.create();
-
       alert.setTitle('Choisir un lecteur pour commencer la lecture de ce livre');
-
       for(let lecteur of lecteurs){
-        console.log('lecteur id : ', lecteur.id, 'lecteur pseudo : ', lecteur.pseudo);
         alert.addInput({
           type: 'radio',
           label: lecteur.pseudo,
@@ -112,12 +88,10 @@ export class FicheLivrePage {
           checked: false
         });
       }
-
       alert.addButton('Cancel');
       alert.addButton({
         text: 'Valider',
         handler: LecID => {
-          console.log('data alert : ', LecID);
           if (LecID === "undefined" || LecID === null ) {
             console.log("Lecteur non séléctionné");
             let toast = this.toastCtrl.create({
@@ -132,7 +106,7 @@ export class FicheLivrePage {
             then(result => {
               let lecture:Lecture = new Lecture();
               // TODO : result --> remplacer par ID_Lecture
-              lecture.setLecture(result, LecID, this.navParams.get('id'), 0, "", new Date(), null);
+              lecture.setLecture(result.id, LecID, this.navParams.get('id'), 0, "", new Date(), null);
               this.navCtrl.push('FicheLecturePage', {'idLec': 'wh0dBMuYP8CoH0lqykJC', 'idLiv':this.livre.id_L, 'livre': this.livre});
             });
             let toast = this.toastCtrl.create({
@@ -147,14 +121,12 @@ export class FicheLivrePage {
   }
 
   deplacer() {
-
     let biblios: Biblio[] = [];
     this.lienStorageService.getBiblios().then(data => {
       biblios = data;
       console.log('biblios : ', biblios);
 
       let alert = this.alertCtrl.create();
-
       for(let biblio of biblios){
         console.log('biblio id : ', biblio.id_B, 'biblio nom : ', biblio.nom_B);
         alert.addInput({
@@ -164,16 +136,12 @@ export class FicheLivrePage {
           checked: false
         });
       }
-
       alert.setTitle('Choisie une nouvelle biblio');
-
       alert.addButton('Cancel');
       alert.addButton({
         text: 'Valider',
         handler: data => {
-          console.log('data alert : ', data);
           if (data === "undefined" || data === null ) {
-            console.log("Biblio non séléctionné");
             let toast = this.toastCtrl.create({
               message: 'ERROR : champs vide',
               duration: 3000
@@ -185,7 +153,6 @@ export class FicheLivrePage {
             this.lienStorageService.moveFromBiblio(this.navParams.get('id'), data);
             let toast = this.toastCtrl.create({
                message: 'Success : Livre deplacé',
-             // message: 'ERROR : Non fonctionnel',
               duration: 3000
             });
             toast.present();
