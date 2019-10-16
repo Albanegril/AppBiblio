@@ -35,7 +35,7 @@ export class MyApp {
             messagingSenderId: "917836731868"
           };
      // AngularFireModule.initializeApp(config);
-      firebase.initializeApp(config);
+     // firebase.initializeApp(config);
     });
 
   }

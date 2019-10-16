@@ -25,8 +25,6 @@ export class ConnexionPage {
   private errorMessage: "Echec Connexion";
   constructor(private gestionnaireCompte: GestionCompteProvider,
               public modalCtrl: ModalController,
-              private lienFirebaseService: LienFireBaseProvider,
-              private lienStorageService: LienStorageProvider,
               public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -53,7 +51,6 @@ export class ConnexionPage {
         console.log("connexion en cours");
         this.navCtrl.push('ListBiblioPage').then(
           ()=>{
-            this.getAllData();
             this.navCtrl.setRoot('ListBiblioPage');
         });
       },
@@ -61,39 +58,6 @@ export class ConnexionPage {
         this.errorMessage = error;
       }
     );
-  }
-
-  getAllData(){
-    //Storage Livres
-    this.lienFirebaseService.retrieveLivres().then(data => {
-      this.lienStorageService.setLivres(data).then(dataBis => {
-        console.log('data: ', dataBis);
-      });
-    });
-    //Storage Biblios
-    this.lienFirebaseService.retrieveBiblio().then(data => {
-      this.lienStorageService.setBiblios(data).then(dataBis => {
-        console.log('data: ', dataBis);
-      });
-    });
-    //Storage Maisons
-    this.lienFirebaseService.retrieveMaisons().then(data => {
-      this.lienStorageService.setMaisons(data).then(dataBis => {
-        console.log('data: ', dataBis);
-      });
-    });
-    //Storage Lecteurs
-    this.lienFirebaseService.retrieveLecteurs().then(data => {
-      this.lienStorageService.setLecteurs(data).then(dataBis => {
-        console.log('data: ', dataBis);
-      });
-    });
-    //Storage Lectures
-    this.lienFirebaseService.retrieveLectures().then(data => {
-      this.lienStorageService.setLectures(data).then(dataBis => {
-        console.log('data: ', dataBis);
-      });
-    });
   }
 
 

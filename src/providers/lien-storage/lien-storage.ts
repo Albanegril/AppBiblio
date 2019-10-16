@@ -14,10 +14,42 @@ import {Maison} from "../../models/Maison";
 */
 @Injectable()
 export class LienStorageProvider {
+  public keys:String[];
 
   constructor(public http: HttpClient,
               private storage: Storage) {
     console.log('Hello LienStorageProvider Provider');
+  }
+
+  getDriver(){
+    return this.storage.driver;
+  }
+
+  /* KEYS */
+  getAllKeys(){
+    this.storage.keys().then((val) => {
+      console.log("VAL : ", val);
+      this.keys = val;
+      console.log('KEYS : ', this.keys);
+      //return this.keys; // utile ?
+      //this.getElementKeys('livre ');
+    }).catch((error) => {
+      console.log("Error getting keys:", error);
+    });
+  }
+
+  getElementKeys(element:string){
+    this.getAllKeys();
+    let elementKeys:String[];
+    console.log("this.keys : ", this.keys);
+    this.keys.forEach(function(key) {
+      if(key.includes(element)){
+        //console.log(key);
+        elementKeys.push(key);
+      }
+    });
+    console.log("ELEMENT KEYS :", elementKeys);
+    return elementKeys;
   }
 
   /*LIVRE*/
@@ -81,27 +113,29 @@ export class LienStorageProvider {
   setLivres(livres:Livre[]){
     return new Promise<any>((resolve, reject) => {
       for(let livre of livres){
-        let livreStored = this.storage.set(`livre ${ livre.id_L }`, livre);
+        let data = this.storage.set(`livre ${ livre.id_L }`, livre);
+       // console.log("Livres : ", data);
       }
     });
   }
 
   getLivres(): Promise<Livre[]>{
     return new Promise<Livre[]>((resolve, reject) => {
-      return this.storage.get('livre ' ).then((val) => {
-        let livres: Livre[] = [];
-        for (let liv of val) {
+      let livres: Livre[] = [];
+      let listKeys = this.getElementKeys('livre ');
+      console.log("LIST KEY : ", listKeys);
+        listKeys.forEach(function(key) {
+        this.storage.get(key).then((val) => {
           let livre: Livre = new Livre();
-          console.log('livre : ', val);
-          livre.setLivre(liv._id_L, liv._titre, liv.isbn || "null", liv.format || "null", liv._editeur, liv._langue,
-            liv._date, liv._edition, liv._nbPages, liv.dimensions || "null", liv._resume, liv._auteurs,
-            liv.avis || [], liv._type, liv._cover, liv._genre, liv._proprioL, liv.lecteurs || null, liv._biblioL);
+          livre.setLivre(val._id_L, val._titre, val.isbn || "null", val.format || "null", val._editeur, val._langue,
+            val._date, val._edition, val._nbPages, val.dimensions || "null", val._resume, val._auteurs,
+            val.avis || [], val._type, val._cover, val._genre, val._proprioL, val.lecteurs || null, val._biblioL);
           livres.push(livre);
-        }
-        resolve(livres);
-      }).catch((error) => {
-        console.log("Error getting document:", error);
-      })
+        }).catch((error) => {
+          console.log("Error getting document:", error);
+        })
+      });
+      resolve(livres);
     });
   }
 
@@ -112,7 +146,7 @@ export class LienStorageProvider {
         for (let liv of val) {
           if(liv._biblioL == idB){
             let livre: Livre = new Livre();
-            console.log('livre : ', val);
+            //console.log('livre : ', val);
             livre.setLivre(liv._id_L, liv._titre, liv.isbn || "null", liv.format || "null", liv._editeur, liv._langue,
               liv._date, liv._edition, liv._nbPages, liv.dimensions || "null", liv._resume, liv._auteurs,
               liv.avis || [], liv._type, liv._cover, liv._genre, liv._proprioL, liv.lecteurs || null, liv._biblioL);
@@ -160,7 +194,8 @@ export class LienStorageProvider {
   setBiblios(biblios:Biblio[]){
     return new Promise<any>((resolve, reject) => {
       for(let biblio of biblios){
-        this.storage.set(`biblio ${ biblio.id_B }`, biblio);
+        let data = this.storage.set(`biblio ${ biblio.id_B }`, biblio);
+       // console.log('Biblios : ', data);
       }
     });
   }
@@ -247,15 +282,17 @@ export class LienStorageProvider {
   setMaisons(maisons:Maison[]){
     return new Promise<any>((resolve, reject) => {
       for(let maison of maisons){
-        this.storage.set(`maison ${ maison.id_M }`, maison);
+        let data = this.storage.set(`maison ${maison.id_M}`, maison);
+        //console.log("Maisons : ", data);
       }
     });
   }
 
   getMaisons(): Promise<Maison[]>{
     return new Promise<Maison[]>((resolve, reject) => {
-      return this.storage.get('maison ' ).then((val) => {
+      return this.storage.get('maison').then((val) => {
         let maisons: Maison[] = [];
+       // console.log("VAL : ", val);
         for (let mai of val) {
           let maison:Maison = new Maison();
           maison.setMaison(mai.id, mai.nomM, mai.adresse || "null", mai.proprio_M || null);
@@ -303,7 +340,8 @@ export class LienStorageProvider {
   setLecteurs(lecteurs:Lecteur[]){
     return new Promise<any>((resolve, reject) => {
       for(let lecteur of lecteurs){
-        this.storage.set(`lecteur ${ lecteur.id }`, lecteur);
+        let data = this.storage.set(`lecteur ${ lecteur.id }`, lecteur);
+        //console.log("Lecteurs : ", data);
       }
     });
   }
@@ -414,7 +452,8 @@ export class LienStorageProvider {
   setLectures(lectures:Lecture[]){
     return new Promise<any>((resolve, reject) => {
       for(let lecture of lectures){
-        this.storage.set(`lecture ${ lecture.id }`, lecture);
+        let data = this.storage.set(`lecture ${ lecture.id }`, lecture);
+        //console.log("Lectures : ", data);
       }
     });
   }

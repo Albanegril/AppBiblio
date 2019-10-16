@@ -28,6 +28,10 @@ export class ListBiblioPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private lienStorageService: LienStorageProvider) {
 
+    this.lienStorageService.getLivres().then(data => {
+      console.log('list de livres : ', data);
+    });
+
     this.lienStorageService.getMaisons().then(data => {
       this.listMaison = data;
       console.log('list de maison : ', this.listMaison);
