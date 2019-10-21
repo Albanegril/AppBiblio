@@ -14,7 +14,7 @@ import {Maison} from "../../models/Maison";
 */
 @Injectable()
 export class LienStorageProvider {
-  public keys:String[];
+  public keys:String[] = [];
 
   constructor(public http: HttpClient,
               private storage: Storage) {
@@ -27,29 +27,35 @@ export class LienStorageProvider {
 
   /* KEYS */
   getAllKeys(){
-    this.storage.keys().then((val) => {
-      console.log("VAL : ", val);
-      this.keys = val;
-      console.log('KEYS : ', this.keys);
-      //return this.keys; // utile ?
-      //this.getElementKeys('livre ');
-    }).catch((error) => {
-      console.log("Error getting keys:", error);
+    return new Promise<any>((resolve, reject) => {
+      return this.storage.keys().then((val) => {
+       // console.log("VAL : ", val);
+        this.keys = val;
+       // console.log('KEYS : ', this.keys);
+        resolve(this.keys)
+      }).catch((error) => {
+        console.log("Error getting keys:", error);
+      });
     });
   }
 
   getElementKeys(element:string){
-    this.getAllKeys();
-    let elementKeys:String[];
-    console.log("this.keys : ", this.keys);
-    this.keys.forEach(function(key) {
-      if(key.includes(element)){
-        //console.log(key);
-        elementKeys.push(key);
-      }
+    return new Promise<any>((resolve, reject) => {
+      return this.getAllKeys().then((val) => {
+        let elementKeys:String[] = [];
+        //console.log("this.keys : ", this.keys);
+        this.keys.forEach(function(key) {
+          if(key.includes(element)){
+            //console.log(key);
+            elementKeys.push(key);
+          }
+        });
+       // console.log("ELEMENT KEYS :", elementKeys);
+        resolve(elementKeys);
+      }).catch((error) => {
+        console.log("Error getting Elements keys:", error);
+      });
     });
-    console.log("ELEMENT KEYS :", elementKeys);
-    return elementKeys;
   }
 
   /*LIVRE*/
@@ -68,9 +74,9 @@ export class LienStorageProvider {
     return new Promise<Livre>((resolve, reject) => {
         return this.storage.get('livre ' + id).then((val) => {
           let livre: Livre = new Livre();
-          livre.setLivre(val._id_L, val._titre, val.isbn || "null", val.format || "null", val._editeur, val._langue,
-            val._date, val._edition, val._nbPages, val.dimensions || "null", val._resume, val._auteurs,
-            val.avis || [], val._type, val._cover, val._genre, val._proprioL, val.lecteurs || null, val._biblioL);
+          livre.setLivre(val._id_L, val._titre, val._isbn || "null", val._format || "null", val._editeur, val._langue,
+            val._date, val._edition, val._nbPages, val._dimensions || "null", val._resume, val._auteurs,
+            val._avis || [], val._type, val._cover, val._genre, val._proprioL, val._lecteurs || null, val._biblioL);
           resolve(livre);
         }).catch((error) => {
         console.log("Error getting document:", error);
@@ -120,37 +126,45 @@ export class LienStorageProvider {
   }
 
   getLivres(): Promise<Livre[]>{
+    let self = this; //if not this is not defined
     return new Promise<Livre[]>((resolve, reject) => {
       let livres: Livre[] = [];
-      let listKeys = this.getElementKeys('livre ');
-      console.log("LIST KEY : ", listKeys);
+      this.getElementKeys('livre ').then((K) => {
+        let listKeys = K;
+        //console.log("LIST KEY : ", listKeys);
         listKeys.forEach(function(key) {
-        this.storage.get(key).then((val) => {
-          let livre: Livre = new Livre();
-          livre.setLivre(val._id_L, val._titre, val.isbn || "null", val.format || "null", val._editeur, val._langue,
-            val._date, val._edition, val._nbPages, val.dimensions || "null", val._resume, val._auteurs,
-            val.avis || [], val._type, val._cover, val._genre, val._proprioL, val.lecteurs || null, val._biblioL);
-          livres.push(livre);
-        }).catch((error) => {
-          console.log("Error getting document:", error);
-        })
-      });
-      resolve(livres);
+            self.storage.get(key).then((val) => {
+              let livre: Livre = new Livre();
+              livre.setLivre(val._id_L, val._titre, val._isbn || "null", val._format || "null", val._editeur, val._langue,
+                val._date, val._edition, val._nbPages, val._dimensions || "null", val._resume, val._auteurs,
+                val._avis || [], val._type, val._cover, val._genre, val._proprioL, val._lecteurs || null, val._biblioL);
+              livres.push(livre);
+            }).catch((error) => {
+              console.log("Error getting document:", error);
+            })
+          });
+        resolve(livres);
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      })
     });
   }
 
   getLivresDeB(idB): Promise<Livre[]>{
+    let self = this; //if not this is not defined
     return new Promise<Livre[]>((resolve, reject) => {
-      return this.storage.get('livre ' ).then((val) => {
-        let livres: Livre[] = [];
-        for (let liv of val) {
-          if(liv._biblioL == idB){
+      let livres: Livre[] = [];
+      this.getLivres().then((val) => {
+        console.log("VAL livre : ", val);
+        for(let liv of val){
+          if(liv.biblio_L == idB) {
+            /*
             let livre: Livre = new Livre();
-            //console.log('livre : ', val);
-            livre.setLivre(liv._id_L, liv._titre, liv.isbn || "null", liv.format || "null", liv._editeur, liv._langue,
-              liv._date, liv._edition, liv._nbPages, liv.dimensions || "null", liv._resume, liv._auteurs,
-              liv.avis || [], liv._type, liv._cover, liv._genre, liv._proprioL, liv.lecteurs || null, liv._biblioL);
-            livres.push(livre);
+            livre.setLivre(liv.id_L, liv.titre, liv.isbn || "null", liv.format || "null", liv.editeur, liv.langue,
+              liv.date, liv.edition, liv.nbPages, liv.dimensions || "null", liv.resume, liv.auteurs,
+              liv.avis || [], liv.type, liv.cover, liv.genre, liv.proprio_L, liv.lecteurs || null, liv.biblio_L);
+             */
+            livres.push(liv);
           }
         }
         resolve(livres);
@@ -177,7 +191,7 @@ export class LienStorageProvider {
       let biblio: Biblio = new Biblio();
       let idStored = 'biblio ' + id;
       return this.storage.get(idStored).then((val) => {
-        biblio.setBiblio(val.id, val.nomB, val.nb_etages || 0, val.proprio_B || null, val.maisonB);
+        biblio.setBiblio(val._id, val._nomB, val._nb_etages || 0, val._proprio_B || null, val._maisonB);
         resolve(biblio);
       }).catch((error) => {
         console.log("Error getting document:", error);
@@ -201,14 +215,21 @@ export class LienStorageProvider {
   }
 
   getBiblios(): Promise<Biblio[]>{
+    let self = this; //if not this is not defined
     return new Promise<Biblio[]>((resolve, reject) => {
-      return this.storage.get('biblio ' ).then((val) => {
-        let biblios: Biblio[] = [];
-        for (let bib of val) {
-          let biblio: Biblio = new Biblio();
-          biblio.setBiblio(bib.id, bib.nomB, bib.nb_etages || 0, bib.proprio_B || null, bib.maisonB);
-          biblios.push(biblio);
-        }
+      let biblios: Biblio[] = [];
+      this.getElementKeys('biblio ').then((K) => {
+        let listKeys = K;
+        listKeys.forEach(function(key) {
+          self.storage.get(key).then((val) => {
+           // console.log("VAL biblio : ", val);
+            let biblio: Biblio = new Biblio();
+            biblio.setBiblio(val._id_B, val._nom_B, val._nb_etages || 0, val._proprio_B || null, val._maisonB);
+            biblios.push(biblio);
+          }).catch((error) => {
+            console.log("Error getting document:", error);
+          })
+        });
         resolve(biblios);
       }).catch((error) => {
         console.log("Error getting document:", error);
@@ -218,30 +239,34 @@ export class LienStorageProvider {
 
   getBiblioDeM(idM: string): Promise<Biblio[]> {
     return new Promise<Biblio[]>((resolve, reject) => {
-      return this.storage.get('biblio ' ).then((val) => {
-        let biblios: Biblio[] = [];
-        for (let bib of val) {
-          if(bib.maisonB === idM){
+      let biblios: Biblio[] = [];
+      this.getBiblios().then((val) => {
+        for(let bibli of val){
+          if(bibli.maisonB === idM) {
+            /*
             let biblio: Biblio = new Biblio();
-            biblio.setBiblio(bib.id, bib.nomB, bib.nb_etages || 0, bib.proprio_B || null, bib.maisonB);
-            biblios.push(biblio);
+            biblio.setBiblio(bibli.id_B, bibli.nom_B, bibli.nb_etages || 0, bibli.proprio_B || null, bibli.maisonB);
+             */
+            biblios.push(bibli);
           }
         }
-        resolve(biblios);
       }).catch((error) => {
         console.log("Error getting document:", error);
-      })
+      });
+      resolve(biblios);
     });
   }
 
   //TODO
   moveFromBiblio(idL, idB): Promise<any> {
     return new Promise<Biblio[]>((resolve, reject) => {
-      return this.storage.get('biblio ' ).then((val) => {
-        if (val.id == idB){
-          //TODO : update id_B de livre !
-          // get + set ?
-          console.log("not done yet")
+      return this.getBiblios().then((val) => {
+        for(let bibli of val){
+          if (bibli.id_B == idB){
+            //TODO : update id_B de livre !
+            // get + set ?
+            console.log("not done yet")
+          }
         }
       }).catch((error) => {
         console.log("Error getting document:", error);
@@ -289,15 +314,20 @@ export class LienStorageProvider {
   }
 
   getMaisons(): Promise<Maison[]>{
+    let self = this; //if not this is not defined
     return new Promise<Maison[]>((resolve, reject) => {
-      return this.storage.get('maison').then((val) => {
-        let maisons: Maison[] = [];
-       // console.log("VAL : ", val);
-        for (let mai of val) {
-          let maison:Maison = new Maison();
-          maison.setMaison(mai.id, mai.nomM, mai.adresse || "null", mai.proprio_M || null);
-          maisons.push(maison);
-        }
+      let maisons: Maison[] = [];
+      this.getElementKeys('maison ').then((K) => {
+        let listKeys = K;
+        listKeys.forEach(function(key) {
+          self.storage.get(key).then((val) => {
+            let maison:Maison = new Maison();
+            maison.setMaison(val._id_M, val._nom_M, val._adresse || "null", val._proprio_M || null);
+            maisons.push(maison);
+          }).catch((error) => {
+            console.log("Error getting document:", error);
+          })
+        });
         resolve(maisons);
       }).catch((error) => {
         console.log("Error getting document:", error);
@@ -347,24 +377,52 @@ export class LienStorageProvider {
   }
 
   getLecteurs(): Promise<Lecteur[]>{
+    let self = this; //if not this is not defined
     return new Promise<Lecteur[]>((resolve, reject) => {
-      return this.storage.get('lecteur ' ).then((val) => {
         let lecteurs: Lecteur[] = [];
-        for (let lec of val) {
-          let lecteur:Lecteur = new Lecteur();
-          lecteur.setLecteur(lec.id, lec.pseudo, lec.mail, lec.nom, lec.prenom,
-            lec.mdp, lec.lecteurs || [], lec.avatar);
-          lecteurs.push(lecteur);
-        }
+      this.getElementKeys('lecteur ').then((K) => {
+        let listKeys = K;
+        listKeys.forEach(function(key) {
+          self.storage.get(key).then((val) => {
+            console.log("VAL lecteur : ", val);
+            let lecteur:Lecteur = new Lecteur();
+            lecteur.setLecteur(val._id, val._pseudo, val._mail, val._nom, val._prenom,
+              val._mdp, val._lecteurs || [], val._avatar);
+            lecteurs.push(lecteur);
+          }).catch((error) => {
+            console.log("Error getting Lecteur:", error);
+          })
+        });
         resolve(lecteurs);
       }).catch((error) => {
-        console.log("Error getting document:", error);
+        console.log("Error getting Keys:", error);
       })
     });
   }
 
   getLecteursDeLivre(idLiv: string) {
+    let self = this; //if not this is not defined
     return new Promise<Lecteur[]>((resolve, reject) => {
+      let lecteurs: Lecteur[] = [];
+      this.getLectures().then(data => {
+        let lecteurs: Lecteur[] = [];
+        for (let lect of data) {
+          let lecteur: Lecteur = new Lecteur();
+          if (lect.idLiv === idLiv) {
+            this.getLecteur(lect.idLec).then(val => {
+              console.log("Lecteur data : ", val);
+              lecteur = val;
+            });
+            lecteurs.push(lecteur);
+          }
+        }
+        resolve(lecteurs);
+      }).catch((error) => {
+        console.log("Error getting Keys:", error);
+      })
+    });
+
+    /* return new Promise<Lecteur[]>((resolve, reject) => {
       return this.storage.get('lecture ' ).then(data => {
         let lecteurs: Lecteur[] = [];
         for (let lect of data) {
@@ -380,7 +438,7 @@ export class LienStorageProvider {
       }).catch(function (error) {
         console.log("Error getting document:", error);
       });
-    });
+    });*/
   }
 
   /*LECTURES*/
@@ -409,11 +467,12 @@ export class LienStorageProvider {
 
   getLectureLivDeLec(idLiv, idLec): Promise<Lecture>{
     return new Promise<Lecture>((resolve, reject) => {
-      return this.storage.get('lecture ' ).then(data => {
+      return this.getLectures().then(data => {
         let lecture: Lecture = new Lecture();
         for (let lect of data) {
           if (lect.idLec === idLec) {
             if (lect.idLiv === idLiv) {
+              console.log("LECT : ", lect);
               lecture.setLecture(lect.id, lect.idLec, lect.idLiv, lect.page, lect.commentaire, lect.dateDebut, lect.dateFin);
             }
           }
@@ -427,7 +486,7 @@ export class LienStorageProvider {
 
   getLectureDeLec(idLec: string): Promise<Lecture[]> {
     return new Promise<Lecture[]>((resolve, reject) => {
-      return this.storage.get('lecture ' ).then(data => {
+      return this.getLectures().then(data => {
         let lectures: Lecture[] = [];
         for (let lect of data) {
           let lecture: Lecture = new Lecture();
@@ -459,14 +518,21 @@ export class LienStorageProvider {
   }
 
   getLectures(): Promise<Lecture[]>{
+    let self = this; //if not this is not defined
     return new Promise<Lecture[]>((resolve, reject) => {
-      return this.storage.get('lecture ' ).then((val) => {
         let lectures: Lecture[] = [];
-        for (let lect of val) {
-          let lecture:Lecture = new Lecture();
-          lecture.setLecture(lect.id, lect.idLec, lect.idLiv, lect.page, lect.commentaire, lect.dateDebut, lect.dateFin);
-          lectures.push(lecture);
-        }
+        this.getElementKeys('lecture ').then((K) => {
+          let listKeys = K;
+          listKeys.forEach(function (key) {
+            self.storage.get(key).then((val) => {
+              let lecture: Lecture = new Lecture();
+              console.log("VAL lecture : ", val);
+              lecture.setLecture(val._id, val._idLec, val._idLiv, val._page, val._commentaire, val._dateDebut, val._dateFin);
+              lectures.push(lecture);
+            }).catch((error) => {
+              console.log("Error getting document:", error);
+            })
+          });
         resolve(lectures);
       }).catch((error) => {
         console.log("Error getting document:", error);
